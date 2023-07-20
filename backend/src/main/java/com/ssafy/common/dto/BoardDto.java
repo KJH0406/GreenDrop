@@ -1,16 +1,17 @@
-package com.ssafy.common.dto.request;
+package com.ssafy.common.dto;
 
 import com.ssafy.common.entity.Board;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
-public class BoardRequestDto {
-
+public class BoardDto {
     private Long boardSeq;
     private String question;
     private String leftAnswer;
@@ -21,6 +22,9 @@ public class BoardRequestDto {
     private Integer likeCount;
     private Integer isDeleted;
     private LocalDateTime deletedDate;
+    private List<String> categoryList;
+
+    public BoardDto(){}
 
     public Board toEntity() {
         Board board = Board.builder()
