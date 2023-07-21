@@ -1,7 +1,6 @@
 package com.ssafy.common.service;
 
 import com.ssafy.common.dto.BoardDto;
-import com.ssafy.common.dto.request.BoardRequestDto;
 import com.ssafy.common.dto.response.BoardResponseDto;
 import com.ssafy.common.entity.Board;
 import com.ssafy.common.entity.BoardCategory;
@@ -14,9 +13,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Slf4j
 @Transactional(readOnly = true)
@@ -41,22 +37,19 @@ public class BoardService {
 
         Board board = boardDto.toEntity();
         boardRepository.save(board);
-        List<String> categoryList = boardDto.getCategoryList();
-        for(String category : categoryList){
-            Category item = categoryRepository.findByItem(category);
-            boardCategoryService.saveBoardAndCategory(item,board);
-        }
+        String itemNo = boardDto.getCategory();
+        Category category = categoryRepository.findByItem(itemNo);
+        boardCategoryService.saveBoardAndCategory(category,board);
+
     }
 
     public BoardResponseDto detailBoardPage(Long boardId){
         Board board = boardRepository.findById(boardId).get();
-        List<BoardCategory> bcList = boardCategoryRepository.findBoardCategoryByBoard_BoardSeq(boardId);
-        List<String> items = new ArrayList<>();
-        for ( BoardCategory br : bcList){
-            items.add(br.getCategory().getItem());
-        }
-        BoardResponseDto boardResponseDto = new BoardResponseDto(board.getQuestion(),board.getLeftAnswer(),board.getRightAnswer(),board.getIp(),board.getNickname(),board.getLikeCount(),items);
-        boardResponseDto.from(board,items);
+        BoardCategory boardCategory = boardCategoryRepository.findBoardCategoryByBoard_BoardSeq(boardId).get(0);
+        String item = boardCategory.getCategory().getItem();
+
+        BoardResponseDto boardResponseDto = new BoardResponseDto(board.getQuestion(),board.getLeftAnswer(),board.getRightAnswer(),board.getIp(),board.getNickname(),board.getLikeCount(),item);
+        boardResponseDto.from(board,item);
         return boardResponseDto;
     }
 

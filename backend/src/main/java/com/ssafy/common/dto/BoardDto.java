@@ -6,7 +6,6 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -22,7 +21,7 @@ public class BoardDto {
     private Integer likeCount;
     private Integer isDeleted;
     private LocalDateTime deletedDate;
-    private List<String> categoryList;
+    private String category;
 
     public BoardDto(){}
 
