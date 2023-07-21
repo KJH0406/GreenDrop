@@ -1,6 +1,7 @@
 package com.ssafy.common.service;
 
 import com.ssafy.common.dto.BoardDto;
+import com.ssafy.common.dto.request.BoardRequestDto;
 import com.ssafy.common.dto.response.BoardResponseDto;
 import com.ssafy.common.entity.Board;
 import com.ssafy.common.entity.BoardCategory;
@@ -57,6 +58,16 @@ public class BoardService {
         BoardResponseDto boardResponseDto = new BoardResponseDto(board.getQuestion(),board.getLeftAnswer(),board.getRightAnswer(),board.getIp(),board.getNickname(),board.getLikeCount(),items);
         boardResponseDto.from(board,items);
         return boardResponseDto;
+    }
+
+    public boolean checkPasswordUser(Long boardNo, String pwd , String userIp){
+        Board board = boardRepository.findById(boardNo).get();
+        String encodePassword = board.getPassword();
+        boolean passwordMatchResult = encoder.matches(pwd,encodePassword);
+
+        boolean sameUserIp = userIp.equals(board.getIp());
+
+        return (passwordMatchResult == sameUserIp);
     }
 
 
