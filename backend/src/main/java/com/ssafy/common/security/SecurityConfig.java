@@ -12,7 +12,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @RequiredArgsConstructor
 @Configuration
 public class SecurityConfig {
-    private final String[] allowedUrls = {"/", "/manager/login", "/manager/regist"}; //인증 없이 접근 허용된 url
+    private final String[] allowedUrls = {"/", "/manager/login", "/manager/regist", "/**"}; //인증 없이 접근 허용된 url. api 테스트를 위해 일단 모든 접근 허용
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
