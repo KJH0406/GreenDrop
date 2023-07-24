@@ -1,6 +1,5 @@
 package com.ssafy.common.service;
 
-import com.ssafy.common.config.AppConfig;
 import com.ssafy.common.dto.BoardDto;
 import com.ssafy.common.dto.response.BoardResponseDto;
 import com.ssafy.common.entity.Board;
@@ -8,6 +7,7 @@ import com.ssafy.common.entity.BoardCategory;
 import com.ssafy.common.entity.Category;
 import com.ssafy.common.repository.BoardCategoryRepository;
 import com.ssafy.common.repository.BoardRepository;
+import com.ssafy.common.repository.BoardRepositoryCustom;
 import com.ssafy.common.repository.CategoryRepository;
 import com.ssafy.common.security.Encoder;
 import lombok.RequiredArgsConstructor;
@@ -101,6 +101,12 @@ public class BoardService {
         Category category = categoryRepository.findByItem(boardDto.getCategory());
         boardCategoryService.saveBoardAndCategory(category,originDto.toEntity());
 
+    }
+
+    @Transactional
+    public void infinityLikeBoard(Long boardNo){
+        Board board = boardRepository.getReferenceById(boardNo);
+        boardRepository.updateLikeCount(board);
     }
 
 }

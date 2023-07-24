@@ -72,6 +72,13 @@ public class BoardController {
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
+    @PatchMapping("/like/{boardNo}")
+    public ResponseEntity<?> boardLikeUp(@PathVariable Long boardNo){
+
+        boardService.infinityLikeBoard(boardNo);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
 
 }
