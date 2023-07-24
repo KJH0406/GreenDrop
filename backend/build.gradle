@@ -45,6 +45,9 @@ dependencies {
 	//JSON parsing
 	implementation 'org.json:json:20190722'
 	implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+
+	//Model mapper
+	implementation group: 'org.modelmapper', name: 'modelmapper', version: '2.3.8'
 }
 
 tasks.named('test') {
