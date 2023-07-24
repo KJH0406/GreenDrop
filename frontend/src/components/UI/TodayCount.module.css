@@ -1,0 +1,35 @@
+.todaySection {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  align-items: baseline;
+}
+
+@media (min-width: 500px) {
+  .totalSection {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .totalSection {
+    font-size: 1.2rem;
+  }
+}
+
+.todayCount {
+  font-size: 5rem;
+  color: #1DA154;
+}
+
+.todayCountText {
+  margin-left: 1rem;
+}
+
+.totalSection {
+  margin-top: 2rem;
+  text-align: center;
+  font-weight: bold;
+}
