@@ -1,0 +1,11 @@
+.board_list {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  /* overflow: scroll; */
+  height: 100px;
+  align-items: center;
+  justify-content: flex-start;
+  /* align-content: center; */
+  /* border: 1px solid black; */
+}
