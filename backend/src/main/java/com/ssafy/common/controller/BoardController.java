@@ -22,7 +22,7 @@ public class BoardController {
     private final UserIp userIp;
 
     @PostMapping("/regist")
-    public ResponseEntity<?> registBoard(
+    public ResponseEntity<Object> registBoard(
             @RequestBody BoardDto boardDto,
             HttpServletRequest request
     ){
@@ -33,33 +33,32 @@ public class BoardController {
     }
 
     @GetMapping("/detail/{boardNo}")
-    public ResponseEntity<?> detailBoardPage(@PathVariable Long boardNo){
+    public ResponseEntity<BoardResponseDto> detailBoardPage(@PathVariable Long boardNo){
         BoardResponseDto boardResponseDto  = boardService.detailBoardPage(boardNo);
 
         return new ResponseEntity<>(boardResponseDto,HttpStatus.OK);
     }
 
     @PostMapping("/modify/{boardNo}")
-    public ResponseEntity<?> checkUserPassword(
+    public ResponseEntity<Object> checkUserPassword(
             @PathVariable Long boardNo,
             @RequestBody String password,
             HttpServletRequest request
     ) {
 
         JSONObject parser = new JSONObject(password);
-        String  userPassword = parser.getString("password");
-        String ipAdress = userIp.searchIP(request);
-        Boolean userCheck = boardService.checkPasswordUser(boardNo,userPassword,ipAdress);
+        Boolean userCheck =
+            boardService.checkPasswordUser(boardNo,parser.getString("password"),userIp.searchIP(request));
 
         if(!userCheck) {
-            //TODO : 비밀번호 불일치 시 Error 처리 예정
+            //TODO : 비밀번호 불일치 시 Error 처리 예정 -> Service단으로 Custom Error class 생성 후 이동예정
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PatchMapping("/delete/{boardNo}")
-    public ResponseEntity<?> deleteYesBoard(
+    public ResponseEntity<Object> deleteYesBoard(
             @PathVariable Long boardNo
     ){
         boardService.deleteYesBoard(boardNo);
@@ -67,7 +66,7 @@ public class BoardController {
     }
 
     @PatchMapping("/modify/{boardNo}")
-    public ResponseEntity<?> modifyBoard(@PathVariable Long boardNo, @RequestBody BoardDto boardDto){
+    public ResponseEntity<Object> modifyBoard(@PathVariable Long boardNo, @RequestBody BoardDto boardDto){
 
         boardService.modifyBoard(boardNo,boardDto);
 
