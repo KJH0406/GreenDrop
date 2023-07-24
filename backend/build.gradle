@@ -48,6 +48,9 @@ dependencies {
 
 	//Model mapper
 	implementation group: 'org.modelmapper', name: 'modelmapper', version: '2.3.8'
+
+	//record Builder 사용 dependency
+	implementation group: 'io.soabase.record-builder', name: 'record-builder-core', version: '34'
 }
 
 tasks.named('test') {
