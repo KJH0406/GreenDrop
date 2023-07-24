@@ -1,0 +1,37 @@
+.header {
+  position: relative;
+  top: 0;
+  left: 0;
+  height: 3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  padding: 10px;
+
+  /* 개발 과정중 헤더 포지션 알기 위해 border 임시 적용 */
+  border: 1px solid red;
+}
+
+.title {
+  font-weight: bolder;
+}
+
+.first_word {
+  margin-right: 5px;
+}
+
+.second_word {
+  color: green;
+}
+
+.hamburger_img {
+  width: 30px;
+  height: 30px;
+}
+
+.close_img {
+  padding-right: 2;
+  width: 20px;
+  height: 20px;
+}
