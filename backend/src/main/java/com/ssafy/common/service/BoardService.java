@@ -79,4 +79,20 @@ public class BoardService {
         boardRepository.save(deleteBoard);
     }
 
+    @Transactional
+    public void modifyBoard(Long boardNo , BoardDto boardDto){
+        Board board = boardRepository.getReferenceById(boardNo);
+        BoardRequestDto originDto = appConfig.modelMapper().map(board,BoardRequestDto.class);
+
+        originDto.setQuestion(boardDto.getQuestion());
+        originDto.setLeftAnswer(boardDto.getLeftAnswer());
+        originDto.setRightAnswer(boardDto.getRightAnswer());
+        originDto.setModified(LocalDateTime.now());
+
+        boardRepository.save(originDto.toEntity());
+        Category category = categoryRepository.findByItem(boardDto.getCategory());
+        boardCategoryService.saveBoardAndCategory(category,originDto.toEntity());
+
+    }
+
 }

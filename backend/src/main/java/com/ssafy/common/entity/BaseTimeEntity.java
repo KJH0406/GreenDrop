@@ -1,6 +1,5 @@
 package com.ssafy.common.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
@@ -20,7 +19,7 @@ public class BaseTimeEntity {
     @Column(name = "created_date")
     private LocalDateTime createdDate;
 
-    @LastModifiedDate
-    @Column(name = "last_modified_date")
-    private LocalDateTime modified;
+//    @LastModifiedDate
+//    @Column(name = "last_modified_date")
+//    private LocalDateTime modified;
 }
