@@ -1,4 +1,31 @@
 package com.ssafy.common.security;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.SecurityFilterChain;
+
+@EnableWebSecurity
+@RequiredArgsConstructor
+@Configuration
 public class SecurityConfig {
+    private final String[] allowedUrls = {"/", "/manager/login", "/manager/regist"}; //인증 없이 접근 허용된 url
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        return http
+                .csrf().disable()
+                .headers(headers -> headers.frameOptions().sameOrigin())
+                .authorizeHttpRequests(requests ->
+                        requests.requestMatchers(allowedUrls).permitAll()
+                                .anyRequest().authenticated() //허용된 Url 외의 모든 요청은 인증 필요
+                )
+                .sessionManagement(sessionManagement ->
+                        //세션 사용하지 않기 때문에 STATELESS로 설정(token 이용)
+                        sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                )
+                .build();
+    }
 }
