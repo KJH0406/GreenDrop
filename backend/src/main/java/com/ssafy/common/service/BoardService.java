@@ -1,6 +1,8 @@
 package com.ssafy.common.service;
 
+import com.ssafy.common.config.AppConfig;
 import com.ssafy.common.dto.BoardDto;
+import com.ssafy.common.dto.request.BoardRequestDto;
 import com.ssafy.common.dto.response.BoardResponseDto;
 import com.ssafy.common.entity.Board;
 import com.ssafy.common.entity.BoardCategory;
@@ -14,6 +16,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+
 @Slf4j
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -25,6 +29,7 @@ public class BoardService {
     private final BoardCategoryRepository boardCategoryRepository;
     private final Encoder encoder;
     private final BoardCategoryService boardCategoryService;
+    private final AppConfig appConfig;
 
     @Transactional
     public void saveBoard(BoardDto boardDto , String ipAdress) {
@@ -34,7 +39,7 @@ public class BoardService {
         boardDto.setLikeCount(0);
         String encodepwd = encoder.encode(boardDto.getPassword());
         boardDto.setPassword(encodepwd);
-
+        boardDto.setLastmodifiedDate(LocalDateTime.now());
         Board board = boardDto.toEntity();
         boardRepository.save(board);
         String itemNo = boardDto.getCategory();
@@ -49,7 +54,7 @@ public class BoardService {
         String item = boardCategory.getCategory().getItem();
 
         BoardResponseDto boardResponseDto = new BoardResponseDto(board.getQuestion(),board.getLeftAnswer(),board.getRightAnswer(),board.getIp(),board.getNickname(),board.getLikeCount(),item);
-        boardResponseDto.from(board,item);
+        boardResponseDto.fromDetail(board,item);
         return boardResponseDto;
     }
 
@@ -63,5 +68,15 @@ public class BoardService {
         return (passwordMatchResult == sameUserIp);
     }
 
+    @Transactional
+    public void deleteYesBoard(Long boardNo){
+        Board board = boardRepository.getReferenceById(boardNo);
+        BoardRequestDto boardRequestDto = appConfig.modelMapper().map(board,BoardRequestDto.class);
+
+        boardRequestDto.setIsDeleted(1);
+        boardRequestDto.setDeletedDate(LocalDateTime.now());
+        Board deleteBoard = boardRequestDto.toEntity();
+        boardRepository.save(deleteBoard);
+    }
 
 }
