@@ -11,6 +11,7 @@ public record ManagerResponseDto( //프론트로 id, role 정보 응답
                                   ManagerType role
                                   //TODO: token 추가
 ) {
+    //TODO: 매개변수에 토큰도 추가
     public static ManagerResponseDto from(Manager manager){
         return new ManagerResponseDto(
                 manager.getId(),
