@@ -1,14 +1,13 @@
 package com.ssafy.common.dto;
 
 import com.ssafy.common.entity.Board;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
 public class BoardDto {
     private Long boardSeq;
@@ -24,7 +23,6 @@ public class BoardDto {
     private LocalDateTime lastmodifiedDate;
     private String category;
 
-    public BoardDto(){}
 
     public Board toEntity() {
         Board board = Board.builder()

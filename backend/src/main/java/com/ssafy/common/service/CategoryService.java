@@ -9,16 +9,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Transactional
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 @Service
 public class CategoryService {
 
     private final CategoryRepository categoryRepository;
 
+    @Transactional
     public void categorySave(CategoryRequestDto categoryRequestDto){
         Category category = categoryRequestDto.toEntity();
-
         categoryRepository.save(category);
     }
 
