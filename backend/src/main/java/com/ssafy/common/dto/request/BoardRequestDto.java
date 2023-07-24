@@ -21,6 +21,7 @@ public class BoardRequestDto {
     private Integer likeCount;
     private Integer isDeleted;
     private LocalDateTime deletedDate;
+    private LocalDateTime modified;
 
     public Board toEntity() {
         Board board = Board.builder()
@@ -34,6 +35,7 @@ public class BoardRequestDto {
                 .likeCount(likeCount)
                 .isDeleted(isDeleted)
                 .deletedDate(deletedDate)
+                .modified(modified)
                 .build();
         return board;
     }

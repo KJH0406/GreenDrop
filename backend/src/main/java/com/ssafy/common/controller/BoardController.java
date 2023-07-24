@@ -58,4 +58,21 @@ public class BoardController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @PatchMapping("/delete/{boardNo}")
+    public ResponseEntity<?> deleteYesBoard(
+            @PathVariable Long boardNo
+    ){
+        boardService.deleteYesBoard(boardNo);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PatchMapping("/modify/{boardNo}")
+    public ResponseEntity<?> modifyBoard(@PathVariable Long boardNo, @RequestBody BoardDto boardDto){
+
+        boardService.modifyBoard(boardNo,boardDto);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
 }
