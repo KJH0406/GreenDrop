@@ -1,5 +1,17 @@
-.close_img {
-  padding-right: 2;
-  width: 20px;
-  height: 20px;
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+}
+
+@media (min-width: 500px) {
+  .sidebar {
+    width: 18rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .sidebar {
+    width: 13.5rem;
+  }
 }

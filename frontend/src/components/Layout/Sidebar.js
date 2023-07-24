@@ -2,10 +2,12 @@
 
 import SidebarItem from "./SidebarItem";
 import classes from "./Sidebar.module.css";
+import { useLocation } from "react-router-dom";
 
 function Sidebar() {
+  const location = useLocation();
   const pageList = [
-    { path: "/", name: "서비스 소개" },
+    { path: "", name: "서비스 소개" },
     { path: "home", name: "홈" },
     { path: "board", name: "밸런스 게임 게시판" },
     { path: "greenStory", name: "그린 스토리" },
@@ -16,15 +18,18 @@ function Sidebar() {
   ];
 
   return (
-    <ul className={classes.sidebar}>
+    <div className={classes.sidebar}>
       {pageList.map((page, index) => {
         return (
-          <li key={index}>
-            <SidebarItem page={page} />
-          </li>
+          <div key={index}>
+            <SidebarItem
+              page={page}
+              isActive={`/${page.path}` === location.pathname} // Compare the path with the current location
+            />
+          </div>
         );
       })}
-    </ul>
+    </div>
   );
 }
 
