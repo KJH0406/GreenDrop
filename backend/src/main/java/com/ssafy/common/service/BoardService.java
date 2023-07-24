@@ -2,7 +2,6 @@ package com.ssafy.common.service;
 
 import com.ssafy.common.config.AppConfig;
 import com.ssafy.common.dto.BoardDto;
-import com.ssafy.common.dto.request.BoardRequestDto;
 import com.ssafy.common.dto.response.BoardResponseDto;
 import com.ssafy.common.entity.Board;
 import com.ssafy.common.entity.BoardCategory;
@@ -13,6 +12,7 @@ import com.ssafy.common.repository.CategoryRepository;
 import com.ssafy.common.security.Encoder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,7 +29,7 @@ public class BoardService {
     private final BoardCategoryRepository boardCategoryRepository;
     private final Encoder encoder;
     private final BoardCategoryService boardCategoryService;
-    private final AppConfig appConfig;
+    private final ModelMapper modelMapper;
 
     @Transactional
     public void saveBoard(BoardDto boardDto , String ipAdress) {
@@ -49,13 +49,18 @@ public class BoardService {
     }
 
     public BoardResponseDto detailBoardPage(Long boardId){
-        Board board = boardRepository.findById(boardId).get();
-        BoardCategory boardCategory = boardCategoryRepository.findBoardCategoryByBoard_BoardSeq(boardId).get(0);
-        String item = boardCategory.getCategory().getItem();
+        Board board = boardRepository.getReferenceById(boardId);
+        String item = "";
+        BoardCategory boardCategory = boardCategoryRepository.findBoardCategoryByBoard_BoardSeq(boardId)
+                .orElse(null);
+
+        if(boardCategory != null){
+            item = boardCategory.getCategory().getItem();
+        }
 
         BoardResponseDto boardResponseDto = new BoardResponseDto(board.getQuestion(),board.getLeftAnswer(),board.getRightAnswer(),board.getIp(),board.getNickname(),board.getLikeCount(),item);
-        boardResponseDto.fromDetail(board,item);
-        return boardResponseDto;
+
+        return boardResponseDto.fromDetail(board,item);
     }
 
     public boolean checkPasswordUser(Long boardNo, String pwd , String userIp){
@@ -65,29 +70,32 @@ public class BoardService {
 
         boolean sameUserIp = userIp.equals(board.getIp());
 
+        //if(!passwordResult){
+        //TODO : 에러처리 예정 (Exception 핸들러 구현 후 작성 예정)
+        //}
         return (passwordMatchResult == sameUserIp);
     }
 
     @Transactional
     public void deleteYesBoard(Long boardNo){
         Board board = boardRepository.getReferenceById(boardNo);
-        BoardRequestDto boardRequestDto = appConfig.modelMapper().map(board,BoardRequestDto.class);
+        BoardDto boardDto = modelMapper.map(board,BoardDto.class);
 
-        boardRequestDto.setIsDeleted(1);
-        boardRequestDto.setDeletedDate(LocalDateTime.now());
-        Board deleteBoard = boardRequestDto.toEntity();
+        boardDto.setIsDeleted(1);
+        boardDto.setDeletedDate(LocalDateTime.now());
+        Board deleteBoard = boardDto.toEntity();
         boardRepository.save(deleteBoard);
     }
 
     @Transactional
     public void modifyBoard(Long boardNo , BoardDto boardDto){
         Board board = boardRepository.getReferenceById(boardNo);
-        BoardRequestDto originDto = appConfig.modelMapper().map(board,BoardRequestDto.class);
+        BoardDto originDto = modelMapper.map(board,BoardDto.class);
 
         originDto.setQuestion(boardDto.getQuestion());
         originDto.setLeftAnswer(boardDto.getLeftAnswer());
         originDto.setRightAnswer(boardDto.getRightAnswer());
-        originDto.setModified(LocalDateTime.now());
+        originDto.setLastmodifiedDate(LocalDateTime.now());
 
         boardRepository.save(originDto.toEntity());
         Category category = categoryRepository.findByItem(boardDto.getCategory());
