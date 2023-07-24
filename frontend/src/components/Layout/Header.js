@@ -15,7 +15,7 @@ function Header() {
   };
 
   return (
-    <div>
+    <div className={classes.container}>
       <header className={classes.header}>
         <div className={classes.title}>
           <span className={classes.first_word}>Green</span>
@@ -28,8 +28,9 @@ function Header() {
           onClick={toggleSidebar}
         />
       </header>
-
-      {isSidebarOpen ? <Sidebar className={classes.sidbar} /> : <></>}
+      <div className={classes.sidbar}>
+        {isSidebarOpen ? <Sidebar /> : <></>}
+      </div>
     </div>
   );
 }

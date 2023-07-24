@@ -1,7 +1,10 @@
+.container {
+  position: sticky;
+  top: 0px;
+}
+
 .header {
   position: relative;
-  top: 0;
-  left: 0;
   height: 3rem;
   display: flex;
   justify-content: space-between;
@@ -15,6 +18,7 @@
 
 .title {
   font-weight: bolder;
+  font-size: larger;
 }
 
 .first_word {
@@ -31,7 +35,12 @@
 }
 
 .close_img {
-  padding-right: 2;
+  padding-right: 4px;
   width: 20px;
   height: 20px;
+}
+.sidbar {
+  position: absolute;
+  right: 0;
+  background-color: white;
 }
