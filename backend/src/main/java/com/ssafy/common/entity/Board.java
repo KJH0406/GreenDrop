@@ -3,6 +3,7 @@ package com.ssafy.common.entity;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -36,6 +37,9 @@ public class Board implements Serializable {
     private Integer isDeleted;
     @Column(name = "deleted_date")
     private LocalDateTime deletedDate;
+    @LastModifiedDate
+    @Column(name = "last_modified_date")
+    private LocalDateTime modified;
     @JsonManagedReference
     @OneToMany(mappedBy = "board" , cascade = CascadeType.ALL)
     private List<BoardCategory> boardCategories = new ArrayList<>();
