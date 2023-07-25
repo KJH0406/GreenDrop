@@ -1,8 +1,8 @@
-import classes from "./Board.module.css"
-import BalanceGameList from "../components//BalanceGame/BalanceGameList"
-import BalanceGameCategoryList from "../components/BalanceGame/BalanceGameCategoryList"
-import search from "../assets/search.png"
-import star from "../assets/star.png"
+import classes from "./Board.module.css";
+import BalanceGameList from "../components/BalanceGame/BalanceGameList";
+import BalanceGameCategoryList from "../components/BalanceGame/BalanceGameCategoryList";
+import search from "../assets/search.png";
+import star from "../assets/star.png";
 function BoardPage() {
   return (
     <div className={classes.outer_box}>
@@ -36,7 +36,7 @@ function BoardPage() {
       {/* 검색시 게임 리스트 state만 바꿔주면 아랑서 화면 출력될 듯(다시 전체 글로는 어떻게 돌아가지?) */}
       <BalanceGameList />
     </div>
-  )
+  );
 }
 
-export default BoardPage
+export default BoardPage;
