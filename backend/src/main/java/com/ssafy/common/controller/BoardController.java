@@ -2,7 +2,6 @@ package com.ssafy.common.controller;
 
 import com.ssafy.common.dto.BoardDto;
 import com.ssafy.common.dto.response.BoardResponseDto;
-import com.ssafy.common.entity.Board;
 import com.ssafy.common.security.UserIp;
 import com.ssafy.common.service.BoardService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -99,5 +98,14 @@ public class BoardController {
         return new ResponseEntity<>(searchKeywords,HttpStatus.OK);
     }
 
+    @GetMapping("/select")
+    public ResponseEntity<?> searchCategory(
+            @PageableDefault(size = 5) Pageable pageable,
+            @RequestParam String category
+    ){
+        Page<BoardResponseDto> boardResponseDtoPage = boardService.searchCategory(category,pageable);
+
+        return new ResponseEntity<>(boardResponseDtoPage,HttpStatus.OK);
+    }
 
 }

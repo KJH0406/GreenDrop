@@ -13,11 +13,15 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @Transactional(readOnly = true)
@@ -44,7 +48,7 @@ public class BoardService {
         Board board = boardDto.toEntity();
         boardRepository.save(board);
         String itemNo = boardDto.getCategory();
-        Category category = categoryRepository.findByItem(itemNo);
+        Category category = categoryRepository.findByItem(itemNo).get();
         boardCategoryService.saveBoardAndCategory(category,board);
     }
 
@@ -87,7 +91,7 @@ public class BoardService {
         originDto.setLastmodifiedDate(LocalDateTime.now());
 
         boardRepository.save(originDto.toEntity());
-        Category category = categoryRepository.findByItem(boardDto.getCategory());
+        Category category = categoryRepository.findByItem(boardDto.getCategory()).get();
         boardCategoryService.saveBoardAndCategory(category,originDto.toEntity());
 
     }
@@ -105,6 +109,21 @@ public class BoardService {
 
     public Page<BoardResponseDto> searchKeyword(String keyword, Pageable pageable){
         return boardRepository.searchKeyword(keyword,pageable);
+    }
+
+    public Page<BoardResponseDto> searchCategory(String item, Pageable pageable){
+        Long categoryNum = categoryRepository.findByItem(item).orElseThrow().getCategorySeq();
+        List<Long> boardList = boardRepository.searchCategory(categoryNum);
+
+        List<BoardResponseDto> resultBoard = new ArrayList<>();
+        for (Long boardNum : boardList){
+            Board board = boardRepository.getReferenceById(boardNum);
+            BoardResponseDto boardResponseDto = modelMapper.map(board, BoardResponseDto.class);
+            boardResponseDto.setItem(item);
+            resultBoard.add(boardResponseDto);
+        }
+
+        return new PageImpl<>(resultBoard, pageable,resultBoard.size());
     }
 
 

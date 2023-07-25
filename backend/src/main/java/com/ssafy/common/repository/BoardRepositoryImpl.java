@@ -77,11 +77,23 @@ public class BoardRepositoryImpl extends QuerydslRepositorySupport implements Bo
                 .from(board)
                 .leftJoin(board.boardCategories,boardCategory)
                 .leftJoin(boardCategory.category,category)
-                .where(containKeyword(keyword))
+                .where(containKeyword(keyword),board.isDeleted.eq(0))
                 .orderBy(board.likeCount.desc());
 
         List<BoardResponseDto> keywords = this.getQuerydsl().applyPagination(pageable, query).fetch();
         return new PageImpl<BoardResponseDto>(keywords, pageable, query.fetchCount());
+    }
+
+    @Override
+    public List<Long> searchCategory(Long categorySeq) {
+
+        List<Long> boardSeqList = queryFactory
+                .select(boardCategory.board.boardSeq)
+                .from(boardCategory)
+                .where(boardCategory.category.categorySeq.eq(categorySeq),board.isDeleted.eq(0))
+                .fetch();
+
+        return boardSeqList;
     }
 
     private BooleanExpression containKeyword(String keyword) {
