@@ -1,7 +1,10 @@
+import Tumnail from "../components/Intro/Tumnail";
+import classes from "./Intro.module.css";
+
 function IntroPage() {
   return (
-    <div>
-      <h1>인트로 페이지 입니다.</h1>
+    <div className={classes.introContainer}>
+      <Tumnail />
     </div>
   );
 }

@@ -1,5 +1,5 @@
 .homepage {
-  background-color: #F8F8F8;
+  background-color: #f8f8f8;
   padding-bottom: 3rem;
 }
 
@@ -103,7 +103,7 @@
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
-  background-color: #6FCF97;
+  background-color: #6fcf97;
   opacity: 72%;
 }
 
@@ -165,7 +165,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #FF8484;
+  background-color: #ff8484;
   opacity: 70%;
   border-radius: 20px;
 }
@@ -176,7 +176,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #958CFF;
+  background-color: #958cff;
   opacity: 70%;
   border-radius: 20px;
 }
@@ -213,7 +213,7 @@
 }
 
 .balance_game_button button {
-  background-color: #E7EDFB;
+  background-color: #e7edfb;
   font-weight: bold;
   padding: 1rem;
   border: none;

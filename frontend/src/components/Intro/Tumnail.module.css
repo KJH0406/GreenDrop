@@ -1,0 +1,56 @@
+.tumnail_box {
+  background-image: url("../../assets/tumnail.jpg");
+  background-size: cover;
+}
+
+.tumnail_title {
+  font-weight: bolder;
+  text-align: left;
+  color: white;
+}
+
+@media (min-width: 500px) {
+  .tumnail_box {
+    height: 43rem;
+  }
+
+  .tumnail_title {
+    background-color: rgba(0, 0, 0, 0.55);
+    height: 39rem;
+    padding-top: 4rem;
+    padding-left: 4rem;
+  }
+  .tumnail_title_first {
+    font-size: 3rem;
+    margin-bottom: 3rem;
+    line-height: 4.5rem;
+  }
+  .tumnail_title_second {
+    font-weight: normal;
+    font-size: 1.2rem;
+    line-height: 2.5rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .tumnail_box {
+    height: 33rem;
+  }
+
+  .tumnail_title {
+    background-color: rgba(0, 0, 0, 0.55);
+    height: 29rem;
+    padding-top: 4rem;
+    padding-left: 2rem;
+  }
+  .tumnail_title_first {
+    font-size: 1.7rem;
+    margin-bottom: 2.5rem;
+    line-height: 3rem;
+  }
+  .tumnail_title_second {
+    font-weight: normal;
+    font-size: 1rem;
+    line-height: 2rem;
+  }
+}
