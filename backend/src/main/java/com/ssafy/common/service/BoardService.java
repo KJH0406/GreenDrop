@@ -39,11 +39,13 @@ public class BoardService {
         String encodepwd = encoder.encode(boardDto.getPassword());
         boardDto.setPassword(encodepwd);
         boardDto.setLastmodifiedDate(LocalDateTime.now());
-        Board board = boardDto.toEntity();
-        boardRepository.save(board);
-        String itemNo = boardDto.getCategory();
-        Category category = categoryRepository.findByItem(itemNo);
-        boardCategoryService.saveBoardAndCategory(category,board);
+        boardRepository.save(boardDto.toEntity());
+
+        Optional<Category> category = categoryRepository.findByItem(boardDto.getCategory());
+        if(category.isPresent()){
+            boardCategoryService.saveBoardAndCategory(category.get(),boardDto.toEntity());
+        }
+
     }
 
     public BoardResponseDto detailBoardPage(Long boardId){
@@ -70,8 +72,7 @@ public class BoardService {
 
         boardDto.setIsDeleted(1);
         boardDto.setDeletedDate(LocalDateTime.now());
-        Board deleteBoard = boardDto.toEntity();
-        boardRepository.save(deleteBoard);
+        boardRepository.save(boardDto.toEntity());
     }
 
     @Transactional
