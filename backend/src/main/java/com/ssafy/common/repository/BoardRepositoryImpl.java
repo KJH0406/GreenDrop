@@ -50,9 +50,22 @@ public class BoardRepositoryImpl extends QuerydslRepositorySupport implements Bo
                 .where(board.isDeleted.eq(0))
                 .orderBy(board.likeCount.desc());
 
-
         List<BoardResponseDto> boardList = this.getQuerydsl().applyPagination(pageable, query).fetch();
         return new PageImpl<BoardResponseDto>(boardList, pageable, query.fetchCount());
+    }
+
+    @Override
+    public BoardResponseDto oneBoard(Long boardNo) {
+        List<BoardResponseDto> query = queryFactory
+                .select(Projections.fields(BoardResponseDto.class,
+                        board.question,board.leftAnswer,board.rightAnswer, board.ip,board.likeCount
+                        ,board.nickname,board.lastModifiedDate,category.item))
+                .from(board)
+                .leftJoin(board.boardCategories,boardCategory)
+                .leftJoin(boardCategory.category,category)
+                .where(board.boardSeq.eq(boardNo)).fetch();
+
+        return query.get(0);
     }
 
 }

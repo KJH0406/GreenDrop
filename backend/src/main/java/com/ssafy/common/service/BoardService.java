@@ -46,22 +46,10 @@ public class BoardService {
         String itemNo = boardDto.getCategory();
         Category category = categoryRepository.findByItem(itemNo);
         boardCategoryService.saveBoardAndCategory(category,board);
-
     }
 
     public BoardResponseDto detailBoardPage(Long boardId){
-        Board board = boardRepository.getReferenceById(boardId);
-        String item = "";
-        BoardCategory boardCategory = boardCategoryRepository.findBoardCategoryByBoard_BoardSeq(boardId)
-                .orElse(null);
-
-        if(boardCategory != null){
-            item = boardCategory.getCategory().getItem();
-        }
-
-        BoardResponseDto boardResponseDto = new BoardResponseDto(board.getQuestion(),board.getLeftAnswer(),board.getRightAnswer(),board.getIp(),board.getNickname(),board.getLikeCount(),item);
-
-        return boardResponseDto.fromDetail(board,item);
+        return boardRepository.oneBoard(boardId);
     }
 
     public boolean checkPasswordUser(Long boardNo, String pwd , String userIp){
