@@ -103,4 +103,9 @@ public class BoardService {
         return boardRepository.allBoardList(pageable);
     }
 
+    public Page<BoardResponseDto> searchKeyword(String keyword, Pageable pageable){
+        return boardRepository.searchKeyword(keyword,pageable);
+    }
+
+
 }
