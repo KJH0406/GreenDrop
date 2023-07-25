@@ -1,23 +1,25 @@
-import { useState } from "react";
 import classes from "./Home.module.css";
 import TodayCount from "../components/UI/TodayCount";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 function HomePage() {
+  let navigate = useNavigate();
+
   let state = useSelector((state) => {
     return state;
   });
 
   let leftPercentage =
-    (parseInt(state.leftAnswer[0].leftCount) /
-      (parseInt(state.leftAnswer[0].leftCount) +
-        parseInt(state.rightAnswer[0].rightCount))) *
+    (parseInt(state.countBundle[0].leftCount) /
+      (parseInt(state.countBundle[0].leftCount) +
+        parseInt(state.countBundle[1].rightCount))) *
     100;
 
   let rightPercentage =
-    (parseInt(state.rightAnswer[0].rightCount) /
-      (parseInt(state.leftAnswer[0].leftCount) +
-        parseInt(state.rightAnswer[0].rightCount))) *
+    (parseInt(state.countBundle[1].rightCount) /
+      (parseInt(state.countBundle[0].leftCount) +
+        parseInt(state.countBundle[1].rightCount))) *
     100;
 
   return (
@@ -36,41 +38,41 @@ function HomePage() {
         <div className={classes.result_title}>지난 밸런스 게임 결과!</div>
         <div className={classes.result_balance_game}>
           <div className={classes.result_balance_game_title}>
-            다시 태어난다면?
+            { state.balanceGame[0].title }
           </div>
           <div className={classes.result_answer}>
             <div className={classes.result_left}>
-              {parseInt(state.leftAnswer[0].leftCount) >
-              parseInt(state.rightAnswer[0].rightCount) ? (
+              {parseInt(state.countBundle[0].leftCount) >
+              parseInt(state.countBundle[1].rightCount) ? (
                 <div className={classes.result_king}></div>
               ) : (
                 <div className={classes.result_nan}></div>
               )}
               <div className={classes.result_content}>
-                {state.leftAnswer[1].left}
+                {state.balanceGame[1].left}
               </div>
               <div className={classes.result_percentage}>
-                {leftPercentage.toFixed(1)}
+                {leftPercentage.toFixed(1)}%
               </div>
               <div className={classes.result_left_count}>
-                {state.leftAnswer[0].leftCount}%
+                {state.countBundle[0].leftCount}표
               </div>
             </div>
             <div className={classes.result_right}>
-              {parseInt(state.leftAnswer[0].leftCount) <
-              parseInt(state.rightAnswer[0].rightCount) ? (
+              {parseInt(state.countBundle[0].leftCount) <
+              parseInt(state.countBundle[1].rightCount) ? (
                 <div className={classes.result_king}></div>
               ) : (
                 <div className={classes.result_nan}></div>
               )}
               <div className={classes.result_content}>
-                {state.rightAnswer[1].right}
+                {state.balanceGame[2].right}
               </div>
               <div className={classes.result_percentage}>
-                {rightPercentage.toFixed(1)}
+                {rightPercentage.toFixed(1)}%
               </div>
               <div className={classes.result_right_count}>
-                {state.rightAnswer[0].rightCount}%
+                {state.countBundle[1].rightCount}표
               </div>
             </div>
           </div>
@@ -84,7 +86,7 @@ function HomePage() {
         </div>
 
         <div className={classes.balance_game_button}>
-          <button>밸런스 게임 등록하러 가기!</button>
+          <button onClick={() => { navigate("/board");  } }>밸런스 게임 등록하러 가기!</button>
         </div>
       </div>
     </div>

@@ -7,28 +7,19 @@ let todayCount = createSlice({
 
 let totalCount = createSlice({
   name: "totalCount",
-  initialState: "2500",
+  initialState: "2,500",
 });
 
-let leftCount = createSlice({
-  name: "leftCount",
-  initialState: "89",
+let countBundle = createSlice({
+  name: "countBundle",
+  initialState: [{ leftCount: "89" }, { rightCount: "32" }],
 });
 
-let rightCount = createSlice({
-  name: "rightCount",
-  initialState: "32",
-});
-
-let leftAnswer = createSlice({
-  name: "leftAnswer",
-  initialState: [{ leftCount: "89" }, { left: "100억으로 20살까지만 살기" }],
-});
-
-let rightAnswer = createSlice({
-  name: "rightAnswer",
+let balanceGame = createSlice({
+  name: "balanceGame",
   initialState: [
-    { rightCount: "32" },
+    { title: "다시 태어난다면?" },
+    { left: "100억으로 20살까지만 살기" },
     { right: "월 100만원으로 100살까지 살기" },
   ],
 });
@@ -37,9 +28,7 @@ export default configureStore({
   reducer: {
     todayCount: todayCount.reducer,
     totalCount: totalCount.reducer,
-    leftCount: leftCount.reducer,
-    rightCount: rightCount.reducer,
-    leftAnswer: leftAnswer.reducer,
-    rightAnswer: rightAnswer.reducer,
+    countBundle: countBundle.reducer,
+    balanceGame: balanceGame.reducer,
   },
 });
