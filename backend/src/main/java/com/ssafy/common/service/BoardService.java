@@ -7,12 +7,13 @@ import com.ssafy.common.entity.BoardCategory;
 import com.ssafy.common.entity.Category;
 import com.ssafy.common.repository.BoardCategoryRepository;
 import com.ssafy.common.repository.BoardRepository;
-import com.ssafy.common.repository.BoardRepositoryCustom;
 import com.ssafy.common.repository.CategoryRepository;
 import com.ssafy.common.security.Encoder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -107,6 +108,11 @@ public class BoardService {
     public void infinityLikeBoard(Long boardNo){
         Board board = boardRepository.getReferenceById(boardNo);
         boardRepository.updateLikeCount(board);
+    }
+
+    /* 좋아요 순으로 내림차순 정렬해서 pagenation => 5개 */
+    public Page<BoardResponseDto> findAllBoardList(Pageable pageable){
+        return boardRepository.allBoardList(pageable);
     }
 
 }
