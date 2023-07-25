@@ -2,12 +2,16 @@ package com.ssafy.common.controller;
 
 import com.ssafy.common.dto.BoardDto;
 import com.ssafy.common.dto.response.BoardResponseDto;
+import com.ssafy.common.entity.Board;
 import com.ssafy.common.security.UserIp;
 import com.ssafy.common.service.BoardService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -73,12 +77,19 @@ public class BoardController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
     @PatchMapping("/like/{boardNo}")
-    public ResponseEntity<?> boardLikeUp(@PathVariable Long boardNo){
+    public ResponseEntity<Object> boardLikeUp(@PathVariable Long boardNo){
 
         boardService.infinityLikeBoard(boardNo);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
+    
+    @GetMapping("/list")
+    public ResponseEntity<Page<BoardResponseDto>> allBoardList(@PageableDefault(size = 5) Pageable pageable){
+        Page<BoardResponseDto> boardList = boardService.findAllBoardList(pageable);
+        return new ResponseEntity<>(boardList,HttpStatus.OK);
+    }
+
 
 
 }

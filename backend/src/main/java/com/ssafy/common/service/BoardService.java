@@ -7,12 +7,13 @@ import com.ssafy.common.entity.BoardCategory;
 import com.ssafy.common.entity.Category;
 import com.ssafy.common.repository.BoardCategoryRepository;
 import com.ssafy.common.repository.BoardRepository;
-import com.ssafy.common.repository.BoardRepositoryCustom;
 import com.ssafy.common.repository.CategoryRepository;
 import com.ssafy.common.security.Encoder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -45,22 +46,10 @@ public class BoardService {
         String itemNo = boardDto.getCategory();
         Category category = categoryRepository.findByItem(itemNo);
         boardCategoryService.saveBoardAndCategory(category,board);
-
     }
 
     public BoardResponseDto detailBoardPage(Long boardId){
-        Board board = boardRepository.getReferenceById(boardId);
-        String item = "";
-        BoardCategory boardCategory = boardCategoryRepository.findBoardCategoryByBoard_BoardSeq(boardId)
-                .orElse(null);
-
-        if(boardCategory != null){
-            item = boardCategory.getCategory().getItem();
-        }
-
-        BoardResponseDto boardResponseDto = new BoardResponseDto(board.getQuestion(),board.getLeftAnswer(),board.getRightAnswer(),board.getIp(),board.getNickname(),board.getLikeCount(),item);
-
-        return boardResponseDto.fromDetail(board,item);
+        return boardRepository.oneBoard(boardId);
     }
 
     public boolean checkPasswordUser(Long boardNo, String pwd , String userIp){
@@ -107,6 +96,11 @@ public class BoardService {
     public void infinityLikeBoard(Long boardNo){
         Board board = boardRepository.getReferenceById(boardNo);
         boardRepository.updateLikeCount(board);
+    }
+
+    /* 좋아요 순으로 내림차순 정렬해서 pagenation => 5개 */
+    public Page<BoardResponseDto> findAllBoardList(Pageable pageable){
+        return boardRepository.allBoardList(pageable);
     }
 
 }
