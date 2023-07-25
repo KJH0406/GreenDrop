@@ -10,5 +10,5 @@ public interface BoardRepositoryCustom {
     void updateLikeCount(Board board);
     Page<BoardResponseDto> allBoardList(Pageable pageable);
     BoardResponseDto oneBoard(Long boardNo);
-    Page<Board> searchKeyword(String keyword, Pageable pageable);
+    Page<BoardResponseDto> searchKeyword(String keyword, Pageable pageable);
 }
