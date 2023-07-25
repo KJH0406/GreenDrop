@@ -30,11 +30,11 @@ public class QBoard extends EntityPathBase<Board> {
 
     public final NumberPath<Integer> isDeleted = createNumber("isDeleted", Integer.class);
 
+    public final DateTimePath<java.time.LocalDateTime> lastModifiedDate = createDateTime("lastModifiedDate", java.time.LocalDateTime.class);
+
     public final StringPath leftAnswer = createString("leftAnswer");
 
     public final NumberPath<Integer> likeCount = createNumber("likeCount", Integer.class);
-
-    public final DateTimePath<java.time.LocalDateTime> modified = createDateTime("modified", java.time.LocalDateTime.class);
 
     public final StringPath nickname = createString("nickname");
 
