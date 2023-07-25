@@ -13,7 +13,7 @@
   padding: 10px;
 
   /* 개발 과정중 헤더 포지션 알기 위해 border 임시 적용 */
-  border: 1px solid red;
+  /* border: 1px solid red; */
 }
 
 .title {
