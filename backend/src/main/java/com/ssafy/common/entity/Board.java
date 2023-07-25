@@ -39,7 +39,7 @@ public class Board implements Serializable {
     private LocalDateTime deletedDate;
     @LastModifiedDate
     @Column(name = "last_modified_date")
-    private LocalDateTime modified;
+    private LocalDateTime lastModifiedDate;
     @JsonManagedReference
     @OneToMany(mappedBy = "board" , cascade = CascadeType.ALL)
     private List<BoardCategory> boardCategories = new ArrayList<>();
