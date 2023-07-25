@@ -9,7 +9,7 @@ function Thumbnail() {
           For a better world <br />
           Recycling Together
         </div>
-        <div className={classes.thumbail_title_second}>
+        <div className={classes.thumbnail_title_second}>
           더 나은 세상을 위한 시작, 함께하는 분리수거 <br />
           Green Drop 이 함께합니다
         </div>
