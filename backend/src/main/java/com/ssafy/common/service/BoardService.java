@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -111,6 +113,21 @@ public class BoardService {
 
     public Page<BoardResponseDto> searchKeyword(String keyword, Pageable pageable){
         return boardRepository.searchKeyword(keyword,pageable);
+    }
+
+    public Page<BoardResponseDto> searchCategory(String item, Pageable pageable){
+        Long categoryNum = categoryRepository.findByItem(item).orElseThrow().getCategorySeq();
+        List<Long> boardList = boardRepository.searchCategory(categoryNum);
+
+        List<BoardResponseDto> resultBoard = new ArrayList<>();
+        for (Long boardNum : boardList){
+            Board board = boardRepository.getReferenceById(boardNum);
+            BoardResponseDto boardResponseDto = modelMapper.map(board, BoardResponseDto.class);
+            boardResponseDto.setItem(item);
+            resultBoard.add(boardResponseDto);
+        }
+
+        return new PageImpl<>(resultBoard, pageable,resultBoard.size());
     }
 
 
