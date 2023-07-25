@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor (access = AccessLevel.PROTECTED)
 @Builder
 public class BoardDto {
     private Long boardSeq;
@@ -23,7 +23,6 @@ public class BoardDto {
     private LocalDateTime lastmodifiedDate;
     private String category;
 
-
     public Board toEntity() {
         Board board = Board.builder()
                 .boardSeq(boardSeq)
@@ -36,7 +35,7 @@ public class BoardDto {
                 .likeCount(likeCount)
                 .isDeleted(isDeleted)
                 .deletedDate(deletedDate)
-                .modified(lastmodifiedDate)
+                .lastModifiedDate(lastmodifiedDate)
                 .build();
         return board;
     }
