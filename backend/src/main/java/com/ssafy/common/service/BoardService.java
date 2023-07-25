@@ -48,7 +48,7 @@ public class BoardService {
         Board board = boardDto.toEntity();
         boardRepository.save(board);
         String itemNo = boardDto.getCategory();
-        Category category = categoryRepository.findByItem(itemNo);
+        Category category = categoryRepository.findByItem(itemNo).get();
         boardCategoryService.saveBoardAndCategory(category,board);
     }
 
@@ -91,7 +91,7 @@ public class BoardService {
         originDto.setLastmodifiedDate(LocalDateTime.now());
 
         boardRepository.save(originDto.toEntity());
-        Category category = categoryRepository.findByItem(boardDto.getCategory());
+        Category category = categoryRepository.findByItem(boardDto.getCategory()).get();
         boardCategoryService.saveBoardAndCategory(category,originDto.toEntity());
 
     }
