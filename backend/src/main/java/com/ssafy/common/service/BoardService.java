@@ -3,9 +3,7 @@ package com.ssafy.common.service;
 import com.ssafy.common.dto.BoardDto;
 import com.ssafy.common.dto.response.BoardResponseDto;
 import com.ssafy.common.entity.Board;
-import com.ssafy.common.entity.BoardCategory;
 import com.ssafy.common.entity.Category;
-import com.ssafy.common.repository.BoardCategoryRepository;
 import com.ssafy.common.repository.BoardRepository;
 import com.ssafy.common.repository.CategoryRepository;
 import com.ssafy.common.security.Encoder;
@@ -18,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Slf4j
 @Transactional(readOnly = true)
@@ -27,7 +26,6 @@ public class BoardService {
 
     private final BoardRepository boardRepository;
     private final CategoryRepository categoryRepository;
-    private final BoardCategoryRepository boardCategoryRepository;
     private final Encoder encoder;
     private final BoardCategoryService boardCategoryService;
     private final ModelMapper modelMapper;
@@ -87,8 +85,15 @@ public class BoardService {
         originDto.setLastmodifiedDate(LocalDateTime.now());
 
         boardRepository.save(originDto.toEntity());
-        Category category = categoryRepository.findByItem(boardDto.getCategory());
-        boardCategoryService.saveBoardAndCategory(category,originDto.toEntity());
+
+        Optional<Category> category = categoryRepository.findByItem(boardDto.getCategory());
+
+        if(category.isPresent()){
+            boardCategoryService.updateBoardAndCategory(category.get(),originDto.toEntity());
+        }
+        else {
+            boardCategoryService.deleteBoardAndCategory(board);
+        }
 
     }
 
