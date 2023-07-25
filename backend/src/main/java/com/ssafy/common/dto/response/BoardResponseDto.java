@@ -1,17 +1,16 @@
 package com.ssafy.common.dto.response;
 
-import com.querydsl.core.annotations.QueryProjection;
 import com.ssafy.common.entity.Board;
-import com.ssafy.common.entity.BoardCategory;
-import lombok.*;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 //TODO: record builder 좀더 삽질 필요 아직 사용법을 잘 모르겠음
 
 @Data
-@NoArgsConstructor (access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 @Builder
 public class BoardResponseDto{
 
