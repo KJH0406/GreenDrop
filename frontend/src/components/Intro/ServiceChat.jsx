@@ -1,13 +1,13 @@
-import classes from "./ServiceIntroChat.module.css";
+import classes from "./ServiceChat.module.css";
 
-function ServiceIntroChat() {
+function ServiceChat() {
   return (
     <div>
       <div className={classes.down}>
         <div className={classes.down_image}></div>
       </div>
-      <div className={classes.introchat_container}>
-        <div className={classes.introchat_title}>
+      <div className={classes.service_chat_container}>
+        <div className={classes.service_chat_title}>
           <div>우리의 서비스는</div>
           <div>
             <span style={{ color: "green" }}>분리수거 동참 캠페인</span>
@@ -15,10 +15,10 @@ function ServiceIntroChat() {
           </div>
           <div>사회의 의미 있는 변화를 만들고자 노력합니다</div>
         </div>
-        <div className={classes.introchat_box}>
-          <div className={classes.introchat_box_top}>
+        <div className={classes.service_chat_box}>
+          <div className={classes.service_chat_box_top}>
             <div
-              className={classes.introchat_item}
+              className={classes.service_chat_item}
               style={{ borderBottomLeftRadius: " 0px" }}
             >
               <span style={{ fontWeight: "bold" }}>IoT 센서</span>
@@ -28,9 +28,9 @@ function ServiceIntroChat() {
               </span>
             </div>
           </div>
-          <div className={classes.introchat_box_middle}>
+          <div className={classes.service_chat_box_middle}>
             <div
-              className={classes.introchat_item}
+              className={classes.service_chat_item}
               style={{ borderBottomRightRadius: " 0px" }}
             >
               <span style={{ fontWeight: "bold" }}>환경 보호</span>
@@ -40,9 +40,9 @@ function ServiceIntroChat() {
               </span>
             </div>
           </div>
-          <div className={classes.introchat_box_bottom}>
+          <div className={classes.service_chat_box_bottom}>
             <div
-              className={classes.introchat_item}
+              className={classes.service_chat_item}
               style={{ borderBottomLeftRadius: " 0px" }}
             >
               <span style={{ fontWeight: "bold" }}>분리수거 가이드</span>
@@ -58,4 +58,4 @@ function ServiceIntroChat() {
   );
 }
 
-export default ServiceIntroChat;
+export default ServiceChat;

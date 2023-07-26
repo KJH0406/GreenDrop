@@ -1,15 +1,16 @@
-import Thumbnail from "../components/Intro/Thumbnail";
-import ServiceIntroChat from "../components/Intro/ServiceIntroChat";
 import classes from "./Intro.module.css";
-import IntroSlider from "../components/Intro/IntroSlider";
+import Thumbnail from "../components/Intro/Thumbnail";
+import ServiceChat from "../components/Intro/ServiceChat";
+import Slider from "../components/Intro/Slider";
+import HomeDescription from "../components/Intro/HomeDescription";
 
 function IntroPage() {
   return (
     <div className={classes.introContainer}>
       <Thumbnail />
-      <ServiceIntroChat />
-      <IntroSlider />
-      <div style={{ height: "400px" }}></div>
+      <ServiceChat />
+      <HomeDescription />
+      <Slider />
     </div>
   );
 }
