@@ -47,4 +47,13 @@ public class BoardResponseDto{
                 .build();
 
    }
+
+   public Board toEntity(Long boardSeq){
+        return Board.builder()
+                .boardSeq(boardSeq)
+                .question(question)
+                .leftAnswer(leftAnswer)
+                .rightAnswer(rightAnswer)
+                .build();
+   }
 }
