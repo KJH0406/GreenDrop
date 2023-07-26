@@ -1,9 +1,13 @@
-h1 {
-  display: inline;
-}
-.first_word {
-  padding-left: 10px;
-  padding-right: 10px;
+.outer_box {
+  display: flex;
+  flex-direction: column;
+  /* width: 100%; */
+
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  padding-bottom: 1.5rem;
+  justify-content: center;
+  align-content: center;
 }
 
 .second_word {
@@ -13,16 +17,6 @@ h1 {
   display: flex;
   justify-content: flex-start;
 }
-.outer_box {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  justify-content: center;
-  align-content: center;
-}
-.row > div::-webkit-scrollbar {
-  display: none;
-}
 
 .row {
   display: flex;
@@ -31,7 +25,10 @@ h1 {
   height: 100%;
   justify-content: center;
   align-items: center;
-  padding: 2%;
+  padding-bottom: 4%;
+}
+.row > div::-webkit-scrollbar {
+  display: none;
 }
 
 .left_align {
@@ -52,39 +49,36 @@ h1 {
   align-content: center;
   align-items: center;
   justify-content: space-around;
-  width: 80%;
+  width: 85%;
 
   border: 3px solid #0b9a47;
   border-radius: 10px;
-  padding: 1%;
 }
 
 .search_input {
   border: none;
   width: 80%;
-  height: 100%;
-}
-.search_btn {
-  width: "12px";
-  height: "12px";
+  /* height: 100%; */
+  background-color: #f8f8f8;
 }
 
-.regist_btn:hover {
+.regist_btn {
+  background-color: #0b9a47;
+  /* border: 1px solid #0b9a47; */
+  border: none;
+  color: white;
+  border-radius: 10px;
+  width: 87%;
+  font-weight: 550;
+}
+/* .regist_btn:hover {
   background-color: #12cf61;
   border: 1px solid #12cf61;
   color: white;
   border-radius: 10px;
-  width: 83%;
+  width: 87%;
   font-weight: 550;
-}
-.regist_btn {
-  background-color: #0b9a47;
-  border: 1px solid #0b9a47;
-  color: white;
-  border-radius: 10px;
-  width: 83%;
-  font-weight: 550;
-}
+} */
 
 @media (min-width: 500px) {
   .outer_box {
@@ -104,6 +98,10 @@ h1 {
   }
   .search_input {
     font-size: 1.5rem;
+  }
+  .search_btn {
+    width: 1.4rem;
+    height: 1.4rem;
   }
   .regist_btn {
     font-size: 1.5rem;
@@ -125,11 +123,17 @@ h1 {
   }
   .search_area {
     font-size: 1rem;
+    border: 2px solid #0b9a47;
   }
   .search_input {
     font-size: 1rem;
   }
+  .search_btn {
+    width: 0.8rem;
+    height: 0.8rem;
+  }
   .regist_btn {
     font-size: 1rem;
+    font-weight: 500;
   }
 }
