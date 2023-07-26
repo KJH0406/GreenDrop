@@ -1,7 +1,9 @@
 package com.ssafy.common.service;
 
+import com.ssafy.common.dto.response.BoardResponseDto;
 import com.ssafy.common.entity.Board;
 import com.ssafy.common.entity.Game;
+import com.ssafy.common.repository.BoardRepository;
 import com.ssafy.common.repository.GameRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,10 +19,13 @@ import java.util.List;
 @Transactional(readOnly = true)
 public class GameService {
     private final GameRepository gameRepository;
+    private final BoardRepository boardRepository;
 
     @Transactional
     public void registGame(Long boardSeq){ //boardSeq를 통해 가져온 Board를 통해 Game 등록
-        Board board = gameRepository.findByBoard_BoardSeq(boardSeq);
+//        Board board = gameRepository.findOneByBoard_BoardSeq(boardSeq);
+        BoardResponseDto boardResponseDto = boardRepository.oneBoard(boardSeq);
+        Board board = boardResponseDto.toEntity(boardSeq);//
         Game game = Game.builder()
                 .board(board)
                 .question(board.getQuestion())
@@ -41,7 +46,7 @@ public class GameService {
     }
 
     public Game findGameByDate(LocalDate date){
-        return gameRepository.findGameByDate(date);
+        return gameRepository.findOneByDate(date);
     }
 
 
