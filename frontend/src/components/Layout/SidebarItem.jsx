@@ -8,7 +8,7 @@ function SidebarItem({ page, isActive }) {
       className={`${classes.sidbar_item} ${isActive ? classes.active : ""} `}
       to={page.path}
     >
-      {page.name}
+      <span className={classes.page_name}>{page.name}</span>
     </Link>
   );
 }

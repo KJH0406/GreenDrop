@@ -20,6 +20,7 @@
 .title {
   font-weight: bolder;
   font-size: larger;
+  cursor: pointer;
 }
 
 .first_word {
@@ -33,6 +34,7 @@
 .hamburger_img {
   width: 30px;
   height: 30px;
+  cursor: pointer;
 }
 
 .close_img {
@@ -40,8 +42,20 @@
   width: 20px;
   height: 20px;
 }
+
 .sidbar {
+  z-index: 997;
   position: absolute;
   right: 0;
+  height: 100vh;
   background-color: white;
+}
+
+.overlay {
+  width: 100%;
+  position: absolute;
+  left: 0;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6); /* 오버레이 배경 색상과 투명도 조정 */
+  z-index: 996; /* 사이드바보다 뒤에 오도록 설정 */
 }
