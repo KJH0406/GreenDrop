@@ -7,6 +7,7 @@
   flex-direction: column;
   box-shadow: 3px 3px 3px 3px #a8a8a8;
   border-radius: 10px;
+  position: relative;
 }
 input:focus {
   outline: none;
@@ -15,7 +16,6 @@ input:focus {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin-bottom: 3%;
 }
 .title {
   color: #0b9a47;
@@ -37,6 +37,13 @@ input:focus {
   justify-content: flex-end;
   align-content: center;
   width: 40%;
+}
+.card_sidebar {
+  z-index: 899;
+  position: absolute;
+  right: 0;
+  top: 10%;
+  background-color: #f8f8f8;
 }
 
 .image {
@@ -127,28 +134,30 @@ input:focus {
   justify-content: flex-start;
   align-items: center;
 }
-
 .bottom_right {
   width: 30%;
   height: 30px;
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  /* margin-right: 10px; */
 }
 
 .bottom_like {
   /* 이 부분 어떻게 해야할지 알아봐야함*/
   margin-right: 5%;
+  /* margin-left: 10px; */
 }
-.bottom_like_count {
-  margin-right: 15px;
+.bottom_like_img {
+  margin-right: 5%;
 }
 .bottom_comment {
   margin-right: 5%;
-  /* margin-top: 1%; */
 }
-.bottom_comment_count {
+.bottom_comment_img {
+  margin-right: 5%;
 }
+
 @media (min-width: 500px) {
   .outer_box {
     font-size: 1.5rem;
@@ -174,13 +183,15 @@ input:focus {
     width: 30px;
     height: 30px;
   }
-
   .bottom_like_img {
     width: 30px;
     height: 30px;
   }
-
   .bottom_comment {
+    width: 30px;
+    height: 30px;
+  }
+  .bottom_comment_img {
     width: 30px;
     height: 30px;
   }
@@ -229,6 +240,10 @@ input:focus {
     height: 20px;
   }
   .bottom_comment {
+    width: 20px;
+    height: 20px;
+  }
+  .bottom_comment_img {
     width: 20px;
     height: 20px;
   }
