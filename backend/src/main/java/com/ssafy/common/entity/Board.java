@@ -40,8 +40,10 @@ public class Board implements Serializable {
     @LastModifiedDate
     @Column(name = "last_modified_date")
     private LocalDateTime lastModifiedDate;
-    @JsonManagedReference
+    @JsonManagedReference(value = "board-category")
     @OneToMany(mappedBy = "board" , cascade = CascadeType.ALL)
     private List<BoardCategory> boardCategories = new ArrayList<>();
-
+    @JsonManagedReference(value = "comment-board")
+    @OneToMany(mappedBy = "board" , cascade = CascadeType.ALL)
+    private List<Comment> commentList = new ArrayList<>();
 }

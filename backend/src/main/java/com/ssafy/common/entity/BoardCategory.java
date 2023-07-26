@@ -17,12 +17,12 @@ public class BoardCategory {
     @Column(name = "board_category_seq")
     private Long boardCategorySeq;
 
-    @JsonBackReference
+    @JsonBackReference(value = "board-category")
     @ManyToOne(targetEntity = Board.class ,fetch = FetchType.LAZY)
     @JoinColumn(name = "board_seq" , referencedColumnName = "board_seq")
     private Board board;
 
-    @JsonBackReference
+    @JsonBackReference(value = "category")
     @ManyToOne(targetEntity = Category.class,fetch = FetchType.LAZY)
     @JoinColumn(name = "category_seq" , referencedColumnName = "category_seq")
     private Category category;

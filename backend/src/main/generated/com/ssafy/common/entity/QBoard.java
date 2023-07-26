@@ -24,6 +24,8 @@ public class QBoard extends EntityPathBase<Board> {
 
     public final NumberPath<Long> boardSeq = createNumber("boardSeq", Long.class);
 
+    public final ListPath<Comment, QComment> commentList = this.<Comment, QComment>createList("commentList", Comment.class, QComment.class, PathInits.DIRECT2);
+
     public final DateTimePath<java.time.LocalDateTime> deletedDate = createDateTime("deletedDate", java.time.LocalDateTime.class);
 
     public final StringPath ip = createString("ip");
