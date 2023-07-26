@@ -30,10 +30,11 @@ function BoardPage() {
           밸런스 게임 등록하기
         </Link>
       </div>
-      <div className={classes.row}>
+      <div className={classes.category_row}>
         <div className={classes.left_align}>
           추천 카테고리 <img src={star} alt="star"></img>
         </div>
+
         <BalanceGameCategoryList />
       </div>
       {/* 글 리스트만 컴포넌트로  */}

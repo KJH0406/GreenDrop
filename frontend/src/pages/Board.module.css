@@ -22,22 +22,32 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 100%;
   justify-content: center;
-  align-items: center;
+  /* align-items: center; */
   padding-bottom: 4%;
 }
 .row > div::-webkit-scrollbar {
   display: none;
 }
-
+.category_row {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 8rem;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 4%;
+}
+.category_row > div::-webkit-scrollbar {
+  display: none;
+}
 .left_align {
   color: #0b9a47;
   font-weight: bold;
   width: 100%;
-  margin-bottom: 2%;
   display: flex;
   align-items: baseline;
+  margin-bottom: 5%;
 }
 
 #search {
@@ -49,8 +59,7 @@
   align-content: center;
   align-items: center;
   justify-content: space-around;
-  width: 85%;
-
+  width: 100%;
   border: 3px solid #0b9a47;
   border-radius: 10px;
 }
@@ -63,12 +72,16 @@
 }
 
 .regist_btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: #0b9a47;
   /* border: 1px solid #0b9a47; */
   border: none;
   color: white;
   border-radius: 10px;
-  width: 87%;
+  width: 100%;
+  height: 3.5rem;
   font-weight: 550;
 }
 /* .regist_btn:hover {
@@ -86,15 +99,17 @@
   }
   .row {
     font-size: 1.5rem;
+    height: 4rem;
   }
   .left_align {
-    font-size: 1.5rem;
+    font-size: 1.7rem;
   }
   #search {
     font-size: 1.5rem;
   }
   .search_area {
     font-size: 1.5rem;
+    height: 3rem;
   }
   .search_input {
     font-size: 1.5rem;
@@ -104,7 +119,7 @@
     height: 1.4rem;
   }
   .regist_btn {
-    font-size: 1.5rem;
+    font-size: 1.7rem;
   }
 }
 
@@ -114,9 +129,10 @@
   }
   .row {
     font-size: 1rem;
+    height: 3rem;
   }
   .left_align {
-    font-size: 1rem;
+    font-size: 1.2rem;
   }
   #search {
     font-size: 1rem;
@@ -124,6 +140,7 @@
   .search_area {
     font-size: 1rem;
     border: 2px solid #0b9a47;
+    height: 2rem;
   }
   .search_input {
     font-size: 1rem;
@@ -133,7 +150,8 @@
     height: 0.8rem;
   }
   .regist_btn {
-    font-size: 1rem;
-    font-weight: 500;
+    font-size: 1.2rem;
+    /* font-weight: 530; */
+    height: 2.5rem;
   }
 }

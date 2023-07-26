@@ -1,7 +1,7 @@
 .recommend {
   /* 가로 스크롤 */
   display: flex;
-  width: 90%;
+  width: 100%;
   overflow: scroll;
   overflow: auto;
   white-space: nowrap;

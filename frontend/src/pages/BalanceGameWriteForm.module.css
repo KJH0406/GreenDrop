@@ -179,7 +179,7 @@ textarea::-webkit-scrollbar {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 120px;
+  /* height: 180px; */
 }
 .info_input {
   display: flex;
@@ -199,6 +199,7 @@ textarea::-webkit-scrollbar {
   color: white;
   border-radius: 10px;
   width: 90%;
+
   font-weight: 550;
 }
 /* .regist_btn:hover {

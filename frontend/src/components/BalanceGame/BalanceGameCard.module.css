@@ -127,6 +127,7 @@ input:focus {
   justify-content: flex-start;
   align-items: center;
 }
+
 .bottom_right {
   width: 30%;
   height: 30px;
@@ -173,6 +174,12 @@ input:focus {
     width: 30px;
     height: 30px;
   }
+
+  .bottom_like_img {
+    width: 30px;
+    height: 30px;
+  }
+
   .bottom_comment {
     width: 30px;
     height: 30px;
@@ -214,6 +221,10 @@ input:focus {
     font-size: 0.5rem;
   }
   .bottom_like {
+    width: 20px;
+    height: 20px;
+  }
+  .bottom_like_img {
     width: 20px;
     height: 20px;
   }
