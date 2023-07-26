@@ -6,6 +6,13 @@ import { useLocation } from "react-router-dom";
 
 function Sidebar(props) {
   const location = useLocation();
+  let currentLocation = location.pathname;
+  let temp = null;
+  if (currentLocation.indexOf("/", 1) !== -1) {
+    temp = currentLocation.split("/");
+    currentLocation = `/${temp[1]}`;
+  }
+
   const pageList = props.pageList;
 
   return (
@@ -15,7 +22,7 @@ function Sidebar(props) {
           <div key={index}>
             <SidebarItem
               page={page}
-              isActive={`/${page.path}` === location.pathname} // Compare the path with the current location
+              isActive={`/${page.path}` === currentLocation} // Compare the path with the current location
             />
           </div>
         );
