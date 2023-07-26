@@ -1,9 +1,11 @@
 package com.ssafy.common.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -13,13 +15,14 @@ import java.time.LocalDateTime;
 @Builder
 @Entity
 @Table(name="game")
-public class Game implements Comparable<Game>{
+public class Game implements Comparable<Game> , Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "game_seq")
     private Long gameSeq;
 
     //FK
+    @JsonIgnore
     @ManyToOne(targetEntity = Board.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "board_seq", referencedColumnName = "board_seq")
     private Board board;
@@ -50,4 +53,5 @@ public class Game implements Comparable<Game>{
     public int compareTo(Game o) {
         return this.date.compareTo(o.date);
     }
+
 }
