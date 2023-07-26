@@ -1,4 +1,5 @@
 .sidebar {
+  z-index: 999;
   display: flex;
   flex-direction: column;
   list-style: none;

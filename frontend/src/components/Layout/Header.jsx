@@ -14,6 +14,18 @@ function Header() {
     setSidebarOpen((prevState) => !prevState);
   };
 
+  // 사이드 바 메뉴 리스트
+  const pageList = [
+    { path: "", name: "서비스 소개" },
+    { path: "home", name: "홈" },
+    { path: "board", name: "밸런스 게임 게시판" },
+    { path: "greenStory", name: "그린 스토리" },
+    { path: "guide", name: "분리수거 가이드" },
+    { path: "location", name: "수거함 위치" },
+    { path: "admin", name: "관리자 페이지" },
+    { path: "device", name: "디바이스" },
+  ];
+
   return (
     <div className={classes.container}>
       <header className={classes.header}>
@@ -29,7 +41,7 @@ function Header() {
         />
       </header>
       <div className={classes.sidbar}>
-        {isSidebarOpen ? <Sidebar /> : <></>}
+        {isSidebarOpen ? <Sidebar pageList={pageList} /> : <></>}
       </div>
     </div>
   );
