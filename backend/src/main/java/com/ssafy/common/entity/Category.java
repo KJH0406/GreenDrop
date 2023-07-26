@@ -20,7 +20,7 @@ public class Category {
     @Column(name = "category_seq")
     private Long categorySeq;
     private String item;
-    @JsonManagedReference
+    @JsonManagedReference(value = "category")
     @OneToMany(mappedBy = "category" , cascade = CascadeType.ALL)
     private List<BoardCategory> boardCategories = new ArrayList<>();
 }
