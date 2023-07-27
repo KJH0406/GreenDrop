@@ -12,12 +12,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -36,10 +37,10 @@ public class BoardService {
     public void saveBoard(BoardDto boardDto , String ipAdress) {
 
         boardDto.setIp(ipAdress);
-        boardDto.setIsDeleted(0);
-        boardDto.setLikeCount(0);
-        String encodepwd = encoder.encode(boardDto.getPassword());
-        boardDto.setPassword(encodepwd);
+        if(boardDto.getPassword() != null) {
+            String encodepwd = encoder.encode(boardDto.getPassword());
+            boardDto.setPassword(encodepwd);
+        }
         boardDto.setLastmodifiedDate(LocalDateTime.now());
         boardRepository.save(boardDto.toEntity());
 
@@ -128,6 +129,15 @@ public class BoardService {
         }
 
         return new PageImpl<>(resultBoard, pageable,resultBoard.size());
+    }
+
+    public boolean userPasswordExistCheck(Long boardNo){
+        String password = boardRepository.getReferenceById(boardNo).getPassword();
+
+        if(password == null){
+            return false;
+        }
+        return true;
     }
 
 
