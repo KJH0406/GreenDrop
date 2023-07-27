@@ -1,0 +1,233 @@
+.backdrop {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: flex-start; */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+
+  background-color: rgba(0, 0, 0, 0.6); /* 오버레이 배경 색상과 투명도 조정 */
+}
+
+.comment_outer_box {
+  max-width: 640px; /* 웹 전체 크기를 제한하기 위해 최대 너비 설정 (카카오 프렌즈샵 너비) */
+  min-width: 320px; /* 320이하가 되면 가려짐*/
+  height: 70%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  background: white;
+}
+.comment_inner_box {
+  display: flex;
+
+  height: 90%;
+  padding: 1rem;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.comment_top {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  border-bottom: 2px solid #eeeeee;
+}
+.childCommentArea {
+  font-size: larger;
+}
+
+.comment_middle {
+  display: flex;
+  flex-direction: column;
+  height: 70%;
+  justify-content: flex-start;
+  padding: 0.4rem;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  margin-bottom: 2rem;
+}
+.comment_middle::-webkit-scrollbar {
+  display: none;
+}
+.comment_area {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+
+  height: auto;
+  margin-bottom: 2%;
+}
+.parent_comment {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+
+  margin-bottom: 1rem;
+}
+.child_comment_area {
+  display: flex;
+  flex-direction: column;
+}
+.child_comment {
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2%;
+}
+.comment_area_top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2%;
+  /* border-bottom: 1px solid black; */
+}
+.comment_area_top_left {
+  display: flex;
+  align-content: center;
+  align-items: center;
+}
+.name_area {
+  color: #0b9a47;
+}
+.img_wrapper {
+  display: flex;
+  background-color: transparent;
+  border: none;
+}
+.comment_area_middle {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 2%;
+}
+.comment_area_bottom {
+  display: flex;
+  align-items: flex-start;
+}
+
+.comment_bottom {
+  flex-direction: column;
+}
+.comment_input_area {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+  border: 3px solid #0b9a47;
+  border-radius: 10px;
+  height: 2rem;
+}
+.comment_input {
+  border: none;
+  width: 100%;
+  background-color: white;
+}
+.input_tag {
+  text-align: left;
+
+  border: none;
+  background-color: transparent;
+  border-radius: 20px;
+}
+.regist_btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #0b9a47;
+  border: none;
+  color: white;
+  border-radius: 10px;
+  width: auto;
+  height: 1.5rem;
+}
+.password_input_area {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+
+  height: 1.5rem;
+  border: 2px solid #838383;
+  border-radius: 10px;
+  margin-bottom: 3%;
+  width: 100%;
+}
+.password_input {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: center;
+  width: 90%;
+  background-color: transparent;
+  border: none;
+}
+.password_input:focus::placeholder {
+  color: transparent;
+}
+.input_tag:focus::placeholder {
+  color: transparent;
+}
+@media (min-width: 500px) {
+  .input_tag {
+    width: 90%;
+  }
+  .comment_top {
+    margin-bottom: 1rem;
+  }
+  .img_wrapper {
+    width: 20px;
+    height: 20px;
+  }
+  .trashcan_img {
+    width: 20px;
+    height: 20px;
+  }
+  .child_comment_area {
+    /* 아래 두개 더해서 100%여야 함 */
+
+    width: 96%;
+    padding-left: 4%;
+  }
+  .comment_bottom {
+    height: 30%;
+  }
+  .comment_input_area {
+    margin-bottom: 2rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .comment_top {
+    margin-bottom: 1rem;
+  }
+  .comment_input_area {
+    margin-bottom: 1rem;
+  }
+  .img_wrapper {
+    width: 15px;
+    height: 15px;
+  }
+  .trashcan_img {
+    width: 15px;
+    height: 15px;
+  }
+  .child_comment_area {
+    /* 아래 두개 더해서 100%여야 함 */
+
+    width: 93%;
+    padding-left: 7%;
+  }
+  .comment_bottom {
+    height: 20%;
+  }
+  .input_tag {
+    width: 80%;
+  }
+}

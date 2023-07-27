@@ -79,7 +79,7 @@ function BalanceGameWriteFormPage() {
           <input
             className={classes.input_tag}
             type="text"
-            placeholder="닉네임을 입력하세요 (최대 10자)"
+            placeholder="비밀번호를 입력하세요 (최대 10자)"
           />
         </div>
         <input
