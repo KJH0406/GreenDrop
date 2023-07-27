@@ -1,21 +1,21 @@
-.introchat_container {
+.service_chat_container {
   margin-top: 15%;
 }
 
-.introchat_title {
+.service_chat_title {
   font-weight: bolder;
   margin-bottom: 10%;
 }
 
 @media (min-width: 500px) {
-  .introchat_title {
+  .service_chat_title {
     line-height: 4rem;
     font-size: 1.8rem;
   }
 }
 
 @media (max-width: 500px) {
-  .introchat_title {
+  .service_chat_title {
     line-height: 2.5rem;
     font-size: 1.1rem;
   }
@@ -32,26 +32,26 @@
   content: url("../../assets/arrow.gif");
 }
 
-.introchat_box {
+.service_chat_box {
   display: flex;
   flex-direction: column;
   padding: 5%;
 }
 
 @media (min-width: 500px) {
-  .introchat_box {
+  .service_chat_box {
     font-size: 1.5rem;
   }
 }
 
 @media (max-width: 500px) {
-  .introchat_box {
+  .service_chat_box {
     font-size: 1rem;
   }
 }
 
 @media (min-width: 500px) {
-  .introchat_item {
+  .service_chat_item {
     width: fit-content;
     padding: 1.8rem;
     margin: 5% 2%;
@@ -62,7 +62,7 @@
 }
 
 @media (max-width: 500px) {
-  .introchat_item {
+  .service_chat_item {
     width: fit-content;
     margin: 4% 1%;
     padding: 1rem;
@@ -71,7 +71,7 @@
   }
 }
 
-.introchat_item {
+.service_chat_item {
   background-color: #fff;
   border: 3px solid white; /* Increase the border thickness */
   border-radius: 15px; /* Increase the border-radius for a more rounded look */
@@ -79,12 +79,12 @@
   transition: transform 0.3s ease-in-out;
 }
 
-.introchat_item:hover {
+.service_chat_item:hover {
   transform: translate(0, -5px);
   box-shadow: 0 20px 16px rgba(0, 0, 0, 0.6);
 }
 
-.introchat_box_middle {
+.service_chat_box_middle {
   display: flex;
   justify-content: flex-end;
 }
