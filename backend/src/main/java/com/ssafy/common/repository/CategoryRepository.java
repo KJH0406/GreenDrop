@@ -7,4 +7,7 @@ import java.util.Optional;
 
 public interface CategoryRepository extends JpaRepository<Category,Long> {
     Optional<Category> findByItem(String item);
+
+    Optional<Category> findByCategorySeq(Long categorySeq);
+
 }
