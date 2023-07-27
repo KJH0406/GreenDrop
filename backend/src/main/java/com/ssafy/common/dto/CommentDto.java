@@ -1,5 +1,6 @@
 package com.ssafy.common.dto;
 
+import com.ssafy.common.dto.response.CommentResponseDto;
 import com.ssafy.common.entity.Board;
 import com.ssafy.common.entity.Comment;
 import lombok.*;
@@ -43,10 +44,10 @@ public class CommentDto {
 
     @Data
     public static class commentList{
-        private Comment comment;
-        private List<Comment> comments;
+        private CommentResponseDto comment;
+        private List<CommentResponseDto> comments;
 
-        public commentList(Comment comment , List<Comment> comments){
+        public commentList(CommentResponseDto comment , List<CommentResponseDto> comments){
             this.comment = comment;
             this.comments = comments;
         }
