@@ -42,7 +42,6 @@ public class CommentController {
         commentService.saveChildComment(commentNo,userIp.searchIP(request),commentDto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
     
     @GetMapping("/{boardNo}")
     ResponseEntity<List<CommentDto.commentList>> boardCommentList(@PathVariable Long boardNo){
@@ -50,4 +49,11 @@ public class CommentController {
         return new ResponseEntity<>
                 (commentService.getCommentList(boardNo),HttpStatus.OK);
     }
+
+    @PatchMapping("/delete/{commentNo}")
+    ResponseEntity<?> deleteParentComment(@PathVariable Long commentNo){
+        commentService.deleteComment(commentNo);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }

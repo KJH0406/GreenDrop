@@ -7,9 +7,11 @@ import com.ssafy.common.repository.CommentRepository;
 import com.ssafy.common.security.Encoder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,14 +24,15 @@ public class CommentService {
     private final CommentRepository commentRepository;
     private final BoardRepository boardRepository;
     private final Encoder encoder;
+    private final ModelMapper modelMapper;
 
     @Transactional
-    public void saveParentComment(Long boardNo, String ip, CommentDto commentDto){
+    public void saveParentComment(Long boardNo, String ip, CommentDto commentDto) {
 
         commentDto.setIp(ip);
         commentDto.setIsChild(0);
 
-        if(commentDto.getPassword() != null) {
+        if (commentDto.getPassword() != null) {
             String encodepwd = encoder.encode(commentDto.getPassword());
             commentDto.setPassword(encodepwd);
         }
@@ -39,11 +42,11 @@ public class CommentService {
     }
 
     @Transactional
-    public void saveChildComment(Long commentNo, String ip, CommentDto commentDto){
+    public void saveChildComment(Long commentNo, String ip, CommentDto commentDto) {
 
         commentDto.setIp(ip);
         commentDto.setIsChild(1);
-        if(commentDto.getPassword() != null) {
+        if (commentDto.getPassword() != null) {
             String encodepwd = encoder.encode(commentDto.getPassword());
             commentDto.setPassword(encodepwd);
         }
@@ -53,18 +56,29 @@ public class CommentService {
 
     }
 
-        public List<CommentDto.commentList> getCommentList(Long boardNo){
+    public List<CommentDto.commentList> getCommentList(Long boardNo) {
 
         List<Comment> boardComments = commentRepository.findByComment(boardNo);
-            List<CommentDto.commentList> resultList = new ArrayList<>();
-        for (Comment c : boardComments){
-            if(c.getParentId() == null) {
+        List<CommentDto.commentList> resultList = new ArrayList<>();
+        for (Comment c : boardComments) {
+            if (c.getParentId() == null) {
                 List<Comment> cocoment = commentRepository.findByParentId(c.getCommentSeq());
-                CommentDto.commentList result = new CommentDto.commentList(c,cocoment);
+                CommentDto.commentList result = new CommentDto.commentList(c, cocoment);
                 resultList.add(result);
-            }
-            else break;
+            } else break;
         }
         return resultList;
     }
+
+    @Transactional
+    public void deleteComment(Long commentNo) {
+        Comment comment = commentRepository.getReferenceById(commentNo);
+        CommentDto commentDto = modelMapper.map(comment, CommentDto.class);
+
+        commentDto.setIsDeleted(1);
+        commentDto.setDeletedDateTime(LocalDateTime.now());
+
+        commentRepository.save(commentDto.toEntity());
+    }
+
 }
