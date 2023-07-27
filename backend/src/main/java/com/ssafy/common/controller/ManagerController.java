@@ -22,7 +22,7 @@ public class ManagerController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/login")
+    @PostMapping("/login")
     public ResponseEntity<?> signIn(@RequestBody ManagerRequestDto managerRequestDto){
         ManagerResponseDto response;
         try {
