@@ -24,6 +24,7 @@ public class CommentDto {
     private Integer isDeleted;
     private LocalDateTime deletedDateTime;
     private Board board;
+    private LocalDateTime createdDate;
 
     public Comment toEntity(){
         Comment comment = Comment.builder()
@@ -36,6 +37,7 @@ public class CommentDto {
                 .parentId(parentId)
                 .isDeleted(isDeleted)
                 .board(board)
+                .createdDate(createdDate)
                 .deletedDateTime(deletedDateTime)
                 .build();
 
