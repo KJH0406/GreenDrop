@@ -28,4 +28,21 @@ public class CategoryService {
         return categories;
     }
 
+    @Transactional
+    public void categoryUpdate(Long categorySeq, CategoryRequestDto categoryRequestDto){
+        String item = categoryRequestDto.getItem();
+        Category category = categoryRepository.findByCategorySeq(categorySeq).get();
+        Category newCategory = Category.builder()
+                .categorySeq(categorySeq)
+                .item(item)
+                .boardCategories(category.getBoardCategories())
+                .build();
+        categoryRepository.save(newCategory);
+    }
+
+    @Transactional
+    public void categoryDelete(Long categorySeq){
+        categoryRepository.deleteById(categorySeq);
+    }
+
 }
