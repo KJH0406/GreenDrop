@@ -131,5 +131,14 @@ public class BoardService {
         return new PageImpl<>(resultBoard, pageable,resultBoard.size());
     }
 
+    public boolean userPasswordExistCheck(Long boardNo){
+        String password = boardRepository.getReferenceById(boardNo).getPassword();
+
+        if(password == null){
+            return false;
+        }
+        return true;
+    }
+
 
 }
