@@ -4,8 +4,10 @@ import com.ssafy.common.dto.BoardDto;
 import com.ssafy.common.dto.response.BoardResponseDto;
 import com.ssafy.common.entity.Board;
 import com.ssafy.common.entity.Category;
+import com.ssafy.common.entity.Comment;
 import com.ssafy.common.repository.BoardRepository;
 import com.ssafy.common.repository.CategoryRepository;
+import com.ssafy.common.repository.CommentRepository;
 import com.ssafy.common.security.Encoder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,6 +34,8 @@ public class BoardService {
     private final Encoder encoder;
     private final BoardCategoryService boardCategoryService;
     private final ModelMapper modelMapper;
+    private final CommentService commentService;
+    private final CommentRepository commentRepository;
 
     @Transactional
     public void saveBoard(BoardDto boardDto , String ipAdress) {
@@ -76,6 +80,15 @@ public class BoardService {
         boardDto.setIsDeleted(1);
         boardDto.setDeletedDate(LocalDateTime.now());
         boardRepository.save(boardDto.toEntity());
+
+        AllDeleteComment(boardNo);
+    }
+
+    public void AllDeleteComment(Long boardNo){
+        List<Comment> commentList = commentRepository.findByComment(boardNo);
+        for (Comment comment : commentList) {
+            commentService.deleteComment(comment.getCommentSeq());
+        }
     }
 
     @Transactional
