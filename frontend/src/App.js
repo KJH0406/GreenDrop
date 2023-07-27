@@ -1,14 +1,15 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom"
-import RootLayout from "./pages/Root"
-import IntroPage from "./pages/Intro"
-import HomePage from "./pages/Home"
-import AdminPage from "./pages/Admin"
-import BoardPage from "./pages/Board"
-import DevicePage from "./pages/Device"
-import GreenStoryPage from "./pages/GreenStory"
-import GuidePage from "./pages/Guide"
-import LocationPage from "./pages/Location"
-import BalanceGameWriteFormPage from "./pages/BalanceGameWriteForm"
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import RootLayout from "./pages/Root";
+import IntroPage from "./pages/Intro";
+import HomePage from "./pages/Home";
+import AdminPage from "./pages/Admin";
+import BoardPage from "./pages/Board";
+import DevicePage from "./pages/Device";
+import GreenStoryPage from "./pages/GreenStory";
+import GuidePage from "./pages/Guide";
+import LocationPage from "./pages/Location";
+import StatusPage from "./pages/Status";
+import BalanceGameWriteFormPage from "./pages/BalanceGameWriteForm";
 
 const router = createBrowserRouter([
   {
@@ -28,13 +29,14 @@ const router = createBrowserRouter([
       { path: "greenStory", element: <GreenStoryPage /> },
       { path: "guide", element: <GuidePage /> },
       { path: "location", element: <LocationPage /> },
+      { path: "status", element: <StatusPage /> },
       { path: "board/write", element: <BalanceGameWriteFormPage /> },
     ],
   },
-])
+]);
 
 function App() {
-  return <RouterProvider router={router} />
+  return <RouterProvider router={router} />;
 }
 
-export default App
+export default App;
