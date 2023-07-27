@@ -36,6 +36,8 @@ public class Comment implements Serializable {
     private Integer isDeleted;
     @Column(name = "deleted_datetime")
     private LocalDateTime deletedDateTime;
+    @Column(name = "created_date")
+    private LocalDateTime createdDate;
     @JsonBackReference(value = "comment-board")
     @ManyToOne(targetEntity = Board.class,fetch = FetchType.LAZY)
     @JoinColumn(name = "board_seq" , referencedColumnName = "board_seq")
