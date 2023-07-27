@@ -49,6 +49,12 @@ public class BoardController {
             HttpServletRequest request
     ) {
 
+        if(!boardService.userPasswordExistCheck(boardNo)){
+            //TODO : log 내용 Error handler로 뺄 예정
+            log.info("게시글 등록 시 비밀번호를 입력하지 않은 게시물이라 접근 권한이 없습니다.");
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+
         JSONObject parser = new JSONObject(password);
         Boolean userCheck =
             boardService.checkPasswordUser(boardNo,parser.getString("password"),userIp.searchIP(request));
