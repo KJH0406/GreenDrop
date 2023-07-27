@@ -5,6 +5,7 @@ import com.ssafy.common.entity.Comment;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -38,6 +39,17 @@ public class CommentDto {
                 .build();
 
         return comment;
+    }
+
+    @Data
+    public static class commentList{
+        private Comment comment;
+        private List<Comment> comments;
+
+        public commentList(Comment comment , List<Comment> comments){
+            this.comment = comment;
+            this.comments = comments;
+        }
     }
 
 }
