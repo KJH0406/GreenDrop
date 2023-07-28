@@ -1,6 +1,7 @@
 package com.ssafy.common.service;
 
 import com.ssafy.common.dto.CommentDto;
+import com.ssafy.common.dto.response.CommentResponseDto;
 import com.ssafy.common.entity.Comment;
 import com.ssafy.common.repository.BoardRepository;
 import com.ssafy.common.repository.CommentRepository;
@@ -21,6 +22,7 @@ import java.util.List;
 @Service
 public class CommentService {
 
+    private static final String DELETE_MESSAGE = "삭제된 댓글 입니다";
     private final CommentRepository commentRepository;
     private final BoardRepository boardRepository;
     private final Encoder encoder;
@@ -63,7 +65,26 @@ public class CommentService {
         for (Comment c : boardComments) {
             if (c.getParentId() == null) {
                 List<Comment> cocoment = commentRepository.findByParentId(c.getCommentSeq());
-                CommentDto.commentList result = new CommentDto.commentList(c, cocoment);
+                List<CommentResponseDto> changeDto = new ArrayList<>();
+                for(Comment coco : cocoment) {
+                    CommentResponseDto crd;
+                    if(coco.getIsDeleted() == 0) {
+                         crd = modelMapper.map(coco,CommentResponseDto.class);
+                    }
+                    else{
+                        crd = CommentResponseDto.fromDeleteComment(DELETE_MESSAGE);
+                    }
+
+                    changeDto.add(crd);
+                }
+                CommentDto.commentList result;
+                if(c.getIsDeleted() == 0) {
+                    result = new CommentDto.commentList(modelMapper.map(c,CommentResponseDto.class), changeDto);
+                }
+                 else {
+                     result = new CommentDto.commentList(CommentResponseDto.fromDeleteComment(DELETE_MESSAGE), changeDto);
+
+                }
                 resultList.add(result);
             } else break;
         }
