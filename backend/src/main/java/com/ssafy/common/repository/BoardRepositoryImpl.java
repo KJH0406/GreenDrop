@@ -42,6 +42,7 @@ public class BoardRepositoryImpl extends QuerydslRepositorySupport implements Bo
 
         JPQLQuery<BoardResponseDto> query = queryFactory
                 .select(Projections.fields(BoardResponseDto.class,
+                board.boardSeq,
                 board.question,board.leftAnswer,board.rightAnswer, board.ip,board.likeCount
                         ,board.nickname,board.lastModifiedDate,category.item))
                 .from(board)
