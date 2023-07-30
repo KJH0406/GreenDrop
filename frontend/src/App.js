@@ -11,6 +11,9 @@ import LocationPage from "./pages/Location";
 import StatusPage from "./pages/Status";
 import BalanceGameWriteFormPage from "./pages/BalanceGameWriteForm";
 
+//새롭게 추가한 부분 디바이스UI작업
+import { QueryClient, QueryClientProvider } from "react-query"; // 추가
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -25,7 +28,7 @@ const router = createBrowserRouter([
       { path: "home", element: <HomePage /> },
       { path: "admin", element: <AdminPage /> },
       { path: "board", element: <BoardPage /> },
-      { path: "device", element: <DevicePage /> },
+
       { path: "greenStory", element: <GreenStoryPage /> },
       { path: "guide", element: <GuidePage /> },
       { path: "location", element: <LocationPage /> },
@@ -33,10 +36,20 @@ const router = createBrowserRouter([
       { path: "board/write", element: <BalanceGameWriteFormPage /> },
     ],
   },
+  {
+    path: "device",
+    element: <DevicePage />,
+  },
 ]);
 
 function App() {
-  return <RouterProvider router={router} />;
+  // 디바이스 페이지를 위하여 리액트 쿼리 설정
+  const queryClient = new QueryClient();
+  return (
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+    </QueryClientProvider>
+  );
 }
 
 export default App;
