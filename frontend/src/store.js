@@ -50,6 +50,11 @@ let isOpenComment = createSlice({
   },
 })
 
+let categories = createSlice({
+  name: "categories",
+  initialState: ["카테고리 등록", "스포츠", "요리", "진로"],
+})
+
 export let { toggleIsOpenComment } = isOpenComment.actions
 
 export default configureStore({
@@ -60,5 +65,6 @@ export default configureStore({
     balanceGame: balanceGame.reducer,
     balanceGameList: balanceGameList.reducer,
     isOpenComment: isOpenComment.reducer,
+    categories: categories.reducer,
   },
 })
