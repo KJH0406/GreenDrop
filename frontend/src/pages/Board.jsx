@@ -1,3 +1,4 @@
+import { useState } from "react"
 import { useSelector } from "react-redux"
 import { Link } from "react-router-dom"
 import search from "../assets/search.png"
@@ -11,16 +12,33 @@ function BoardPage() {
   const isOpenComment = useSelector((state) => {
     return state.isOpenComment
   })
+  const cardList = useSelector((state) => {
+    return state.balanceGameList
+  })
+  const sidebarArr = new Array(cardList.length)
+  sidebarArr.fill(false)
+  const [isSidebarOpen, setIsSidebarOpen] = useState(sidebarArr)
 
   return (
-    <div className={classes.container}>
-      {isOpenComment.isOpenComment ? <BalanceGameCommentModal /> : <></>}
+    <div
+      className={classes.container}
+      onClick={() => {
+        if (isSidebarOpen) {
+          setIsSidebarOpen(sidebarArr)
+        }
+      }}
+    >
+      {isOpenComment.isOpenComment ? (
+        <BalanceGameCommentModal boardSeq={isOpenComment.boardSeq} />
+      ) : (
+        <></>
+      )}
       <div className={classes.outer_box}>
         {/* <h1>Green Balance Game</h1> */}
-        <div className={classes.title}>
+        <Link className={classes.title} to={"/board"}>
           <h2>Green &nbsp;</h2>
           <h2 className={classes.second_word}>Balance Game</h2>
-        </div>
+        </Link>
         <div className={classes.row} id={classes.search}>
           <span className={classes.search_area}>
             <input type="text" className={classes.search_input} />
@@ -47,7 +65,11 @@ function BoardPage() {
         </div>
         {/* 글 리스트만 컴포넌트로  */}
         {/* 검색시 게임 리스트 state만 바꿔주면 아랑서 화면 출력될 듯(다시 전체 글로는 어떻게 돌아가지?) */}
-        <BalanceGameList />
+        <BalanceGameList
+          cardList={cardList}
+          isSidebarOpen={isSidebarOpen}
+          setIsSidebarOpen={setIsSidebarOpen}
+        />
       </div>
     </div>
   )

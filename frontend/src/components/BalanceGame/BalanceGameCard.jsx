@@ -4,42 +4,45 @@ import commentImg from "../../assets/commentpng.png"
 import emptyHeartImg from "../../assets/empty_heartpng.png"
 import fullHeartImg from "../../assets/full_heartpng.png"
 import menuImg from "../../assets/list_menu.png"
-import { toggleIsOpenComment } from "../../store"
+import { toggleIsOpenComment, changeBoardSeq } from "../../store"
 import classes from "./BalanceGameCard.module.css"
 import BalanceGameCardSidebarList from "./BalanceGameCardSidebarList"
-function BalanceGameCard({ card }) {
-  let [commentCnt] = useState(0)
-  let [isLiked, setIsLiked] = useState(false)
-  const [isSidebarOpen, setSidebarOpen] = useState(false)
-  const toggleSidebar = () => {
-    setSidebarOpen((prevState) => !prevState)
-  }
+
+function BalanceGameCard({ card, isSidebarOpen, setSidebarOpen }) {
+  // 카드별로 독립적인 isSidebarOpen 상태를 관리합니다.
+  // const [SidebarOpen, setSidebarOpen] = useState(false)
+  const [commentCnt] = useState(0)
+  const [isLiked, setIsLiked] = useState(false)
+
   const isOpenComment = useSelector((state) => {
     return state.isOpenComment
   })
   const dispatch = useDispatch()
+
   return (
     <div className={classes.outer_box}>
       <div className={classes.top}>
         <div className={`${classes.top_item_left} ${classes.title}`}>
           {card.nickname}
         </div>
-        <div
-          onClick={() => {
-            toggleSidebar()
+
+        <img
+          alt=""
+          src={menuImg}
+          className={`${classes.top_item_right} ${classes.bar_image}`}
+          onClick={(e) => {
+            e.stopPropagation()
             // console.log(isSidebarOpen)
+            setSidebarOpen()
           }}
-        >
-          <input
-            type="image"
-            src={menuImg}
-            alt="menu"
-            className={`${classes.top_item_right} ${classes.image}`}
-          />
-        </div>
+        />
 
         <div className={classes.card_sidebar}>
-          {isSidebarOpen ? <BalanceGameCardSidebarList /> : <></>}
+          {isSidebarOpen ? (
+            <BalanceGameCardSidebarList boardSeq={card.boardSeq} />
+          ) : (
+            <></>
+          )}
         </div>
       </div>
       <div className={classes.top}>
@@ -60,43 +63,40 @@ function BalanceGameCard({ card }) {
       </div>
       <div className={classes.bottom}>
         <div className={classes.bottom_left}>
-          <div
-            className={classes.bottom_like}
-            onClick={() => {
-              setIsLiked(!isLiked)
-            }}
-          >
-            {isLiked ? (
-              <input
-                type="image"
-                src={fullHeartImg}
-                className={classes.bottom_like_img}
-                alt=""
-              />
-            ) : (
-              <input
-                type="image"
-                src={emptyHeartImg}
-                className={classes.bottom_like_img}
-                alt=""
-              />
-            )}
-          </div>
+          {isLiked ? (
+            <img
+              src={fullHeartImg}
+              className={classes.bottom_like_img}
+              alt=""
+              onClick={() => {
+                setIsLiked(!isLiked)
+              }}
+            />
+          ) : (
+            <img
+              src={emptyHeartImg}
+              className={classes.bottom_like_img}
+              alt=""
+              onClick={() => {
+                setIsLiked(!isLiked)
+              }}
+            />
+          )}
+
           <span className={classes.bottom_like}>{card.likeCount}</span>
-          <div
-            className={classes.bottom_like}
+
+          <img
+            src={commentImg}
+            className={classes.bottom_comment_img}
+            alt=""
             onClick={() => {
               console.log("comment")
+              //axios로 해당 boardSeq의 댓글 데이터만 store에 저장
+              //기존에 조회한 댓글 데이터는 날림 -> 인스타그램도 이렇게 하는듯
+              dispatch(changeBoardSeq(card.boardSeq))
               dispatch(toggleIsOpenComment(isOpenComment.isOpenComment))
             }}
-          >
-            <input
-              type="image"
-              src={commentImg}
-              className={classes.bottom_comment_img}
-              alt=""
-            />
-          </div>
+          />
           {/* 댓글 수 출력 어떻게 할 지 고민 */}
           <span className={classes.bottom_comment}>{commentCnt}</span>
         </div>
@@ -105,4 +105,5 @@ function BalanceGameCard({ card }) {
     </div>
   )
 }
+
 export default BalanceGameCard
