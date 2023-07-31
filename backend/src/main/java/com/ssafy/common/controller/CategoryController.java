@@ -18,7 +18,7 @@ public class CategoryController {
     private final CategoryService categoryService;
 
     @PostMapping("/regist")
-    public ResponseEntity<?> saveCategory(@RequestBody CategoryRequestDto categoryRequestDto){
+    public ResponseEntity<Object> saveCategory(@RequestBody CategoryRequestDto categoryRequestDto){
         categoryService.categorySave(categoryRequestDto);
 
         return new ResponseEntity<>(HttpStatus.OK);
@@ -31,4 +31,17 @@ public class CategoryController {
         return new ResponseEntity<>(categories,HttpStatus.OK);
     }
 
+    @PatchMapping("/{categoryNo}")
+    public ResponseEntity<Object> categoryUpdate(@PathVariable Long categoryNo, @RequestBody CategoryRequestDto request){
+        categoryService.categoryUpdate(categoryNo, request);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{categoryNo}")
+    public ResponseEntity<Object> categoryDelete(@PathVariable Long categoryNo){
+        categoryService.categoryDelete(categoryNo);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
