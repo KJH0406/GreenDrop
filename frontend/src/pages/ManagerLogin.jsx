@@ -1,24 +1,28 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import classes from "./ManagerLogin.module.css"; // CSS 모듈 import
+import classes from "./ManagerLogin.module.css";
 
 const MangerLogin = () => {
-  const [username, setUsername] = useState("");
+  const navigate = useNavigate();
+  const [id, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("", {
-        username,
+      const response = await axios.post("http://localhost:9000/manager/login", {
+        id,
         password,
       });
 
       // 로그인 성공 처리
       console.log("로그인 성공:", response.data);
+      localStorage.setItem("loggedInUser", JSON.stringify(response.data));
+      navigate("/admin");
     } catch (error) {
       // 로그인 실패 처리
-      console.error("로그인 실패:", error);
+      alert("등록되지 않은 관리자입니다.");
     }
   };
 
@@ -34,7 +38,7 @@ const MangerLogin = () => {
             <input
               type="text"
               id="username"
-              value={username}
+              value={id}
               onChange={(e) => setUsername(e.target.value)}
               className={classes.form_input}
             />

@@ -1,19 +1,25 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import classes from "./AdminHeader.module.css";
 
 function AdminHeader() {
+  const token = localStorage.getItem("loggedInUser");
+  const isSuper = JSON.parse(token).role === "SUPER";
+  const navigate = useNavigate();
   // 헤더 리스트
   const pageList = [
     { path: "", name: "홈" },
     { path: "adminBoard", name: "밸런스 게임 게시판 관리" },
     { path: "adminCategories", name: "카테고리 관리" },
-    { path: "accountManagement", name: "관리자 계정 관리" },
   ];
 
+  const onLogout = (event) => {
+    window.localStorage.removeItem("loggedInUser");
+    return navigate("/login");
+  };
   return (
     <div className={classes.admin_header_container}>
       <div className={classes.logo}>
-        <h1>사이트 로고</h1>
+        <h1>Green Drop</h1>
       </div>
       <div className={classes.page_list}>
         {pageList.map((page, index) => (
@@ -21,6 +27,16 @@ function AdminHeader() {
             {page.name}
           </Link>
         ))}
+        {isSuper ? (
+          <Link to="accountManagement" className={classes.page_item}>
+            관리자 계정 관리
+          </Link>
+        ) : (
+          <div className={classes.page_item}>비밀번호 변경하기</div>
+        )}
+        <button className={classes.logout_button} onClick={onLogout}>
+          로그아웃
+        </button>
       </div>
     </div>
   );
