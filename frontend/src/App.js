@@ -10,9 +10,14 @@ import GuidePage from "./pages/Guide";
 import LocationPage from "./pages/Location";
 import StatusPage from "./pages/Status";
 import BalanceGameWriteFormPage from "./pages/BalanceGameWriteForm";
+import AdminMain from "./components/AdminPage/AdminMain";
 
 //새롭게 추가한 부분 디바이스UI작업
 import { QueryClient, QueryClientProvider } from "react-query"; // 추가
+import ManagerLogin from "./pages/ManagerLogin";
+import AccountManagement from "./components/AdminPage/AccountManagement";
+import AdminBoard from "./components/AdminPage/AdminBoard";
+import AdminCategories from "./components/AdminPage/AdminCategories";
 
 const router = createBrowserRouter([
   {
@@ -24,21 +29,35 @@ const router = createBrowserRouter([
       // 앱 실행시 처음 보여질 화면
       { index: true, element: <IntroPage /> },
 
-      // 이 외의 각 페이지
+      // 각 페이지 링크
       { path: "home", element: <HomePage /> },
-      { path: "admin", element: <AdminPage /> },
-      { path: "board", element: <BoardPage /> },
-
       { path: "greenStory", element: <GreenStoryPage /> },
       { path: "guide", element: <GuidePage /> },
       { path: "location", element: <LocationPage /> },
       { path: "status", element: <StatusPage /> },
+
+      // 밸런스 게임 게시판 링크
+      { path: "board", element: <BoardPage /> },
       { path: "board/write", element: <BalanceGameWriteFormPage /> },
     ],
   },
   {
     path: "device",
     element: <DevicePage />,
+  },
+  {
+    path: "login",
+    element: <ManagerLogin />,
+  },
+  {
+    path: "admin",
+    element: <AdminPage />,
+    children: [
+      { index: true, element: <AdminMain /> },
+      { path: "accountManagement", element: <AccountManagement /> },
+      { path: "adminBoard", element: <AdminBoard /> },
+      { path: "adminCategories", element: <AdminCategories /> },
+    ],
   },
 ]);
 

@@ -1,0 +1,30 @@
+.admin_header_container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 80px;
+  background-color: gray;
+  padding: 10px;
+}
+
+.logo h1 {
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.page_list {
+  display: flex;
+}
+
+.page_item {
+  padding: 10px;
+  color: white;
+  text-decoration: none;
+}
+
+.page_item:hover {
+  background-color: #555;
+  border-radius: 5px;
+}

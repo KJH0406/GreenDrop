@@ -44,15 +44,14 @@ function DevicePage() {
 
   // 나중에 SSE로 연결해야함
   // 모달 오픈 여부
-  const isOpen = true;
-
+  const isOpen = false;
   // device에 띄울 내용 및 색상
   const device = {
     title: "내용물을 확인 중입니다...",
     title2: "수거가 완료되었습니다!",
     content: "확인 중에 플라스틱 컵을 움직이지 말아주세요!",
     content2: "오늘도 환경보호에 앞장서는 당신은 우리의 환경히어로 🌱",
-    color: "green",
+    color: "red",
   };
 
   return (
@@ -91,13 +90,13 @@ function DevicePage() {
           style={{ width: `${leftBarPercent}%` }}
           className={`${classes.result_box_bar} ${classes.result_box_leftbar}`}
         >
-          <span className={classes.result_num}>{leftCount}</span>
+          <span className={classes.result_num}>{leftCount}개</span>
         </div>
         <div
           style={{ width: `${rightBarPercent}%` }}
           className={`${classes.result_box_bar} ${classes.result_box_rightbar}`}
         >
-          <span className={classes.result_num}>{rightCount}</span>
+          <span className={classes.result_num}>{rightCount}개</span>
         </div>
       </div>
     </div>
