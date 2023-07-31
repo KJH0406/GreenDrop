@@ -3,7 +3,7 @@ import { toggleIsOpenComment } from "../../store"
 import classes from "./BalanceGameCommentModal.module.css"
 import { useDispatch, useSelector } from "react-redux"
 import trashcan from "../../assets/trashcan.png"
-function BalanceGameCommentModal() {
+function BalanceGameCommentModal({ boardSeq }) {
   const dispatch = useDispatch()
 
   const [isWriteChildComment, setIsWriteChildComment] = useState(false)
@@ -11,72 +11,9 @@ function BalanceGameCommentModal() {
   const [parentCommentNumber, setParentCommentNumber] = useState("")
   // const [parentUser, setParentUser] = useState("")
 
-  const [commentObj] = useState([
-    {
-      comment: {
-        content: "닉네임 있는 댓글 등록중",
-        commentSeq: 11,
-        board: 6,
-        nickName: "닉네임",
-        ip: "127.0.0.1",
-        createdDate: "2023-07-26T12:53:01",
-      },
-      comments: [
-        {
-          content: "닉네임 있는 댓글 등록중",
-          commentSeq: 10,
-          board: 6,
-          nickName: "ssafy",
-          ip: "127.0.0.1",
-          createdDate: "2023-07-26T12:52:13",
-        },
-        {
-          content: "대댓글 테스트",
-          commentSeq: 13,
-          board: 6,
-          nickName: "ssafy",
-          ip: "127.0.0.1",
-          createdDate: "2023-07-26T12:54:58",
-        },
-        {
-          content: "대댓글 테스트",
-          commentSeq: 14,
-          board: 6,
-          nickName: "ssafy",
-          ip: "127.0.0.1",
-          createdDate: "2023-07-26T12:55:19",
-        },
-        {
-          content: "대댓글 테스트",
-          commentSeq: 15,
-          board: 6,
-          nickName: "ssafy",
-          ip: "127.0.0.1",
-          createdDate: "2023-07-26T12:55:25",
-        },
-        {
-          content: "시간 테스트",
-          commentSeq: 16,
-          board: 6,
-          nickName: "child",
-          ip: "127.0.0.1",
-          createdDate: "2023-07-27T13:19:55",
-        },
-      ],
-    },
-    {
-      comment: {
-        content: "대댓글 테스트",
-        commentSeq: 12,
-        board: 6,
-        nickName: "ssafy",
-        ip: "127.0.0.1",
-        createdDate: "2023-07-26T12:54:15",
-      },
-      comments: [],
-    },
-  ])
-
+  const commentObj = useSelector((state) => {
+    return state.commentObj
+  })
   const isOpenComment = useSelector((state) => {
     return state.isOpenComment
   })

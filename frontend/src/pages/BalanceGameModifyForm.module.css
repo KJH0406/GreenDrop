@@ -206,7 +206,7 @@ input:focus {
   color: white;
   border-radius: 10px;
   width: 90%;
-
+  margin-bottom: 3%;
   font-weight: 550;
 }
 /* .regist_btn:hover {

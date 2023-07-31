@@ -1,15 +1,18 @@
-import BalanceGameCardSidebar from "./BalanceGameCardSidebar"
-import classes from "./BalanceGameCardSidebar.module.css"
-
-function BalanceGameCardSidebarList() {
-  const menuList = [{ name: "수정" }, { name: "삭제" }]
-
-  return menuList.map((menu, index) => {
-    return (
-      <div className={classes.card_sidebar} key={index}>
-        <BalanceGameCardSidebar menu={menu} />
-      </div>
-    )
-  })
+import classes from "./BalanceGameCardSidebarList.module.css"
+import { Link } from "react-router-dom"
+function BalanceGameCardSidebarList({ boardSeq }) {
+  const page = [{ path: "modify", name: "밸런스 게임 게시판 글 작성" }]
+  console.log(boardSeq)
+  return (
+    <div className={classes.card_sidebar}>
+      <Link
+        className={`${classes.sidbar_item} ${classes.modify_link}`}
+        to={{ pathname: page[0].path, search: `?boardSeq=${boardSeq}` }}
+      >
+        수정
+      </Link>
+      <div className={classes.sidbar_item}>삭제</div>
+    </div>
+  )
 }
 export default BalanceGameCardSidebarList

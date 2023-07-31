@@ -18,10 +18,10 @@ function BalanceGameWriteFormPage() {
 
   return (
     <div className={classes.regist_box}>
-      <div className={classes.title}>
+      <Link className={classes.title} to={"/board"}>
         <h2 className={classes.first_word}>Green &nbsp;</h2>
         <h2 className={classes.second_word}>Balance Game</h2>
-      </div>
+      </Link>
       <div className={classes.outer_box}>
         <div className={classes.top}>
           <div className={`${classes.top_item} `}>
@@ -68,9 +68,10 @@ function BalanceGameWriteFormPage() {
             <select
               name="category"
               className={classes.category}
+              defaultValue={"카테고리 등록"}
               onChange={(e) => {
                 setCategory(e.target.value)
-                console.log(category)
+
               }}
             >
               {categories.map((item, idx) => {
