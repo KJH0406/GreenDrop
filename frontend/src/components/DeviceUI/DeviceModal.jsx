@@ -1,9 +1,9 @@
 import classes from "./DeviceModal.module.css";
 
 function DeviceModal(props) {
-  const title = props.device.title2;
+  const title = props.device.title;
   // 없으면 빈값
-  const content = props.device.content2 || "";
+  const content = props.device.content || "";
   const color = props.device.color || "";
   return (
     <div className={classes.device_modal_container}>
