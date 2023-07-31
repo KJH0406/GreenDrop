@@ -1,12 +1,21 @@
 import classes from "./BalanceGameWriteForm.module.css"
 
 import { useState } from "react"
+import { useSelector } from "react-redux"
+import { Link } from "react-router-dom"
 
 function BalanceGameWriteFormPage() {
   const [question, setQuestion] = useState("")
   const [leftAnswer, setLeftAnswer] = useState("")
   const [rightAnswer, setRightAnswer] = useState("")
-  const [categories] = useState(["카테고리 등록", "스포츠", "요리", "진로"])
+  const [nickname, setNickname] = useState("")
+  const [category, setCategory] = useState("")
+  const [password, setPassword] = useState("")
+  const [card, setCard] = useState("")
+  const categories = useSelector((state) => {
+    return state.categories
+  })
+
   return (
     <div className={classes.regist_box}>
       <div className={classes.title}>
@@ -30,6 +39,7 @@ function BalanceGameWriteFormPage() {
         <div className={classes.middle}>
           <div className={`${classes.middle_item} ${classes.middle_item_left}`}>
             <textarea
+              className={classes.text_input}
               placeholder="선택지1(필수)(최대50자)"
               onChange={(e) => {
                 setLeftAnswer(e.target.value)
@@ -42,6 +52,7 @@ function BalanceGameWriteFormPage() {
             className={`${classes.middle_item} ${classes.middle_item_right}`}
           >
             <textarea
+              className={classes.text_input}
               placeholder="선택지2(필수)(최대50자)"
               onChange={(e) => {
                 setRightAnswer(e.target.value)
@@ -54,11 +65,18 @@ function BalanceGameWriteFormPage() {
         <div className={classes.bottom}>
           <div className={classes.bottom_left}>
             {/* 카테고리 선택하는 부분 */}
-            <select name="category" className={classes.category}>
-              {categories.map((category, idx) => {
+            <select
+              name="category"
+              className={classes.category}
+              onChange={(e) => {
+                setCategory(e.target.value)
+                console.log(category)
+              }}
+            >
+              {categories.map((item, idx) => {
                 return (
-                  <option value={category} key={idx}>
-                    {category}
+                  <option value={item} key={idx}>
+                    {item}
                   </option>
                 )
               })}
@@ -73,21 +91,40 @@ function BalanceGameWriteFormPage() {
             className={classes.input_tag}
             type="text"
             placeholder="닉네임을 입력하세요 (최대 10자)"
+            onChange={(e) => {
+              setNickname(e.target.value)
+            }}
           />
         </div>
         <div className={classes.info_input}>
           <input
             className={classes.input_tag}
-            type="text"
+            type="password"
             placeholder="비밀번호를 입력하세요 (최대 10자)"
+            onChange={(e) => {
+              setPassword(e.target.value)
+            }}
           />
         </div>
         <input
           type="button"
           className={classes.regist_btn}
           value="밸런스 게임 등록하기"
-          onClick={() => {}}
+          onClick={() => {
+            setCard({
+              question: question,
+              leftAnswer: leftAnswer,
+              rightAnswer: rightAnswer,
+              nickname: nickname,
+              password: password,
+              category: category,
+            })
+            console.log(card)
+          }}
         ></input>
+        <Link className={classes.regist_btn} to={"/board"}>
+          목록으로
+        </Link>
       </div>
     </div>
   )

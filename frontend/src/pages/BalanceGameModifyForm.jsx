@@ -84,7 +84,9 @@ function BalanceGameWriteFormPage({ boardNo }) {
             <select
               name="category"
               className={classes.category}
-              onChange={setCategory(this.value)}
+              onChange={(e) => {
+                setCategory(e.target.value)
+              }}
             >
               {categories.map((item, idx) => {
                 return card.item == item ? (
