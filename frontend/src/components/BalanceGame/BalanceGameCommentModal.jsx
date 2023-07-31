@@ -6,12 +6,17 @@ import trashcan from "../../assets/trashcan.png"
 function BalanceGameCommentModal() {
   const dispatch = useDispatch()
 
-  const [isWriteComment, setIsWriteComment] = useState(false)
+  const [isWriteChildComment, setIsWriteChildComment] = useState(false)
+
+  const [parentCommentNumber, setParentCommentNumber] = useState("")
+  // const [parentUser, setParentUser] = useState("")
 
   const [commentObj] = useState([
     {
       comment: {
         content: "닉네임 있는 댓글 등록중",
+        commentSeq: 11,
+        board: 6,
         nickName: "닉네임",
         ip: "127.0.0.1",
         createdDate: "2023-07-26T12:53:01",
@@ -19,30 +24,40 @@ function BalanceGameCommentModal() {
       comments: [
         {
           content: "닉네임 있는 댓글 등록중",
+          commentSeq: 10,
+          board: 6,
           nickName: "ssafy",
           ip: "127.0.0.1",
           createdDate: "2023-07-26T12:52:13",
         },
         {
           content: "대댓글 테스트",
+          commentSeq: 13,
+          board: 6,
           nickName: "ssafy",
           ip: "127.0.0.1",
           createdDate: "2023-07-26T12:54:58",
         },
         {
           content: "대댓글 테스트",
+          commentSeq: 14,
+          board: 6,
           nickName: "ssafy",
           ip: "127.0.0.1",
           createdDate: "2023-07-26T12:55:19",
         },
         {
           content: "대댓글 테스트",
+          commentSeq: 15,
+          board: 6,
           nickName: "ssafy",
           ip: "127.0.0.1",
           createdDate: "2023-07-26T12:55:25",
         },
         {
           content: "시간 테스트",
+          commentSeq: 16,
+          board: 6,
           nickName: "child",
           ip: "127.0.0.1",
           createdDate: "2023-07-27T13:19:55",
@@ -52,6 +67,8 @@ function BalanceGameCommentModal() {
     {
       comment: {
         content: "대댓글 테스트",
+        commentSeq: 12,
+        board: 6,
         nickName: "ssafy",
         ip: "127.0.0.1",
         createdDate: "2023-07-26T12:54:15",
@@ -85,9 +102,9 @@ function BalanceGameCommentModal() {
     if (time < 7) {
       return parseInt(time) + "일 전"
     }
-    // return `${date.getFullYear()}년 ${
-    //   date.getMonth() + 1
-    // }월 ${date.getDate()}일`
+    return `${today.getFullYear()}년 ${
+      today.getMonth() + 1
+    }월 ${today.getDate()}일`
   }
 
   return (
@@ -100,8 +117,9 @@ function BalanceGameCommentModal() {
       <div
         className={classes.comment_outer_box}
         onClick={(e) => {
+          setIsWriteChildComment(false)
+          // setParentUser("")
           e.stopPropagation()
-          setIsWriteComment(false)
         }}
       >
         <div className={classes.comment_inner_box}>
@@ -142,7 +160,9 @@ function BalanceGameCommentModal() {
                       className={classes.comment_area_bottom}
                       onClick={(e) => {
                         console.log("답글달기")
-                        setIsWriteComment(true)
+                        setIsWriteChildComment(true)
+                        // setParentUser(comment.nickName)
+                        setParentCommentNumber(comment.commentSeq)
                         e.stopPropagation()
                       }}
                     >
@@ -187,8 +207,57 @@ function BalanceGameCommentModal() {
               )
             })}
           </div>
-          {isWriteComment ? (
+
+          {isWriteChildComment ? (
             <div className={classes.comment_bottom}>
+              <div className={classes.user_info_input_area}>
+                <input
+                  type="text"
+                  className={classes.password_input}
+                  placeholder="닉네임을 입력하세요."
+                />
+              </div>
+              <div className={classes.password_input_area}>
+                <input
+                  type="password"
+                  className={classes.password_input}
+                  placeholder="비밀번호를 입력하세요."
+                />
+              </div>
+              <div className={classes.comment_input_area}>
+                <input
+                  type="text"
+                  className={classes.input_tag}
+                  // value={parentUser || ` `}
+                  placeholder="답글을 등록하세요"
+                />
+
+                <button
+                  className={classes.regist_btn}
+                  onClick={() => {
+                    console.log(parentCommentNumber)
+                  }}
+                >
+                  등록
+                </button>
+              </div>
+            </div>
+          ) : (
+            <div className={classes.comment_bottom}>
+              <div className={classes.user_info_input_area}>
+                <input
+                  type="text"
+                  className={classes.password_input}
+                  placeholder="닉네임을 입력하세요."
+                />
+              </div>
+              <div className={classes.password_input_area}>
+                <input
+                  type="password"
+                  className={classes.password_input}
+                  placeholder="비밀번호를 입력하세요."
+                />
+              </div>
               <div className={classes.comment_input_area}>
                 <input
                   type="text"
@@ -202,16 +271,7 @@ function BalanceGameCommentModal() {
                   value="등록"
                 />
               </div>
-              <div className={classes.password_input_area}>
-                <input
-                  type="password"
-                  className={classes.password_input}
-                  placeholder="추후 수정이나 삭제를 원하시면 비밀번호를 입력하세요"
-                />
-              </div>
             </div>
-          ) : (
-            <div className={classes.comment_bottom}></div>
           )}
         </div>
       </div>
