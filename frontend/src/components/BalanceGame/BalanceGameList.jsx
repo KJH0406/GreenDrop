@@ -12,6 +12,21 @@ function BalanceGameList() {
       {cardList.map((card, index) => {
         return <BalanceGameCard key={index} card={card} />
       })}
+      {cardList.map((card, index) => {
+        return <BalanceGameCard key={index} card={card} />
+      })}
+      {cardList.map((card, index) => {
+        return <BalanceGameCard key={index} card={card} />
+      })}
+      {cardList.map((card, index) => {
+        return <BalanceGameCard key={index} card={card} />
+      })}
+      {cardList.map((card, index) => {
+        return <BalanceGameCard key={index} card={card} />
+      })}
+      {cardList.map((card, index) => {
+        return <BalanceGameCard key={index} card={card} />
+      })}
     </div>
   )
 }

@@ -38,6 +38,19 @@ let balanceGameList = createSlice({
     },
   ],
 })
+let isOpenComment = createSlice({
+  name: "isOpenComment",
+  initialState: { isOpenComment: false },
+  reducers: {
+    toggleIsOpenComment(state, action) {
+      // console.log(state.isOpenComment)
+      // console.log(action.payload)
+      state.isOpenComment = !action.payload
+    },
+  },
+})
+
+export let { toggleIsOpenComment } = isOpenComment.actions
 
 export default configureStore({
   reducer: {
@@ -46,5 +59,6 @@ export default configureStore({
     countBundle: countBundle.reducer,
     balanceGame: balanceGame.reducer,
     balanceGameList: balanceGameList.reducer,
+    isOpenComment: isOpenComment.reducer,
   },
 })

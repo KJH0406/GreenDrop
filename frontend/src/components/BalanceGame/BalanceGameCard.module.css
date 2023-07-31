@@ -39,7 +39,7 @@ input:focus {
   width: 40%;
 }
 .card_sidebar {
-  z-index: 899;
+  z-index: 898;
   position: absolute;
   right: 0;
   top: 10%;
