@@ -1,0 +1,73 @@
+/* ManagerLogin.module.css */
+.login_container {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* 로그인 페이지 전체를 감싸는 컨테이너 스타일 */
+.login_form {
+  width: 500px;
+  height: 300px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* 로그인 페이지 제목 스타일 */
+.login_title {
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+/* 입력 폼 스타일 */
+.form_group {
+  margin-bottom: 15px;
+}
+
+.form_label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.form_input {
+  width: 95%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* 로그인 버튼 스타일 */
+.login_button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.login_button:hover {
+  background-color: #0056b3;
+}
+
+/* 오류 메시지 스타일 */
+.error_message {
+  color: #f00;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+/* 추가적인 스타일을 필요에 따라 더 구현할 수 있습니다. */

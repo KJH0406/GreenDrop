@@ -71,6 +71,7 @@ function BalanceGameWriteFormPage() {
               defaultValue={"카테고리 등록"}
               onChange={(e) => {
                 setCategory(e.target.value)
+
               }}
             >
               {categories.map((item, idx) => {
