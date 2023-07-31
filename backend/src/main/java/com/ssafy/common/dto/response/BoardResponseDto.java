@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 @Builder
 public class BoardResponseDto{
 
+    private Long boardSeq;
     private String question;
     private String leftAnswer;
     private String rightAnswer;
@@ -22,10 +23,12 @@ public class BoardResponseDto{
     private Integer likeCount;
     private LocalDateTime lastModifiedDate;
     private String item;
+    private Integer commentCount;
 
-    public BoardResponseDto (String question, String leftAnswer, String rightAnswer, String ip, String nickname, Integer likeCount ,LocalDateTime lastModifiedDate,String item) {
+    public BoardResponseDto (Long boardSeq,String question, String leftAnswer, String rightAnswer, String ip, String nickname, Integer likeCount ,LocalDateTime lastModifiedDate,String item,Integer commentCount) {
 //        return new BoardResponseDto(question, leftAnswer, rightAnswer, ip, nickname, likeCount,lastModifiedDate,item);
-    this.question = question;
+    this.boardSeq = boardSeq;
+        this.question = question;
     this.leftAnswer = leftAnswer;
     this.rightAnswer = rightAnswer;
     this.ip = ip;
@@ -33,9 +36,11 @@ public class BoardResponseDto{
     this.likeCount = likeCount;
     this.lastModifiedDate = lastModifiedDate;
     this.item=item;
+    this.commentCount = commentCount;
     }
-    public BoardResponseDto fromEntity(Board board, String item){
+    public BoardResponseDto fromEntity(Board board, Integer cCount){
         return BoardResponseDto.builder()
+                .boardSeq(board.getBoardSeq())
                 .question(board.getQuestion())
                 .leftAnswer(board.getLeftAnswer())
                 .rightAnswer(board.getRightAnswer())
@@ -44,11 +49,11 @@ public class BoardResponseDto{
                 .likeCount(board.getLikeCount())
                 .lastModifiedDate(board.getLastModifiedDate())
                 .item(item)
+                .commentCount(cCount)
                 .build();
 
    }
-
-   public Board toEntity(Long boardSeq){
+    public Board toEntity(Long boardSeq){
         return Board.builder()
                 .boardSeq(boardSeq)
                 .question(question)
