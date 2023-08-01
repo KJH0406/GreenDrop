@@ -46,4 +46,11 @@ public class PlasticLogController {
         result.put("todayCount", plasticCount);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+
+    @GetMapping("/current")
+    public ResponseEntity<Object> currentPlastic(){
+        PlasticLogResponseDto plasticLogResponseDto = plasticLogService.getCurrentPlastic();
+
+        return new ResponseEntity<>(plasticLogResponseDto, HttpStatus.OK);
+    }
 }
