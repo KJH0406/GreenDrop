@@ -1,35 +1,48 @@
-import { useState } from "react"
-import { useSelector } from "react-redux"
-import { Link } from "react-router-dom"
-import search from "../assets/search.png"
-import star from "../assets/star.png"
-import BalanceGameCategoryList from "../components/BalanceGame/BalanceGameCategoryList"
-import BalanceGameCommentModal from "../components/BalanceGame/BalanceGameCommentModal"
-import BalanceGameList from "../components/BalanceGame/BalanceGameList"
-import classes from "./Board.module.css"
+import { useState } from "react";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import search from "../assets/search.png";
+import star from "../assets/star.png";
+import BalanceGameCategoryList from "../components/BalanceGame/BalanceGameCategoryList";
+import BalanceGameCommentModal from "../components/BalanceGame/BalanceGameCommentModal";
+import BalanceGameList from "../components/BalanceGame/BalanceGameList";
+import BalanceGameCheckModal from "../components/BalanceGame/BalanceGameCheckModal";
+import classes from "./Board.module.css";
 function BoardPage() {
-  const page = [{ path: "write", name: "밸런스 게임 게시판 글 작성" }]
+  const page = [{ path: "write", name: "밸런스 게임 게시판 글 작성" }];
   const isOpenComment = useSelector((state) => {
-    return state.isOpenComment
-  })
+    return state.isOpenComment;
+  });
   const cardList = useSelector((state) => {
-    return state.balanceGameList
-  })
-  const sidebarArr = new Array(cardList.length)
-  sidebarArr.fill(false)
-  const [isSidebarOpen, setIsSidebarOpen] = useState(sidebarArr)
-
+    return state.balanceGameList;
+  });
+  const sidebarArr = new Array(cardList.length);
+  sidebarArr.fill(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(sidebarArr);
+  const [isClicked, setIsClicked] = useState({ flag: false, boardSeq: "" });
+  console.log(isClicked);
   return (
     <div
       className={classes.container}
       onClick={() => {
         if (isSidebarOpen) {
-          setIsSidebarOpen(sidebarArr)
+          setIsSidebarOpen(sidebarArr);
         }
       }}
     >
+      {isClicked.flag ? (
+        <BalanceGameCheckModal
+          isClicked={isClicked}
+          setIsClicked={setIsClicked}
+        />
+      ) : (
+        <></>
+      )}
       {isOpenComment.isOpenComment ? (
-        <BalanceGameCommentModal boardSeq={isOpenComment.boardSeq} />
+        <BalanceGameCommentModal
+          boardSeq={isOpenComment.boardSeq}
+          isClicked={isClicked}
+        />
       ) : (
         <></>
       )}
@@ -69,10 +82,12 @@ function BoardPage() {
           cardList={cardList}
           isSidebarOpen={isSidebarOpen}
           setIsSidebarOpen={setIsSidebarOpen}
+          isClicked={isClicked}
+          setIsClicked={setIsClicked}
         />
       </div>
     </div>
-  )
+  );
 }
 
-export default BoardPage
+export default BoardPage;

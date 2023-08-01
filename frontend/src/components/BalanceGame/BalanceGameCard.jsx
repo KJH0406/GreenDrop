@@ -1,23 +1,29 @@
-import { useState } from "react"
-import { useDispatch, useSelector } from "react-redux"
-import commentImg from "../../assets/commentpng.png"
-import emptyHeartImg from "../../assets/empty_heartpng.png"
-import fullHeartImg from "../../assets/full_heartpng.png"
-import menuImg from "../../assets/list_menu.png"
-import { toggleIsOpenComment, changeBoardSeq } from "../../store"
-import classes from "./BalanceGameCard.module.css"
-import BalanceGameCardSidebarList from "./BalanceGameCardSidebarList"
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import commentImg from "../../assets/commentpng.png";
+import emptyHeartImg from "../../assets/empty_heartpng.png";
+import fullHeartImg from "../../assets/full_heartpng.png";
+import menuImg from "../../assets/list_menu.png";
+import { toggleIsOpenComment, changeBoardSeq } from "../../store";
+import classes from "./BalanceGameCard.module.css";
+import BalanceGameCardSidebarList from "./BalanceGameCardSidebarList";
 
-function BalanceGameCard({ card, isSidebarOpen, setSidebarOpen }) {
+function BalanceGameCard({
+  card,
+  isSidebarOpen,
+  setSidebarOpen,
+  isClicked,
+  setIsClicked,
+}) {
   // 카드별로 독립적인 isSidebarOpen 상태를 관리합니다.
   // const [SidebarOpen, setSidebarOpen] = useState(false)
-  const [commentCnt] = useState(0)
-  const [isLiked, setIsLiked] = useState(false)
+  const [commentCnt] = useState(0);
+  const [isLiked, setIsLiked] = useState(false);
 
   const isOpenComment = useSelector((state) => {
-    return state.isOpenComment
-  })
-  const dispatch = useDispatch()
+    return state.isOpenComment;
+  });
+  const dispatch = useDispatch();
 
   return (
     <div className={classes.outer_box}>
@@ -31,15 +37,18 @@ function BalanceGameCard({ card, isSidebarOpen, setSidebarOpen }) {
           src={menuImg}
           className={`${classes.top_item_right} ${classes.bar_image}`}
           onClick={(e) => {
-            e.stopPropagation()
+            e.stopPropagation();
             // console.log(isSidebarOpen)
-            setSidebarOpen()
+            setSidebarOpen();
           }}
         />
 
         <div className={classes.card_sidebar}>
           {isSidebarOpen ? (
-            <BalanceGameCardSidebarList boardSeq={card.boardSeq} />
+            <BalanceGameCardSidebarList
+              boardSeq={card.boardSeq}
+              setIsClicked={setIsClicked}
+            />
           ) : (
             <></>
           )}
@@ -69,7 +78,7 @@ function BalanceGameCard({ card, isSidebarOpen, setSidebarOpen }) {
               className={classes.bottom_like_img}
               alt=""
               onClick={() => {
-                setIsLiked(!isLiked)
+                setIsLiked(!isLiked);
               }}
             />
           ) : (
@@ -78,7 +87,7 @@ function BalanceGameCard({ card, isSidebarOpen, setSidebarOpen }) {
               className={classes.bottom_like_img}
               alt=""
               onClick={() => {
-                setIsLiked(!isLiked)
+                setIsLiked(!isLiked);
               }}
             />
           )}
@@ -90,11 +99,11 @@ function BalanceGameCard({ card, isSidebarOpen, setSidebarOpen }) {
             className={classes.bottom_comment_img}
             alt=""
             onClick={() => {
-              console.log("comment")
+              console.log("comment");
               //axios로 해당 boardSeq의 댓글 데이터만 store에 저장
               //기존에 조회한 댓글 데이터는 날림 -> 인스타그램도 이렇게 하는듯
-              dispatch(changeBoardSeq(card.boardSeq))
-              dispatch(toggleIsOpenComment(isOpenComment.isOpenComment))
+              dispatch(changeBoardSeq(card.boardSeq));
+              dispatch(toggleIsOpenComment(isOpenComment.isOpenComment));
             }}
           />
           {/* 댓글 수 출력 어떻게 할 지 고민 */}
@@ -103,7 +112,7 @@ function BalanceGameCard({ card, isSidebarOpen, setSidebarOpen }) {
         <div className={classes.bottom_right}>{card.item}</div>
       </div>
     </div>
-  )
+  );
 }
 
-export default BalanceGameCard
+export default BalanceGameCard;
