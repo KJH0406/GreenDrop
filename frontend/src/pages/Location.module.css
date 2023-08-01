@@ -1,0 +1,95 @@
+.location {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@media (max-width: 500px) {
+  .title {
+    margin: 1rem;
+    font-size: 1.5rem;
+  }
+
+  .iot_location {
+    margin-bottom: 1.5rem;
+  }
+
+  .iot_picture {
+    margin-bottom: 1.5rem;
+    height: 200px;
+  }
+
+  .iot_location_text {
+    margin-bottom: 1.5rem;
+    padding: 0.5rem 0;
+    font-size: 1.1rem;
+  }
+
+  .location_text {
+    margin: 1rem;
+  }
+}
+
+@media (min-width: 500px) {
+  .title {
+    margin: 2rem 0 1rem 0;
+    font-size: 2rem;
+  }
+
+  .iot_location {
+    margin: 1rem;
+  }
+
+  .iot_picture {
+    margin: 1rem;
+    height: 350px;
+  }
+
+  .iot_location_text {
+    margin: 1rem;
+    padding: 1rem 0;
+    font-size: 1.25rem;
+  }
+
+  .location_text {
+    margin: 1rem;
+  }
+}
+
+/* 제목 */
+.title {
+  
+  font-weight: bolder;
+  display: flex;
+}
+
+.title_green {
+  color: green;
+  margin-right: 0.5rem;
+}
+
+/* 위치 지도 */
+.iot_location {
+  width: 90%;
+  border-radius: 15px;
+  box-shadow: 0 5px 6px rgba(0, 0, 0, 0.4);
+  content: url("../assets/iot_location.PNG");
+}
+
+/* 분리수거함 사진 */
+.iot_picture {
+  width: 90%;
+  border-radius: 15px;
+  box-shadow: 0 5px 6px rgba(0, 0, 0, 0.4);
+  /* 추후 수정 예정 */
+  content: url("../assets/bin.jfif");
+}
+
+/* 위치 텍스트 */
+.iot_location_text {
+  width: 90%;
+  font-weight: bold;
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: 0 5px 6px rgba(0, 0, 0, 0.4);
+}

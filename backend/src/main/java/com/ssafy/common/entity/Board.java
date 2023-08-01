@@ -3,12 +3,17 @@ package com.ssafy.common.entity;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@DynamicUpdate
+@DynamicInsert
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
@@ -36,8 +41,13 @@ public class Board implements Serializable {
     private Integer isDeleted;
     @Column(name = "deleted_date")
     private LocalDateTime deletedDate;
-    @JsonManagedReference
+    @LastModifiedDate
+    @Column(name = "last_modified_date")
+    private LocalDateTime lastModifiedDate;
+    @JsonManagedReference(value = "board-category")
     @OneToMany(mappedBy = "board" , cascade = CascadeType.ALL)
     private List<BoardCategory> boardCategories = new ArrayList<>();
-
+    @JsonManagedReference(value = "comment-board")
+    @OneToMany(mappedBy = "board" , cascade = CascadeType.ALL)
+    private List<Comment> commentList = new ArrayList<>();
 }

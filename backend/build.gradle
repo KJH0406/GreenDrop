@@ -45,6 +45,17 @@ dependencies {
 	//JSON parsing
 	implementation 'org.json:json:20190722'
 	implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+
+	//Model mapper
+	implementation group: 'org.modelmapper', name: 'modelmapper', version: '2.3.8'
+
+	//record Builder 사용 dependency
+	implementation group: 'io.soabase.record-builder', name: 'record-builder-core', version: '34'
+
+	//jwt dependency
+	implementation("io.jsonwebtoken:jjwt-api:0.11.5")
+	runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.5")
+	runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.5")
 }
 
 tasks.named('test') {

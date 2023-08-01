@@ -2,6 +2,7 @@ package com.ssafy.common.controller;
 
 import com.ssafy.common.dto.request.ManagerRequestDto;
 import com.ssafy.common.dto.response.ManagerResponseDto;
+import com.ssafy.common.security.SuperAuthorize;
 import com.ssafy.common.service.ManagerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,7 @@ public class ManagerController {
     private final ManagerService managerService;
 
     //관리자 등록 기능
+    @SuperAuthorize
     @PostMapping("/regist")
     public ResponseEntity<?> registManager(@RequestBody ManagerRequestDto managerRequestDto){
         managerService.registManager(managerRequestDto);
@@ -22,7 +24,7 @@ public class ManagerController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/login")
+    @PostMapping("/login")
     public ResponseEntity<?> signIn(@RequestBody ManagerRequestDto managerRequestDto){
         ManagerResponseDto response;
         try {

@@ -1,0 +1,263 @@
+.outer_box {
+  width: 80%;
+  height: 300px;
+  justify-content: space-between;
+  margin: 5%;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 3px 3px 3px 3px #a8a8a8;
+  border-radius: 10px;
+  position: relative;
+}
+input:focus {
+  outline: none;
+}
+.top {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.title {
+  color: #0b9a47;
+  font-weight: 600;
+}
+.top_item_left {
+  display: flex;
+  justify-content: flex-start;
+  align-content: center;
+  width: 60%;
+  text-align: start;
+  overflow-y: scroll;
+}
+.top_item_left::-webkit-scrollbar {
+  display: none; /* 크롬, 사파리, 오페라, 엣지 */
+}
+.top_item_right {
+  display: flex;
+  justify-content: flex-end;
+  align-content: center;
+  width: 40%;
+}
+.card_sidebar {
+  z-index: 898;
+  position: absolute;
+  right: 0;
+  top: 10%;
+  background-color: #f8f8f8;
+}
+
+.bar_image {
+  margin-top: 5px;
+  margin-right: 5px;
+  margin-bottom: 3px;
+  width: 5px;
+  height: 18px;
+}
+
+.middle {
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
+  overflow: hidden;
+}
+.middle_item {
+  height: 70%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 5%;
+  width: 40%;
+  border-radius: 20px;
+  position: relative;
+}
+.middle_item_left {
+  border: 3px solid #ffcece;
+}
+.middle_item_right {
+  border: 3px solid #d5d1ff;
+}
+.answer {
+  border: none;
+  text-align: center;
+  align-items: center;
+  background-color: #f8f8f8;
+  width: 100%;
+  overflow-y: scroll;
+  overflow-wrap: break-word;
+  height: 80%;
+}
+
+.answer:focus {
+  outline: none;
+}
+.answer::-webkit-scrollbar,
+.answer::-webkit-scrollbar-thumb {
+  overflow: visible;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.2);
+}
+.answer::-webkit-scrollbar {
+  /* 스크롤바 너비 조절하는 부분 */
+  width: 10px;
+}
+
+.cover_bar {
+  width: 10px;
+  height: 80%;
+  position: absolute;
+  top: 3;
+  right: 0;
+  -webkit-transition: all 0.5s;
+  opacity: 1;
+  /* 배경색을 상자색과 똑같이 맞춰준다 */
+  background-color: #f8f8f8;
+  border-radius: 4px;
+}
+.middle_item:hover .cover_bar {
+  opacity: 0;
+  -webkit-transition: all 0.5s;
+}
+.bottom {
+  display: flex;
+  height: 30px;
+
+  flex-direction: row;
+  justify-content: space-between;
+  align-content: center;
+}
+.bottom_left {
+  width: 60%;
+  height: 30px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.bottom_right {
+  width: 30%;
+  height: 30px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  /* margin-right: 10px; */
+}
+
+.bottom_like {
+  /* 이 부분 어떻게 해야할지 알아봐야함*/
+  margin-right: 5%;
+  /* margin-left: 10px; */
+}
+.bottom_like_img {
+  margin-right: 5%;
+}
+.bottom_comment {
+  margin-right: 5%;
+}
+.bottom_comment_img {
+  margin-right: 5%;
+}
+
+@media (min-width: 500px) {
+  .outer_box {
+    font-size: 1.5rem;
+    height: 500px;
+    padding: 1.5rem;
+  }
+  .top_item_left {
+    font-size: 1.5rem;
+  }
+  .top_item_right {
+    font-size: 0.9rem;
+  }
+  .subject {
+    font-size: 1.2rem;
+  }
+  .bottom_left {
+    font-size: 0.9rem;
+  }
+  .bottom_right {
+    font-size: 0.9rem;
+  }
+  .bottom_like {
+    width: 30px;
+    height: 30px;
+  }
+  .bottom_like_img {
+    width: 30px;
+    height: 30px;
+  }
+  .bottom_comment {
+    width: 30px;
+    height: 30px;
+  }
+  .bottom_comment_img {
+    width: 30px;
+    height: 30px;
+  }
+
+  .middle_item_left {
+    border: 3px solid #ffcece;
+  }
+  .middle_item_right {
+    border: 3px solid #d5d1ff;
+  }
+  .middle_item {
+    font-size: 1rem;
+  }
+  .answer {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .outer_box {
+    font-size: 0.8rem;
+    height: 300px;
+    padding: 1rem;
+  }
+  .top_item_left {
+    font-size: 1rem;
+  }
+  .top_item_right {
+    font-size: 0.5rem;
+  }
+  .subject {
+    font-size: 0.8rem;
+  }
+  .bottom_left {
+    font-size: 0.5rem;
+  }
+  .bottom_right {
+    font-size: 0.5rem;
+  }
+  .bottom_like {
+    width: 20px;
+    height: 20px;
+  }
+  .bottom_like_img {
+    width: 20px;
+    height: 20px;
+  }
+  .bottom_comment {
+    width: 20px;
+    height: 20px;
+  }
+  .bottom_comment_img {
+    width: 20px;
+    height: 20px;
+  }
+  .middle_item_left {
+    border: 1.5px solid #ffcece;
+  }
+  .middle_item_right {
+    border: 1.5px solid #d5d1ff;
+  }
+
+  .middle_item {
+    font-size: 0.8rem;
+  }
+  .answer {
+    font-size: 0.8rem;
+  }
+}

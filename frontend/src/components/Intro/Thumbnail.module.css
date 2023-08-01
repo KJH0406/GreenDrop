@@ -1,0 +1,56 @@
+.thumbnail_box {
+  background-image: url("../../assets/thumbnail.jpg");
+  background-size: cover;
+}
+
+.thumbnail_title {
+  font-weight: bolder;
+  text-align: left;
+  color: white;
+}
+
+@media (min-width: 500px) {
+  .thumbnail_box {
+    height: 43rem;
+  }
+
+  .thumbnail_title {
+    background-color: rgba(0, 0, 0, 0.55);
+    height: 39rem;
+    padding-top: 4rem;
+    padding-left: 4rem;
+  }
+  .thumbnail_title_first {
+    font-size: 3rem;
+    margin-bottom: 3rem;
+    line-height: 4.5rem;
+  }
+  .thumbnail_title_second {
+    font-weight: normal;
+    font-size: 1.2rem;
+    line-height: 2.5rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .thumbnail_box {
+    height: 33rem;
+  }
+
+  .thumbnail_title {
+    background-color: rgba(0, 0, 0, 0.55);
+    height: 29rem;
+    padding-top: 4rem;
+    padding-left: 2rem;
+  }
+  .thumbnail_title_first {
+    font-size: 1.7rem;
+    margin-bottom: 2.5rem;
+    line-height: 3rem;
+  }
+  .thumbnail_title_second {
+    font-weight: normal;
+    font-size: 1rem;
+    line-height: 2rem;
+  }
+}
