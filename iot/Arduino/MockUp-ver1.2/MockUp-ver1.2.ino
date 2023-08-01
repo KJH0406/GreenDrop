@@ -59,11 +59,11 @@ void loop() {
   }else if((filteredGram1 > 190) && (filteredGram1 < 200)){ // 필터된 무게가 빈컵의 무게 범위 내일 경우
     offsetCount = 0; // 범위 밖이 아니기 때문에 0으로 초기화
     outerCount = 0;
-    Serial.println("측정중입니다..");
+    Serial.println("m"); // measuring
     if(++innerCount > count){ // 빈 컵이라고 판단하고 컵을 떨어트린다.
       innerCount = 0;
       servo.write(angle + 90);
-      Serial.println("Drop the Cup!!!");
+      Serial.println("L");
       delay(1000);
       servo.write(angle);
       delay(1000);
@@ -73,11 +73,11 @@ void loop() {
     innerCount = 0;
     if(outerCount >= count){
       if(filteredGram1 >= 200){
-        Serial.println("너무 무거워ㅠ");
+        Serial.println("o"); // Overweight
       }
     }else{
       outerCount++;
-      Serial.println("측정중입니다..");
+      Serial.println("m"); // measuring
     }
   }
   // Serial.print(innerCount);
@@ -86,7 +86,7 @@ void loop() {
   // Serial.print(" ");
   // Serial.print(outerCount);
   // Serial.print(" ");
-  Serial.println(filteredGram1);
+  // Serial.println(filteredGram1);
   // Serial.println(zero1);
 
   // double duration, distance;

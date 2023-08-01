@@ -24,7 +24,7 @@ public class PlasticLogService {
     private final EquipmentRepository equipmentRepository;
 
     @Transactional
-    public PlasticLogResponseDto updatePlastic(String direction, EquipmentRequestDto equipmentRequestDto){
+    public PlasticLogResponseDto updatePlastic(String direction, EquipmentRequestDto equipmentRequestDto) {
         //1. 오늘 날짜의 game 가져옴
         Game game = gameRepository.findOneByDate(LocalDate.now());
         Long equipmentSeq = equipmentRequestDto.getEquipmentSeq();
@@ -42,25 +42,24 @@ public class PlasticLogService {
 
         //TODO: 갱신된 결과값 바로 나오도록 만들기
         PlasticLogResponseDto response = PlasticLogResponseDto.fromEntity(game);
-        if(direction.equals("L")){
-            response.setLeftCount(response.getLeftCount()+1);
-        }
-        else if(direction.equals("R")){
-            response.setRightCount(response.getRightCount()+1);
+        if (direction.equals("L")) {
+            response.setLeftCount(response.getLeftCount() + 1);
+        } else if (direction.equals("R")) {
+            response.setRightCount(response.getRightCount() + 1);
         }
         return response;
     }
 
-    public PlasticLogResponseDto getCurrentPlastic(){
+    public PlasticLogResponseDto getCurrentPlastic() {
         Game game = gameRepository.findOneByDate(LocalDate.now());
         return PlasticLogResponseDto.fromEntity(game);
     }
 
-    public Long getTotalPlastic(){
+    public Long getTotalPlastic() {
         return plasticLogRepository.count();
     }
 
-    public Integer getPlasticCountByDate(LocalDate date){
+    public Integer getPlasticCountByDate(LocalDate date) {
         Game game = gameRepository.findOneByDate(date);
         return game.getLeftCount() + game.getRightCount();
     }
