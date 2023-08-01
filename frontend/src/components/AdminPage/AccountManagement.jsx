@@ -1,19 +1,23 @@
 import { useState } from "react";
 import classes from "./AccountManagement.module.css";
-import { Navigate } from "react-router-dom";
+
+// 작업을 위해서 임시 주석처리
+// import { Navigate } from "react-router-dom";
 
 function AccountManagement() {
-  const token = localStorage.getItem("loggedInUser");
-  const isSuper = JSON.parse(token).role === "SUPER";
+  // 작업을 위해서 임시 주석처리
+  // const token = localStorage.getItem("loggedInUser");
+  // const isSuper = JSON.parse(token).role === "SUPER";
   const [selectedAccountId, setSelectedAccountId] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [newAccountId, setNewAccountId] = useState("");
   const [newPassword, setNewPassword] = useState("");
 
-  if (!isSuper) {
-    alert("최고 관리자만 접근 가능한 기능입니다.");
-    return <Navigate to="/admin" />;
-  }
+  // 작업을 위해 임시 주석처리
+  // if (!isSuper) {
+  //   alert("최고 관리자만 접근 가능한 기능입니다.");
+  //   return <Navigate to="/admin" />;
+  // }
 
   // 서버에 관리자 리스트를 불러오는 요청 GET
   // get 받아서 List 관리하면됨!

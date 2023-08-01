@@ -2,9 +2,12 @@ import { Link, useNavigate } from "react-router-dom";
 import classes from "./AdminHeader.module.css";
 
 function AdminHeader() {
-  const token = localStorage.getItem("loggedInUser");
-  const isSuper = JSON.parse(token).role === "SUPER";
   const navigate = useNavigate();
+
+  const isSuper = true;
+  // 작업을 위해서 임시 주석처리
+  // const token = localStorage.getItem("loggedInUser");
+  // const isSuper = JSON.parse(token).role === "SUPER";
   // 헤더 리스트
   const pageList = [
     { path: "", name: "홈" },
