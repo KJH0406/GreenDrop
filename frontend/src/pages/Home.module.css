@@ -1,0 +1,226 @@
+.homepage {
+  background-color: #f8f8f8;
+  padding-bottom: 3rem;
+}
+
+@media (min-width: 500px) {
+  .collection {
+    height: 300px;
+  }
+
+  .collection_background {
+    height: 120px;
+  }
+
+  .collection_text {
+    font-size: 2.4rem;
+  }
+
+  .collection_image {
+    width: 300px;
+    height: 300px;
+  }
+
+  .result_title {
+    font-size: 2rem;
+  }
+
+  .result_answer {
+    height: 350px;
+  }
+
+  .result_balance_game_title {
+    font-size: 1.8rem;
+  }
+
+  .result_content {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+  }
+
+  .result_percentage {
+    font-size: 2rem;
+  }
+
+  .last_text {
+    font-size: 1.5rem;
+  }
+
+  .balance_game_button button {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .collection {
+    height: 200px;
+  }
+
+  .collection_background {
+    height: 80px;
+  }
+
+  .collection_text {
+    font-size: 1.6rem;
+  }
+
+  .collection_image {
+    width: 200px;
+    height: 200px;
+  }
+
+  .result_title {
+    font-size: 1.2rem;
+  }
+
+  .result_answer {
+    height: 250px;
+  }
+
+  .result_balance_game_title {
+    font-size: 1rem;
+  }
+
+  .result_content {
+    font-size: 1rem;
+  }
+
+  .result_percentage {
+    font-size: 1.5rem;
+  }
+
+  .last_text {
+    font-size: 0.9rem;
+  }
+
+  .balance_game_button button {
+    font-size: 0.8rem;
+  }
+}
+
+/* 홈페이지 - 현황 */
+.collection {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  background-color: #6fcf97;
+}
+
+.collection_text {
+  margin: 1.5rem 1.5rem;
+  text-align: center;
+  color: white;
+  text-shadow: 2px 2px 2px gray;
+}
+
+.collection_image {
+  border-radius: 50%;
+  border: 6px solid white;
+  content: url("../assets/earth.png");
+}
+
+.down {
+  margin: 3rem;
+  display: flex;
+  justify-content: center;
+}
+
+.down_image {
+  width: 20px;
+  content: url("../assets/arrow.gif");
+}
+
+/* 홈페이지 - 결과 */
+.result {
+  text-align: center;
+}
+
+.result_title {
+  font-weight: bold;
+}
+
+.result_balance_game {
+  padding-top: 1rem;
+  margin: 2rem;
+  background-color: white;
+  text-align: center;
+  border-radius: 20px;
+}
+
+.result_balance_game_title {
+  margin-bottom: 2rem;
+  font-weight: bold;
+}
+
+.result_answer {
+  color: white;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-around;
+}
+
+.result_left {
+  width: 45%;
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #ff8484;
+  border-radius: 20px;
+}
+
+.result_right {
+  width: 45%;
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #958cff;
+  border-radius: 20px;
+}
+
+.result_king {
+  margin: 1rem;
+  width: 30%;
+  height: 30%;
+  content: url("../assets/winner.png");
+}
+
+.result_nan {
+  margin: 1rem;
+  width: 30%;
+  height: 30%;
+}
+
+.result_content {
+  width: 90%;
+  word-break: keep-all;
+}
+
+.result_percentage {
+  margin: 0.5rem;
+}
+
+.last_text {
+  margin: 3rem 0;
+}
+
+/* 홈페이지 - 밸런스 게임 버튼 */
+.balance_game_button {
+  margin: 2rem;
+}
+
+.balance_game_button button {
+  background-color: #e7edfb;
+  font-weight: bold;
+  padding: 1rem;
+  border: none;
+  border-radius: 30px;
+  box-shadow: 3px 3px 5px gray;
+}
+
+.balance_game_button button:hover {
+  transition: all 0.2s linear;
+  transform:scale(1.1);
+}
