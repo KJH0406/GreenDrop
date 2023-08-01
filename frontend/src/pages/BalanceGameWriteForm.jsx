@@ -1,20 +1,20 @@
-import classes from "./BalanceGameWriteForm.module.css"
+import classes from "./BalanceGameWriteForm.module.css";
 
-import { useState } from "react"
-import { useSelector } from "react-redux"
-import { Link } from "react-router-dom"
+import { useState } from "react";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 function BalanceGameWriteFormPage() {
-  const [question, setQuestion] = useState("")
-  const [leftAnswer, setLeftAnswer] = useState("")
-  const [rightAnswer, setRightAnswer] = useState("")
-  const [nickname, setNickname] = useState("")
-  const [category, setCategory] = useState("")
-  const [password, setPassword] = useState("")
-  const [card, setCard] = useState("")
+  const [question, setQuestion] = useState("");
+  const [leftAnswer, setLeftAnswer] = useState("");
+  const [rightAnswer, setRightAnswer] = useState("");
+  const [nickname, setNickname] = useState("");
+  const [category, setCategory] = useState("");
+  const [password, setPassword] = useState("");
+  const [card, setCard] = useState("");
   const categories = useSelector((state) => {
-    return state.categories
-  })
+    return state.categories;
+  });
 
   return (
     <div className={classes.regist_box}>
@@ -30,8 +30,8 @@ function BalanceGameWriteFormPage() {
               type="text"
               placeholder="상황 설명*(필수)(최대 30자)"
               onChange={(e) => {
-                setQuestion(e.target.value)
-                console.log(question)
+                setQuestion(e.target.value);
+                console.log(question);
               }}
             />
           </div>
@@ -42,8 +42,8 @@ function BalanceGameWriteFormPage() {
               className={classes.text_input}
               placeholder="선택지1(필수)(최대50자)"
               onChange={(e) => {
-                setLeftAnswer(e.target.value)
-                console.log(leftAnswer)
+                setLeftAnswer(e.target.value);
+                console.log(leftAnswer);
               }}
             ></textarea>
             <div className={classes.cover_bar}></div>
@@ -55,8 +55,8 @@ function BalanceGameWriteFormPage() {
               className={classes.text_input}
               placeholder="선택지2(필수)(최대50자)"
               onChange={(e) => {
-                setRightAnswer(e.target.value)
-                console.log(rightAnswer)
+                setRightAnswer(e.target.value);
+                console.log(rightAnswer);
               }}
             ></textarea>
             <div className={classes.cover_bar}></div>
@@ -70,8 +70,7 @@ function BalanceGameWriteFormPage() {
               className={classes.category}
               defaultValue={"카테고리 등록"}
               onChange={(e) => {
-                setCategory(e.target.value)
-
+                setCategory(e.target.value);
               }}
             >
               {categories.map((item, idx) => {
@@ -79,7 +78,7 @@ function BalanceGameWriteFormPage() {
                   <option value={item} key={idx}>
                     {item}
                   </option>
-                )
+                );
               })}
             </select>
           </div>
@@ -93,7 +92,7 @@ function BalanceGameWriteFormPage() {
             type="text"
             placeholder="닉네임을 입력하세요 (최대 10자)"
             onChange={(e) => {
-              setNickname(e.target.value)
+              setNickname(e.target.value);
             }}
           />
         </div>
@@ -103,7 +102,7 @@ function BalanceGameWriteFormPage() {
             type="password"
             placeholder="비밀번호를 입력하세요 (최대 10자)"
             onChange={(e) => {
-              setPassword(e.target.value)
+              setPassword(e.target.value);
             }}
           />
         </div>
@@ -119,8 +118,8 @@ function BalanceGameWriteFormPage() {
               nickname: nickname,
               password: password,
               category: category,
-            })
-            console.log(card)
+            });
+            console.log(card);
           }}
         ></input>
         <Link className={classes.regist_btn} to={"/board"}>
@@ -128,7 +127,7 @@ function BalanceGameWriteFormPage() {
         </Link>
       </div>
     </div>
-  )
+  );
 }
 
-export default BalanceGameWriteFormPage
+export default BalanceGameWriteFormPage;

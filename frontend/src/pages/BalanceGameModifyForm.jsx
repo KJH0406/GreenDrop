@@ -1,25 +1,25 @@
-import classes from "./BalanceGameModifyForm.module.css"
+import classes from "./BalanceGameModifyForm.module.css";
 
-import { useState } from "react"
-import { useSelector } from "react-redux"
-import { Link, useLocation } from "react-router-dom"
+import { useState } from "react";
+import { useSelector } from "react-redux";
+import { Link, useLocation } from "react-router-dom";
 
 function BalanceGameWriteFormPage() {
-  const [question, setQuestion] = useState("")
-  const [leftAnswer, setLeftAnswer] = useState("")
-  const [rightAnswer, setRightAnswer] = useState("")
+  const [question, setQuestion] = useState("");
+  const [leftAnswer, setLeftAnswer] = useState("");
+  const [rightAnswer, setRightAnswer] = useState("");
 
-  const location = useLocation()
-  const searchParams = new URLSearchParams(location.search)
-  const boardSeq = searchParams.get("boardSeq") || "Default Value"
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const boardSeq = searchParams.get("boardSeq") || "Default Value";
 
   const categories = useSelector((state) => {
-    return state.categories
-  })
-  const [category, setCategory] = useState("")
+    return state.categories;
+  });
+  const [category, setCategory] = useState("");
   //newCard만 서버로 전송하면 됨
-  const [newCard, setNewCard] = useState("")
-  console.log(newCard)
+  const [newCard, setNewCard] = useState("");
+  console.log(newCard);
   //boardSeq로 주제 상세 읽어오기(axios)
   //현재는 더미 데이터
   const [card] = useState({
@@ -30,8 +30,8 @@ function BalanceGameWriteFormPage() {
     likeCount: "3",
     lastModifiedDate: "2023.07.26",
     item: "스포츠",
-  })
-  console.log(boardSeq)
+  });
+  console.log(boardSeq);
 
   return (
     <div className={classes.regist_box}>
@@ -48,8 +48,8 @@ function BalanceGameWriteFormPage() {
               placeholer="상황 설명*(필수)(최대 30자)"
               value={card.question || ""}
               onChange={(e) => {
-                setQuestion(e.target.value)
-                console.log(question)
+                setQuestion(e.target.value);
+                console.log(question);
               }}
             />
           </div>
@@ -61,8 +61,8 @@ function BalanceGameWriteFormPage() {
               placeholder="선택지1(필수)(최대50자)"
               value={card.leftAnswer || ""}
               onChange={(e) => {
-                setLeftAnswer(e.target.value)
-                console.log(leftAnswer)
+                setLeftAnswer(e.target.value);
+                console.log(leftAnswer);
               }}
             ></textarea>
             <div className={classes.cover_bar}></div>
@@ -75,8 +75,8 @@ function BalanceGameWriteFormPage() {
               placeholder="선택지2(필수)(최대50자)"
               value={card.rightAnswer || ""}
               onChange={(e) => {
-                setRightAnswer(e.target.value)
-                console.log(rightAnswer)
+                setRightAnswer(e.target.value);
+                console.log(rightAnswer);
               }}
             ></textarea>
             <div className={classes.cover_bar}></div>
@@ -91,7 +91,7 @@ function BalanceGameWriteFormPage() {
               className={classes.category}
               defaultValue={card.item || ""}
               onChange={(e) => {
-                setCategory(e.target.value)
+                setCategory(e.target.value);
               }}
             >
               {categories.map((item, idx) => {
@@ -99,7 +99,7 @@ function BalanceGameWriteFormPage() {
                   <option value={item} key={idx}>
                     {item}
                   </option>
-                )
+                );
               })}
             </select>
           </div>
@@ -126,7 +126,7 @@ function BalanceGameWriteFormPage() {
               leftAnswer: leftAnswer,
               rightAnswer: rightAnswer,
               item: category,
-            })
+            });
           }}
         ></input>
         <Link className={classes.regist_btn} to={"/board"}>
@@ -134,7 +134,7 @@ function BalanceGameWriteFormPage() {
         </Link>
       </div>
     </div>
-  )
+  );
 }
 
-export default BalanceGameWriteFormPage
+export default BalanceGameWriteFormPage;
