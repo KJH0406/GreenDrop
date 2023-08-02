@@ -10,8 +10,12 @@ function HomePage() {
   let [balanceGame, setBalanceGame] = useState([{ question: "" }, { leftAnswer: "" }, { rightAnswer: "" }, { leftCount: "" }, { rightCount: "" }]);
 
   useEffect(() => {
-    let date = new Date();
-    let now = date.toISOString().slice(0, 10);
+    let today = new Date();
+    let yesterday = new Date(today);
+
+    yesterday.setDate(today.getDate() - 1);
+
+    let now = yesterday.toISOString().slice(0, 10);
 
     axios
       .get(`http://i9b103.p.ssafy.io:8000/game/${now}`)
