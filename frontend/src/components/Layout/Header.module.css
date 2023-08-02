@@ -46,9 +46,18 @@
 .sidbar {
   z-index: 997;
   position: absolute;
-  right: 0;
+  right: 0%;
   height: 100vh;
   background-color: white;
+  animation: fadeIn ease-in-out 0.4s;
+}
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 .overlay {

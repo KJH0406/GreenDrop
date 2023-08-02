@@ -7,38 +7,85 @@ import decorateImg_2 from "../assets/deviceUI_2.png";
 import ConfirmModal from "../components/DeviceUI/ConfirmModal";
 import CompleteModal from "../components/DeviceUI/CompleteModal";
 import OverWeightModal from "../components/DeviceUI/OverWeightModal";
-import success from "../assets/success.mp3";
+// import success from "../assets/success.mp3"; 향후 사운드 추가
+import axios from "axios";
 
-// 밸런스 게임 데이터 불러오기
-const fetchGameData = async () => {
-  const response = await fetch(
-    "https://react-app-a1e5d-default-rtdb.firebaseio.com/data.json"
-  );
+// API
+const api = "http://i9b103.p.ssafy.io:8000/";
+
+// 날짜 자동생성
+const getCurrentDate = () => {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, "0");
+  const day = String(today.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+};
+
+// 수거 데이터 불러오기
+const CollectData = async () => {
+  const response = await fetch(`${api}plastic/current`);
   return response.json();
 };
 
 // 디바이스 페이지 정보
 function DevicePage() {
   // 오디오 재생(수정필요)
-  var audio = new Audio(success);
+  // var audio = new Audio(success);
+
   // 포트 관련 함수
   const [port, setPort] = useState(null);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [showThankYouModal, setShowThankYouModal] = useState(false);
   const [showHeavyModal, setShowHeavyModal] = useState(false);
+  const [GameInfo, setGameInfo] = useState(null); // 데이터를 담을 상태
+  const { question, leftAnswer, rightAnswer } = GameInfo || {}; // 데이터를 디스트럭처링하여 사용
 
-  const connectSerial = async () => {
+  const BalanceGameData = async () => {
+    const currentDate = getCurrentDate(); // 현재 날짜를 가져옴
     try {
-      const port = await navigator.serial.requestPort();
-      await port.open({ baudRate: 9600 });
-      setPort(port);
-
-      const reader = port.readable.getReader();
-      readData(reader);
+      const response = await axios.get(`${api}game/${currentDate}`); // API 엔드포인트를 적절히 수정해주세요
+      setGameInfo(response.data);
     } catch (error) {
-      console.error("Error connecting to serial port:", error);
+      console.error("Error fetching data:", error);
     }
   };
+
+  useEffect(() => {
+    if (!GameInfo) {
+      BalanceGameData();
+    }
+  }, [GameInfo]);
+
+  useEffect(() => {
+    const connectSerial = async () => {
+      try {
+        const port = await navigator.serial.requestPort();
+        await port.open({ baudRate: 9600 });
+        setPort(port);
+
+        const reader = port.readable.getReader();
+        readData(reader);
+      } catch (error) {
+        console.error("Error connecting to serial port:", error);
+      }
+    };
+
+    const handleClick = () => {
+      connectSerial();
+    };
+
+    document.addEventListener("click", handleClick);
+
+    return () => {
+      if (port && port.readable) {
+        port.readable.cancel();
+        port.close();
+      }
+      document.removeEventListener("click", handleClick);
+    };
+  }, [port]);
+
   const readData = async (reader) => {
     try {
       while (true) {
@@ -59,7 +106,7 @@ function DevicePage() {
           setShowConfirmModal(true);
         }
 
-        // 'L' 데이터를 받았을 때 Thank You Modal 표시
+        // 왼쪽 수거
         if (portValue.includes("L")) {
           setShowHeavyModal(false);
           setShowConfirmModal(false);
@@ -67,6 +114,34 @@ function DevicePage() {
           setTimeout(() => {
             setShowThankYouModal(false);
           }, 2000); // Close Thank You Modal after 2 seconds
+
+          axios({
+            url: `${api}plastic/L`,
+            method: "patch",
+            data: {
+              // 보낼 데이터
+              equipmentSeq: 1,
+            },
+          });
+        }
+
+        // 오른쪽 수거
+        if (portValue.includes("R")) {
+          setShowHeavyModal(false);
+          setShowConfirmModal(false);
+          setShowThankYouModal(true);
+          setTimeout(() => {
+            setShowThankYouModal(false);
+          }, 2000); // Close Thank You Modal after 2 seconds
+
+          axios({
+            url: `${api}plastic/R`,
+            method: "patch",
+            data: {
+              // 보낼 데이터
+              equipmentSeq: 1,
+            },
+          });
         }
 
         // 'o' 데이터를 받았을 때 Heavy Modal 표시
@@ -87,19 +162,7 @@ function DevicePage() {
     }
   };
 
-  useEffect(() => {
-    document.addEventListener("click", connectSerial);
-
-    return () => {
-      if (port && port.readable) {
-        port.readable.cancel();
-        port.close();
-      }
-      document.removeEventListener("click", connectSerial);
-    };
-  }, [port]);
-
-  const { data, status } = useQuery("gameData", fetchGameData, {
+  const { data, status } = useQuery("gameData", CollectData, {
     refetchInterval: 2000, // 2초마다 데이터 리프레시
   });
 
@@ -112,14 +175,14 @@ function DevicePage() {
   }
 
   // 위에서 호출한 data를 통해 데이터 명칭 별 정의하기
-  const { question, leftAnswer, rightAnswer, leftCount, rightCount } = data;
+  const { leftCount, rightCount } = data;
 
   // 전체 카운트 및 왼쪽,오른쪽 비율
   const totalCount = leftCount + rightCount;
   let leftBarPercent =
-    leftCount !== 0 ? Math.round((leftCount / totalCount) * 100) : 5;
+    leftCount !== 0 ? Math.round((leftCount / totalCount) * 100) : 7;
   let rightBarPercent =
-    rightCount !== 0 ? Math.round((rightCount / totalCount) * 100) : 5;
+    rightCount !== 0 ? Math.round((rightCount / totalCount) * 100) : 7;
   if (totalCount === 0) {
     leftBarPercent = 50;
     rightBarPercent = 50;
@@ -127,7 +190,8 @@ function DevicePage() {
 
   return (
     <div className={classes.device_container}>
-      <input type="button" onClick={() => audio.play()} value="PLAY"></input>
+      {/* 오디오 관련 버튼 향후 재구성 */}
+      {/* <input type="button" onClick={() => audio.play()} value="PLAY"></input> */}
 
       {/* Confirm Modal */}
       {showConfirmModal && <ConfirmModal />}
