@@ -20,7 +20,7 @@ function BoardPage() {
 
   useEffect(() => {
     axios
-      .get("http://i9b103.p.ssafy.io:8000/board/list?page=")
+      .get("http://i9b103.p.ssafy.io:8000/board/list?page=2")
       .then((response) => {
         // console.log("응답", response);
         const fetchedCardList = [...response.data.content];
