@@ -1,11 +1,12 @@
-import classes from "./Status.module.css";
-import React, { useState } from 'react';
+import axios from "axios";
+import React, { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
+import classes from "./Status.module.css";
 
 function StatusPage() {
   let date = new Date();
 
-  const [weeklyOptions] = useState({
+  const [weeklyOptions, setWeeklyOptions] = useState({
     series: [{
       name: '일주일',
       data: [
@@ -61,7 +62,7 @@ function StatusPage() {
     }
   });
 
-  const [dailyOptions] = useState({
+  const [dailyOptions, setDailyOptions] = useState({
     series: [{
       name: '오늘',
       data: [ 29, 15, 12, 77, 29, 33, 0, 0, 0, 0, 0 ]
@@ -102,6 +103,42 @@ function StatusPage() {
       },
     }
   });
+  
+  useEffect(() => {
+    let date = new Date();
+    let now = date.toISOString().slice(0, 10);
+
+    axios
+      .get(`http://i9b103.p.ssafy.io:8000/plastic/list/data/${now}`)
+      .then((result) => {
+        setDailyOptions((dailySeries) => {
+          return {
+            ...dailySeries, series: [{
+              ...dailySeries.series[0],
+              data: result.data
+            }],
+          };
+        });
+      })
+      .catch(() => {
+        alert("집계에 오류가 있습니다.");
+      });
+    
+    axios.get('http://i9b103.p.ssafy.io:8000/plastic/list/week')
+      .then((result) => {
+        setWeeklyOptions((weeklySeries) => {
+          return {
+            ...weeklySeries, series: [{
+              ...weeklySeries.series[0],
+              data: result.data
+            }],
+          };
+        });
+      })
+      .catch(() => {
+        alert("집계에 오류가 있습니다.");
+      });
+  }, []);
 
   return (
     <div className={classes.chart_page}>
