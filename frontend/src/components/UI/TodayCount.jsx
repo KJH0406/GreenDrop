@@ -1,14 +1,33 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
 import classes from "./TodayCount.module.css";
-import { useSelector } from "react-redux";
 
 function TotalCount() {
-  let todayCount = useSelector((state) => {
-    return state.todayCount;
-  });
+  let [todayCount, setTodayCount] = useState('');
 
-  let totalCount = useSelector((state) => {
-    return state.totalCount;
-  });
+  let [totalCount, setTotalCount] = useState('');
+
+  useEffect(() => {
+    let date = new Date();
+    let now = date.toISOString().slice(0, 10);
+
+    axios
+      .get(`http://i9b103.p.ssafy.io:8000/plastic/list/${now}`)
+      .then((result) => {
+        setTodayCount(parseInt(result.data.todayCount).toLocaleString('ko-KR'));
+      })
+      .catch(() => {
+        alert("집계에 오류가 있습니다.");
+      });
+    
+    axios.get('http://i9b103.p.ssafy.io:8000/plastic/list')
+      .then((result) => {
+        setTotalCount(parseInt(result.data.totalCount).toLocaleString('ko-KR'));
+      })
+      .catch(() => {
+        alert("집계에 오류가 있습니다.");
+      });
+  }, []);
 
   return (
     <div>

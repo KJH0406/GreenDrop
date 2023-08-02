@@ -1,29 +1,46 @@
-import classes from "./Home.module.css";
-import TodayCount from "../components/UI/TodayCount";
-import { useSelector } from "react-redux";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import TodayCount from "../components/UI/TodayCount";
+import classes from "./Home.module.css";
 
 function HomePage() {
   let navigate = useNavigate();
-  
-  let countBundle = useSelector((state) => {
-    return state.countBundle;
-  });
 
-  let balanceGame = useSelector((state) => {
-    return state.balanceGame;
-  });
+  let [balanceGame, setBalanceGame] = useState([{ question: "" }, { leftAnswer: "" }, { rightAnswer: "" }, { leftCount: "" }, { rightCount: "" }]);
+
+  useEffect(() => {
+    let date = new Date();
+    let now = date.toISOString().slice(0, 10);
+
+    axios
+      .get(`http://i9b103.p.ssafy.io:8000/game/${now}`)
+      .then(result => {
+        setBalanceGame((prevBalanceGame) => {
+          return [
+          { ...prevBalanceGame[0], question: result.data.question },
+          { ...prevBalanceGame[1], leftAnswer: result.data.leftAnswer },
+          { ...prevBalanceGame[2], rightAnswer: result.data.rightAnswer },
+          { ...prevBalanceGame[3], leftCount: result.data.leftCount },
+          { ...prevBalanceGame[4], rightCount: result.data.rightCount },
+        ];
+        });
+      })
+      .catch(() => {
+        alert("집계에 오류가 있습니다.");
+      });
+  }, []);
 
   let leftPercentage =
-    (parseInt(countBundle[0].leftCount) /
-      (parseInt(countBundle[0].leftCount) +
-        parseInt(countBundle[1].rightCount))) *
+    (parseInt(balanceGame[3].leftCount) /
+      (parseInt(balanceGame[3].leftCount) +
+        parseInt(balanceGame[4].rightCount))) *
     100;
 
   let rightPercentage =
-    (parseInt(countBundle[1].rightCount) /
-      (parseInt(countBundle[0].leftCount) +
-        parseInt(countBundle[1].rightCount))) *
+    (parseInt(balanceGame[4].rightCount) /
+      (parseInt(balanceGame[3].leftCount) +
+        parseInt(balanceGame[4].rightCount))) *
     100;
 
   return (
@@ -42,41 +59,41 @@ function HomePage() {
         <div className={classes.result_title}>지난 밸런스 게임 결과!</div>
         <div className={classes.result_balance_game}>
           <div className={classes.result_balance_game_title}>
-            { balanceGame[0].title }
+            { balanceGame[0].question }
           </div>
           <div className={classes.result_answer}>
             <div className={classes.result_left}>
-              {parseInt(countBundle[0].leftCount) >
-              parseInt(countBundle[1].rightCount) ? (
+              {parseInt(balanceGame[3].leftCount) >
+              parseInt(balanceGame[4].rightCount) ? (
                 <div className={classes.result_king}></div>
               ) : (
                 <div className={classes.result_nan}></div>
               )}
               <div className={classes.result_content}>
-                {balanceGame[1].left}
+                {balanceGame[1].leftAnswer}
               </div>
               <div className={classes.result_percentage}>
                 {leftPercentage.toFixed(1)}%
               </div>
               <div className={classes.result_left_count}>
-                {countBundle[0].leftCount}표
+                {balanceGame[3].leftCount}표
               </div>
             </div>
             <div className={classes.result_right}>
-              {parseInt(countBundle[0].leftCount) <
-              parseInt(countBundle[1].rightCount) ? (
+              {parseInt(balanceGame[3].leftCount) <
+              parseInt(balanceGame[4].rightCount) ? (
                 <div className={classes.result_king}></div>
               ) : (
                 <div className={classes.result_nan}></div>
               )}
               <div className={classes.result_content}>
-                {balanceGame[2].right}
+                {balanceGame[2].rightAnswer}
               </div>
               <div className={classes.result_percentage}>
                 {rightPercentage.toFixed(1)}%
               </div>
               <div className={classes.result_right_count}>
-                {countBundle[1].rightCount}표
+                {balanceGame[4].rightCount}표
               </div>
             </div>
           </div>
