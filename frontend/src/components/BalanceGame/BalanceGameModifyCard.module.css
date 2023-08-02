@@ -1,0 +1,76 @@
+.row_title {
+  font-size: 24pt;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  font-weight: bolder;
+}
+.row_info {
+  font-size: 16pt;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+}
+
+.row_password_input {
+  width: 90%;
+  height: 8%;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  border-radius: 10px;
+  border: 2px solid black;
+}
+.input_tag {
+  width: 90%;
+  text-align: center;
+
+  border: none;
+  background-color: transparent;
+  border-radius: 20px;
+}
+.input_tag:focus::placeholder {
+  color: transparent;
+}
+.row_message {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+.row_error_message {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  color: red;
+}
+
+.confirm_btn {
+  background-color: #0b9a47;
+  border: none;
+  color: white;
+  border-radius: 10px;
+  width: 90%;
+  height: 10%;
+  margin-bottom: 3%;
+  font-weight: 550;
+}
+
+@media (max-width: 500px) {
+  .row_title {
+    font-weight: 900;
+    font-size: 14pt;
+  }
+  .row_info {
+    font-size: 8pt;
+  }
+  .row_password_input {
+    border: 1px solid black;
+  }
+  .row_message {
+    font-size: 8pt;
+  }
+  .confirm_btn {
+    font-size: 8pt;
+  }
+}
