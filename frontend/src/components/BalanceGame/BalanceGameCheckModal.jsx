@@ -5,17 +5,17 @@ import BalanceGameCommentDelete from "./BalanceGameCommentDelete";
 import closeImg from "../../assets/close_green.png";
 
 import { useState } from "react";
-function BalanceGameCheckModal({ isClicked, setIsClicked }) {
+function BalanceGameCheckModal({ isModify, setIsModify }) {
   const [isConfirmed, setIsConfirmed] = useState(false);
   const [ment] = useState(["삭제가", "수정이"]);
-  console.log("보드 시퀀스", isClicked.boardSeq);
+  console.log("보드 시퀀스", isModify.boardSeq);
   return (
     <div
       className={classes.backdrop}
       onClick={() => {
-        if (isClicked.flag) {
+        if (isModify.flag) {
           const newModify = { flag: false, boardSeq: "" };
-          setIsClicked(newModify);
+          setIsModify(newModify);
         }
       }}
     >
@@ -32,23 +32,29 @@ function BalanceGameCheckModal({ isClicked, setIsClicked }) {
             alt=""
             onClick={() => {
               const newModify = { flag: false, boardSeq: "" };
-              setIsClicked(newModify);
+              setIsModify(newModify);
             }}
           />
         </div>
         <div className={classes.component_container}>
-          {!isClicked.boardSeq && !isConfirmed ? (
+          {!isModify.flag && !isModify.boardSeq && !isConfirmed ? (
             <BalanceGameCommentDelete setIsConfirmed={setIsConfirmed} />
-          ) : !isClicked.boardSeq && isConfirmed ? (
+          ) : !isModify.flag && !isModify.boardSeq && isConfirmed ? (
             <BalanceGameConfirm
-              isClicked={isClicked}
-              setIsClicked={setIsClicked}
+              isModify={isModify}
+              setIsModify={setIsModify}
               ment={ment[0]}
             />
-          ) : isClicked.boardSeq ? (
+          ) : !isModify.flag && isModify.boardSeq ? (
+            <BalanceGameConfirm
+              isModify={isModify}
+              setIsModify={setIsModify}
+              ment={ment[1]}
+            />
+          ) : isModify.boardSeq ? (
             <BalanceGameModifyCard
-              isClicked={isClicked}
-              setIsClicked={setIsClicked}
+              isModify={isModify}
+              setIsModify={setIsModify}
               isConfirmed={isConfirmed}
               setIsConfirmed={setIsConfirmed}
             />

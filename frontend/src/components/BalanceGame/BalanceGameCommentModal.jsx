@@ -18,7 +18,7 @@ function BalanceGameCommentModal({ boardSeq }) {
   const isOpenComment = useSelector((state) => {
     return state.isOpenComment;
   });
-  const [isClicked, setIsClicked] = useState({ flag: false, boardSeq: "" });
+  const [isModify, setIsModify] = useState({ flag: false, boardSeq: "" });
 
   // console.log(new Date().toISOString().slice(0, -5))
   function timePassed(date) {
@@ -48,11 +48,8 @@ function BalanceGameCommentModal({ boardSeq }) {
 
   return (
     <div>
-      {isClicked.flag ? (
-        <BalanceGameCheckModal
-          isClicked={isClicked}
-          setIsClicked={setIsClicked}
-        />
+      {isModify.flag ? (
+        <BalanceGameCheckModal isModify={isModify} setIsModify={setIsModify} />
       ) : null}
       <div
         className={classes.backdrop}
@@ -85,14 +82,7 @@ function BalanceGameCommentModal({ boardSeq }) {
                           </span>
                           <span>{timePassed(comment.createdDate)}</span>
                         </div>
-                        {/* <div
-                          onClick={() => {
-                            console.log("삭제");
-                            const deleteComment = { flag: true, boardSeq: "" };
-                            setIsClicked(deleteComment);
-                          }}
-                          className={classes.img_wrapper}
-                        > */}
+
                         <img
                           src={trashcan}
                           alt=""
@@ -100,10 +90,9 @@ function BalanceGameCommentModal({ boardSeq }) {
                           onClick={() => {
                             console.log("삭제");
                             const deleteComment = { flag: true, boardSeq: "" };
-                            setIsClicked(deleteComment);
+                            setIsModify(deleteComment);
                           }}
                         />
-                        {/* </div> */}
                       </div>
                       <div className={classes.comment_area_middle}>
                         {comment.content}
@@ -151,7 +140,7 @@ function BalanceGameCommentModal({ boardSeq }) {
                                     flag: true,
                                     boardSeq: "",
                                   };
-                                  setIsClicked(deleteComment);
+                                  setIsModify(deleteComment);
                                 }}
                               />
                               {/* </div> */}

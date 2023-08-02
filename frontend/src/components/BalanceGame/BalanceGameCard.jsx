@@ -12,8 +12,8 @@ function BalanceGameCard({
   card,
   isSidebarOpen,
   setSidebarOpen,
-  isClicked,
-  setIsClicked,
+  isModify,
+  setIsModify,
 }) {
   // 카드별로 독립적인 isSidebarOpen 상태를 관리합니다.
   // const [SidebarOpen, setSidebarOpen] = useState(false)
@@ -47,7 +47,7 @@ function BalanceGameCard({
           {isSidebarOpen ? (
             <BalanceGameCardSidebarList
               boardSeq={card.boardSeq}
-              setIsClicked={setIsClicked}
+              setIsModify={setIsModify}
             />
           ) : (
             <></>

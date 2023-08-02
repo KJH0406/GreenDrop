@@ -1,19 +1,20 @@
-import { configureStore, createSlice } from "@reduxjs/toolkit"
+import { configureStore, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
 
 let todayCount = createSlice({
   name: "todayCount",
   initialState: "121",
-})
+});
 
 let totalCount = createSlice({
   name: "totalCount",
   initialState: "2,500",
-})
+});
 
 let countBundle = createSlice({
   name: "countBundle",
   initialState: [{ leftCount: "89" }, { rightCount: "32" }],
-})
+});
 
 let balanceGame = createSlice({
   name: "balanceGame",
@@ -22,33 +23,23 @@ let balanceGame = createSlice({
     { left: "100억으로 20살까지만 살기" },
     { right: "월 100만원으로 100살까지 살기" },
   ],
-})
+});
 
 let balanceGameList = createSlice({
   name: "balanceGameList",
-  initialState: [
-    {
-      boardSeq: "1",
-      question: "메시VS호날두",
-      leftAnswer: "축구는 메시지",
-      rightAnswer: "단신 메시보다는 호날두지",
-      nickname: "user1",
-      likeCount: "3",
-      lastModifiedDate: "2023.07.26",
-      item: "#스포츠",
+  initialState: [],
+  reducers: {
+    getBoardList(state, action) {
+      return action.payload;
     },
-    {
-      boardSeq: "2",
-      question: "똥먹기VS카레먹기",
-      leftAnswer: "당연 똥이지",
-      rightAnswer: "카레지",
-      nickname: "user2",
-      likeCount: "3",
-      lastModifiedDate: "2023.07.26",
-      item: "#요리",
+    searchBoard(state, action) {
+      return action.payload;
     },
-  ],
-})
+  },
+});
+
+export let { getBoardList, searchBoard } = balanceGameList.actions;
+
 let isOpenComment = createSlice({
   name: "isOpenComment",
   initialState: { isOpenComment: false, boardSeq: "" },
@@ -56,18 +47,18 @@ let isOpenComment = createSlice({
     toggleIsOpenComment(state, action) {
       // console.log(state.isOpenComment)
       // console.log(action.payload)
-      state.isOpenComment = !action.payload
+      state.isOpenComment = !action.payload;
     },
     changeBoardSeq(state, action) {
-      state.boardSeq = action.boardSeq
+      state.boardSeq = action.boardSeq;
     },
   },
-})
+});
 
 let categories = createSlice({
   name: "categories",
   initialState: ["카테고리 등록", "스포츠", "요리", "진로"],
-})
+});
 
 let commentObj = createSlice({
   name: "commentObj",
@@ -136,9 +127,18 @@ let commentObj = createSlice({
       comments: [],
     },
   ],
-})
+  reducers: {
+    getCommentList(state, action) {
+      axios
+        .get("http://i9b103.p.ssafy.io:8000/comment" + action.payload)
+        .then((response) => {
+          state = [response];
+        });
+    },
+  },
+});
 
-export let { toggleIsOpenComment, changeBoardSeq } = isOpenComment.actions
+export let { toggleIsOpenComment, changeBoardSeq } = isOpenComment.actions;
 
 export default configureStore({
   reducer: {
@@ -151,4 +151,4 @@ export default configureStore({
     categories: categories.reducer,
     commentObj: commentObj.reducer,
   },
-})
+});

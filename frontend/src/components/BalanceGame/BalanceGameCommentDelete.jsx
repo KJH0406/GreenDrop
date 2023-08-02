@@ -1,6 +1,6 @@
 import classes from "../BalanceGame/BalanceGameCommentDelete.module.css";
 
-function BalanceGamePassword({ setIsConfirmed }) {
+function BalanceGameCommentDelete() {
   return (
     <>
       <div className={classes.row_info}>
@@ -22,11 +22,9 @@ function BalanceGamePassword({ setIsConfirmed }) {
         type="button"
         className={classes.confirm_btn}
         value="삭제하기"
-        onClick={() => {
-          setIsConfirmed(true);
-        }}
+        onClick={() => {}}
       />
     </>
   );
 }
-export default BalanceGamePassword;
+export default BalanceGameCommentDelete;

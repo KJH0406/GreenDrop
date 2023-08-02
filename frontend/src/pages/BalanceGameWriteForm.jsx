@@ -1,9 +1,9 @@
+import axios from "axios";
 import classes from "./BalanceGameWriteForm.module.css";
 
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-
 function BalanceGameWriteFormPage() {
   const [question, setQuestion] = useState("");
   const [leftAnswer, setLeftAnswer] = useState("");
@@ -11,10 +11,42 @@ function BalanceGameWriteFormPage() {
   const [nickname, setNickname] = useState("");
   const [category, setCategory] = useState("");
   const [password, setPassword] = useState("");
-  const [card, setCard] = useState("");
+  // const [card, setCard] = useState("");
   const categories = useSelector((state) => {
     return state.categories;
   });
+  const handleCardRegistration = () => {
+    const cardData = {
+      question: question,
+      leftAnswer: leftAnswer,
+      rightAnswer: rightAnswer,
+      nickname: nickname,
+      password: password,
+      category: category,
+    };
+
+    console.log(JSON.stringify(cardData));
+
+    // axios 요청 보내기
+    axios
+      .post(
+        "http://i9b103.p.ssafy.io:8000/board/regist",
+        JSON.stringify(cardData),
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        },
+      )
+      .then((response) => {
+        console.log(response);
+        // 요청에 대한 응답을 처리하는 코드를 추가할 수 있습니다.
+      })
+      .catch((error) => {
+        console.error("Error sending data:", error);
+        // 에러 처리 코드를 추가할 수 있습니다.
+      });
+  };
 
   return (
     <div className={classes.regist_box}>
@@ -111,15 +143,7 @@ function BalanceGameWriteFormPage() {
           className={classes.regist_btn}
           value="밸런스 게임 등록하기"
           onClick={() => {
-            setCard({
-              question: question,
-              leftAnswer: leftAnswer,
-              rightAnswer: rightAnswer,
-              nickname: nickname,
-              password: password,
-              category: category,
-            });
-            console.log(card);
+            handleCardRegistration();
           }}
         ></input>
         <Link className={classes.regist_btn} to={"/board"}>
