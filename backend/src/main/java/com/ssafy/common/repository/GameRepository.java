@@ -8,8 +8,9 @@ import java.util.List;
 
 public interface GameRepository extends JpaRepository<Game, Long>, GameRepositoryCustom {
     //TODO: GameRepositoryImpl에서 QueryDsl을 통해 상세 쿼리 작성하기?
-    Game findOneByDate(LocalDate date); //등록 일자를 통해 게임 조회
-    
+//    Optional<Game> findOneByDate(LocalDate date); //등록 일자를 통해 게임 조회
+
+    List<Game> findByDateOrderByCreatedDateAsc(LocalDate date);
 
     List<Game> findAll();
 
