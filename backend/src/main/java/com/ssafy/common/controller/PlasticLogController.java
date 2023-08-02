@@ -25,13 +25,13 @@ public class PlasticLogController {
     public ResponseEntity<PlasticLogResponseDto> updateVoteCount(
             @PathVariable String direction,
             @RequestBody EquipmentRequestDto equipmentRequestDto){
-        PlasticLogResponseDto response;
+        PlasticLogResponseDto plasticLogResponseDto;
         try {
-            response = plasticLogService.updatePlastic(direction, equipmentRequestDto);
+            plasticLogResponseDto = plasticLogService.updatePlastic(direction, equipmentRequestDto);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return new ResponseEntity<>(plasticLogResponseDto, HttpStatus.OK);
     }
 
     //지금까지 수거한 컵 총량

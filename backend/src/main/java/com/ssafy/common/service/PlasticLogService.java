@@ -28,7 +28,7 @@ public class PlasticLogService {
     @Transactional
     public PlasticLogResponseDto updatePlastic(String direction, EquipmentRequestDto equipmentRequestDto) throws Exception {
         //1. 오늘 날짜의 game 가져옴
-        List<Game> gameList = gameRepository.findByDate(LocalDate.now());
+        List<Game> gameList = gameRepository.findByDateOrderByCreatedDateAsc(LocalDate.now());
         Game game;
         if(gameList.size() == 0){
             //오늘의 밸런스 게임이 없을 시 exception
@@ -64,7 +64,7 @@ public class PlasticLogService {
 
     //현재 게임에서의 투표 현황
     public PlasticLogResponseDto getCurrentPlastic() throws Exception {
-        List<Game> gameList = gameRepository.findByDate(LocalDate.now());
+        List<Game> gameList = gameRepository.findByDateOrderByCreatedDateAsc(LocalDate.now());
         Game game;
         if(gameList.size() == 0){
             throw new Exception();
