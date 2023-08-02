@@ -46,7 +46,11 @@ public class GameService {
     }
 
     public Game findGameByDate(LocalDate date){
-        return gameRepository.findOneByDate(date);
+        List<Game> gameList = gameRepository.findByDate(date);
+        if(gameList.size() == 0){ //오늘자 등록된 게임이 없다면
+            return Game.builder().build();
+        }
+        return gameList.get(gameList.size()-1);
     }
 
 
