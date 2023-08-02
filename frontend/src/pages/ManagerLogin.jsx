@@ -11,10 +11,13 @@ const MangerLogin = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:9000/manager/login", {
-        id,
-        password,
-      });
+      const response = await axios.post(
+        "http://i9b103.p.ssafy.io:8000/manager/login",
+        {
+          id,
+          password,
+        }
+      );
 
       // 로그인 성공 처리
       console.log("로그인 성공:", response.data);
