@@ -3,24 +3,27 @@ import classes from "./BalanceGameModifyForm.module.css";
 
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import BalanceGameCheckModal from "../components/BalanceGame/BalanceGameCheckModal";
 
-function BalanceGameWriteFormPage() {
+function BalanceGameModifyFormPage() {
   const location = useLocation();
   // const boardSeq = StateParams.get("boardSeq") || "Default Value";
   const boardSeq = location.state.boardSeq || "Default Value";
   const categories = useSelector((state) => {
     return state.categories;
   });
-  //newCard만 서버로 전송하면 됨
+
   const [newCard, setNewCard] = useState("");
-  console.log(newCard);
-  //boardSeq로 주제 상세 읽어오기(axios)
-  //현재는 더미 데이터
-  // const [card, setCard] = useState("");
+
+  const navigate = useNavigate();
+  const [showCheckModal, setShowCheckModal] = useState("");
+  const [confirm, setConfirm] = useState(false);
+  const [confirmModalData, setConfirmModalData] = useState("");
+
   useEffect(() => {
     axios
-      .get("http://i9b103.p.ssafy.io:8000/board/detail/" + boardSeq)
+      .get("http://i9b103.p.ssafy.io:8000/api/board/detail/" + boardSeq)
       .then((response) => {
         // console.log(response);
         // setCard(response.data);
@@ -35,38 +38,87 @@ function BalanceGameWriteFormPage() {
         console.log(error);
       });
   }, [boardSeq]);
-
   const [question, setQuestion] = useState("");
   const [leftAnswer, setLeftAnswer] = useState("");
   const [rightAnswer, setRightAnswer] = useState("");
   const [category, setCategory] = useState("");
   const [nickname, setNickname] = useState("");
-  const handleModifyCard = () => {
-    setNewCard({
+  useEffect(() => {
+    const updatedCard = {
       question: question,
       leftAnswer: leftAnswer,
       rightAnswer: rightAnswer,
       item: category,
-    });
-    axios
-      .patch(
-        "http://i9b103.p.ssafy.io:8000/board/modify/" + boardSeq,
-        JSON.stringify(newCard),
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        },
-      )
-      .then(() => {
-        console.log("수정완료");
-      })
-      .catch((error) => {
-        console.log(error);
+    };
+
+    setNewCard(updatedCard);
+  }, [question, leftAnswer, rightAnswer, category]);
+
+  const handleModifyCard = () => {
+    if (leftAnswer.length === 0 || rightAnswer.length === 0) {
+      setShowCheckModal({
+        title: "글 수정 실패",
+        category: "board",
+        type: "confirm",
+        action: "수정하기",
       });
+      setConfirm(true);
+      setConfirmModalData({
+        confirmTitle: "밸런스 게임을 작성해 주세요",
+        confirmCategory: "board",
+        confirmType: "modify",
+        confirmAction: "실패",
+      });
+    } else {
+      axios
+        .patch(
+          "http://i9b103.p.ssafy.io:8000/board/modify/" + boardSeq,
+          JSON.stringify(newCard),
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          },
+        )
+        .then(() => {
+          console.log("수정완료");
+          navigate("/board");
+        })
+        .catch((error) => {
+          console.log(error);
+          setShowCheckModal({
+            title: "글 수정 실패",
+            category: "board",
+            type: "confirm",
+            action: "수정하기",
+          });
+          setConfirm(true);
+          setConfirmModalData({
+            confirmTitle: "글 수정에 실패했습니다.",
+            confirmCategory: "board",
+            confirmType: "modify",
+            confirmAction: "실패",
+          });
+        });
+    }
   };
   return (
     <div className={classes.regist_box}>
+      {showCheckModal ? (
+        <BalanceGameCheckModal
+          setShowCheckModal={setShowCheckModal}
+          confirm={confirm}
+          setConfirm={setConfirm}
+          confirmTitle={confirmModalData.confirmTitle}
+          confirmCategory={confirmModalData.confirmCategory}
+          confirmType={confirmModalData.confirmType}
+          confirmAction={confirmModalData.confirmAction}
+          setConfirmModalData={setConfirmModalData}
+        />
+      ) : (
+        <></>
+      )}
+
       <Link className={classes.title} to={"/board"}>
         <h2 className={classes.first_word}>Green &nbsp;</h2>
         <h2 className={classes.second_word}>Balance Game</h2>
@@ -81,7 +133,7 @@ function BalanceGameWriteFormPage() {
               value={question || ""}
               onChange={(e) => {
                 setQuestion(e.target.value);
-                console.log(question);
+                // console.log(question);
               }}
             />
           </div>
@@ -94,7 +146,7 @@ function BalanceGameWriteFormPage() {
               value={leftAnswer || ""}
               onChange={(e) => {
                 setLeftAnswer(e.target.value);
-                console.log(leftAnswer);
+                // console.log(leftAnswer);
               }}
             ></textarea>
             <div className={classes.cover_bar}></div>
@@ -108,7 +160,7 @@ function BalanceGameWriteFormPage() {
               value={rightAnswer || ""}
               onChange={(e) => {
                 setRightAnswer(e.target.value);
-                console.log(rightAnswer);
+                // console.log(rightAnswer);
               }}
             ></textarea>
             <div className={classes.cover_bar}></div>
@@ -128,8 +180,8 @@ function BalanceGameWriteFormPage() {
             >
               {categories.map((item, idx) => {
                 return (
-                  <option value={item} key={idx}>
-                    {item}
+                  <option value={item.item} key={idx}>
+                    {item.item}
                   </option>
                 );
               })}
@@ -143,7 +195,7 @@ function BalanceGameWriteFormPage() {
           <input
             className={classes.input_tag}
             type="text"
-            value={nickname || ""}
+            value={nickname}
             disabled
           />
         </div>
@@ -164,4 +216,4 @@ function BalanceGameWriteFormPage() {
   );
 }
 
-export default BalanceGameWriteFormPage;
+export default BalanceGameModifyFormPage;

@@ -1,17 +1,24 @@
-import classes from "./BalanceGameCategory.module.css"
-import { useState } from "react"
+import classes from "./BalanceGameCategory.module.css";
+import { useState } from "react";
 
-function BalanceGameCategory({ category }) {
-  let [isSelected, setIsSelected] = useState(false)
+function BalanceGameCategory({
+  category,
+  selectedCategory,
+  isCategorySelected,
+  setIsCategorySelected,
+}) {
+  // let [isSelected, setIsSelected] = useState(false);
   return (
     <div
-      className={isSelected ? classes.box_selected : classes.box}
+      className={isCategorySelected ? classes.box_selected : classes.box}
       onClick={() => {
-        setIsSelected(!isSelected)
+        // setIsSelected(!isSelected);
+        setIsCategorySelected();
+        selectedCategory(category);
       }}
     >
       {category}
     </div>
-  )
+  );
 }
-export default BalanceGameCategory
+export default BalanceGameCategory;
