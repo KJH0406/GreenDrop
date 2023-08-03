@@ -1,6 +1,8 @@
 FROM jenkins/jenkins:jdk17
 
-ARG JAR_FILE=build/libs/*.jar
-COPY ${JAR_FILE} app.jar
+COPY backend/build/libs/common-0.0.1-SNAPSHOT.jar app.jar
+COPY application-deploy2.yml ./
 
-ENTRYPOINT ["java","-jar","/app.jar"]
+EXPOSE 8888
+
+CMD ["nohup", "java", "-jar", "-Dspring.profiles.active=deploy2" , "app.jar", "&"]
