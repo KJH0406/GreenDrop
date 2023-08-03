@@ -1,5 +1,6 @@
 package com.ssafy.common.controller;
 
+import com.ssafy.common.dto.ManagerListDto;
 import com.ssafy.common.dto.request.ManagerRequestDto;
 import com.ssafy.common.dto.response.ManagerResponseDto;
 import com.ssafy.common.security.SuperAuthorize;
@@ -8,6 +9,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @RestController
@@ -33,6 +38,31 @@ public class ManagerController {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @SuperAuthorize
+    @GetMapping("/list")
+    public ResponseEntity<Object> getManagerList(){
+        List<ManagerListDto> managerList = managerService.getAllManager();
+
+        return new ResponseEntity<>(managerList, HttpStatus.OK);
+    }
+
+    @SuperAuthorize
+    @DeleteMapping("/delete")
+    public ResponseEntity<Object> deleteManager(@RequestBody Map<String, Short> managerInfo){
+        Short managerSeq = managerInfo.get("managerSeq");
+        managerService.deleteManager(managerSeq);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PatchMapping("/change/password")
+    public ResponseEntity<Object> changeAdminPassword(@RequestBody Map<String, String> adminInfo){
+        managerService.changeAdminPassword(adminInfo);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+
     }
 
 }
