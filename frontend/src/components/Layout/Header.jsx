@@ -85,9 +85,13 @@ function Header() {
           onClick={toggleSidebar}
         />
       </header>
-      <div className={classes.sidbar}>
-        {isSidebarOpen ? <Sidebar pageList={pageList} /> : <></>}
-      </div>
+      {isSidebarOpen ? (
+        <div className={classes.sidbar}>
+          <Sidebar pageList={pageList} />
+        </div>
+      ) : (
+        ""
+      )}
       {renderOverlay()}
     </div>
   );

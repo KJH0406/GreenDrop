@@ -1,43 +1,106 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import classes from "./AccountManagement.module.css";
-
-// 작업을 위해서 임시 주석처리
-// import { Navigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 function AccountManagement() {
-  // 작업을 위해서 임시 주석처리
-  // const token = localStorage.getItem("loggedInUser");
-  // const isSuper = JSON.parse(token).role === "SUPER";
+  // 로그인한 사용자의 토큰 가져오기
+  const userInfo = localStorage.getItem("loggedInUser");
+  const isSuper = JSON.parse(userInfo).role === "SUPER";
+  const token = JSON.parse(userInfo).token;
+
+  // 관리자 리스트를 담을 상태 변수 선언
+  const [managerList, setManagerList] = useState([]);
+
+  // 선택된 계정의 ID를 담을 상태 변수 선언
   const [selectedAccountId, setSelectedAccountId] = useState(null);
+
+  // 모달의 보이기/감추기 상태 변수 선언
   const [showModal, setShowModal] = useState(false);
+
+  // 새로운 계정 정보를 담을 상태 변수 선언
   const [newAccountId, setNewAccountId] = useState("");
   const [newPassword, setNewPassword] = useState("");
 
-  // 작업을 위해 임시 주석처리
-  // if (!isSuper) {
-  //   alert("최고 관리자만 접근 가능한 기능입니다.");
-  //   return <Navigate to="/admin" />;
-  // }
+  // Axios 인터셉터를 사용하여 토큰을 모든 요청 헤더에 담아 보내기
+  useEffect(() => {
+    // 로그인한 사용자가 최고 관리자가 아닌 경우, 경고창 띄우고 '/admin' 페이지로 리다이렉트
+    if (!isSuper) {
+      alert("최고 관리자만 접근 가능한 기능입니다.");
+      // 리다이렉트를 위해 `Navigate` 컴포넌트를 반환
+      return <Navigate to="/admin" />;
+    }
 
-  // 서버에 관리자 리스트를 불러오는 요청 GET
-  // get 받아서 List 관리하면됨!
-  const managerList = [
-    { id: "ssafy", date: "2020-01-01" },
-    { id: "ssafy1", date: "2020-01-01" },
-    { id: "ssafy1123213213123233123213123221", date: "2020-01-01" },
-  ];
+    // Axios 인터셉터 등록
+    const axiosInterceptor = axios.interceptors.request.use((config) => {
+      config.headers.Authorization = `Bearer ${token}`;
+      return config;
+    });
 
+    // Axios 인터셉터 해제 함수 등록
+    return () => {
+      axios.interceptors.request.eject(axiosInterceptor);
+    };
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // 컴포넌트가 처음 마운트될 때, 관리자 리스트를 서버에서 가져오도록 useEffect 사용
+  useEffect(() => {
+    // 로그인한 사용자가 최고 관리자가 아닌 경우, 경고창 띄우고 '/admin' 페이지로 리다이렉트
+    if (!isSuper) {
+      alert("최고 관리자만 접근 가능한 기능입니다.");
+      // 리다이렉트를 위해 `Navigate` 컴포넌트를 반환
+      return <Navigate to="/admin" />;
+    }
+
+    // Axios를 사용하여 서버에서 관리자 리스트를 가져옴
+    axios
+      .get("/api/manager-list")
+      .then((response) => {
+        // 서버 응답에서 관리자 리스트 추출하여 상태 변수에 저장
+        setManagerList(response.data);
+      })
+      .catch((error) => {
+        console.error("관리자 리스트를 불러오는데 실패했습니다.", error);
+      });
+  }, [isSuper]); // 컴포넌트가 처음 마운트될 때와 isSuper 값이 변경될 때 실행
+
+  // 서버에 해당 id를 삭제하는 요청을 보내는 함수
   const handleDelete = (id) => {
-    // 서버에 해당 id를 삭제하는 요청 POST, 마찬가지로 삭제되면 바로 삭제된 형태로 보이게해야함
-    console.log(`Delete account with id: ${id}`);
+    axios
+      .post("/api/delete-account", { id })
+      .then(() => {
+        // 삭제 성공 시, 관리자 리스트에서 해당 계정 삭제
+        setManagerList((prevList) =>
+          prevList.filter((account) => account.id !== id)
+        );
+      })
+      .catch((error) => {
+        console.error("계정 삭제 중 오류가 발생했습니다.", error);
+      });
   };
 
+  // 새로운 계정 정보를 생성하는 함수
   const handleCreateAccount = () => {
-    // 서버에 새로운 계정 정보를 생성하는 요청 DELETE
-    // 아이디와 비밀번호는 newAccountId, newPassword 담아서 보내기만하면됨.
-    // 그리고 GET요청 한번 더 실행시켜서 추가된 관리자 바로 볼 수 있게함 (아마 리스트 부분을 useEffect 사용해서 구현해야할듯)
-    // 중복체크 해야하나?
-    console.log("Create new account:", newAccountId, newPassword);
+    // 새로운 계정 정보를 서버에 보내는 요청을 보냄
+    axios
+      .post("http://i9b103.p.ssafy.io:8000/manager/regist", {
+        id: newAccountId,
+        password: newPassword,
+      })
+      .then((response) => {
+        // 생성된 계정 정보를 서버에서 반환하면, 관리자 리스트에 추가
+        console.log(response);
+        setManagerList((prevList) => [
+          ...prevList,
+          { id: response.data.id, date: response.data.date },
+        ]);
+      })
+      .catch((error) => {
+        console.error("계정 생성 중 오류가 발생했습니다.", error);
+      });
+
     // 모달 닫기
     setShowModal(false);
     // 입력값 초기화

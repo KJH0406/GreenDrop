@@ -1,12 +1,13 @@
 .device_modal_container {
   z-index: 1;
   position: absolute;
+  left: 5%;
   top: 7%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 60%;
-  height: 65%;
+  width: 30%;
+  height: 70%;
   padding: 5%;
   background-color: rgb(255, 255, 255, 0.9);
   border-radius: 30px;
@@ -25,22 +26,16 @@
   width: 300px;
   height: 300px;
   content: url("../../assets/earth.png");
-  animation: rotate_image 2s linear infinite;
-  transform-origin: 50% 50%;
-}
-
-@keyframes rotate_image {
-  100% {
-    transform: rotate(360deg);
-  }
 }
 
 .device_modal_title {
-  margin-top: 2rem;
+  margin-top: 3rem;
   margin-bottom: 6rem;
-  font-size: 6rem;
+  font-size: 3.3rem;
   color: #494848;
 }
 .device_modal_content {
-  font-size: 2.5rem;
+  font-size: 2rem;
+  color: green;
+  line-height: 4rem;
 }

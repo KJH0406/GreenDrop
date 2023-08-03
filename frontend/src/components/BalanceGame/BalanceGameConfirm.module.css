@@ -1,0 +1,36 @@
+.row_title {
+  font-size: 24pt;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  font-weight: bolder;
+}
+.confirm_btn {
+  background-color: #0b9a47;
+  border: none;
+  color: white;
+  border-radius: 10px;
+  width: 15%;
+  height: 10%;
+  margin-bottom: 3%;
+  font-weight: 550;
+}
+
+@media (max-width: 500px) {
+  .row_title {
+    font-weight: 900;
+    font-size: 14pt;
+  }
+  .row_info {
+    font-size: 8pt;
+  }
+  .row_password_input {
+    border: 1px solid black;
+  }
+  .row_message {
+    font-size: 8pt;
+  }
+  .confirm_btn {
+    font-size: 8pt;
+  }
+}

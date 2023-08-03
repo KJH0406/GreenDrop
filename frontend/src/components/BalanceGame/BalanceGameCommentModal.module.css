@@ -1,3 +1,9 @@
+/* .container {
+  position: absolute;
+  min-height: 100vh;
+  background-color: transparent;
+  margin: 0 auto; 
+} */
 .backdrop {
   position: absolute;
   display: flex;
