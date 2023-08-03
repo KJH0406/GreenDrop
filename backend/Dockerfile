@@ -2,7 +2,7 @@ FROM jenkins/jenkins:jdk17
 
 ARG JAR_FILE=build/libs/*.jar
 COPY ${JAR_FILE} app.jar
-COPY application-deploy2.yml ./
+COPY /home/ubuntu/application-deploy2.yml ./
 
 EXPOSE 8888
 
