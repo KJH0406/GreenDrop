@@ -72,7 +72,7 @@ function BalanceGameModifyFormPage() {
     } else {
       axios
         .patch(
-          "http://i9b103.p.ssafy.io:8000/board/modify/" + boardSeq,
+          "http://i9b103.p.ssafy.io:8000/api/board/modify/" + boardSeq,
           JSON.stringify(newCard),
           {
             headers: {
