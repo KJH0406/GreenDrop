@@ -1,0 +1,40 @@
+/* AdminBoard.module.css */
+
+/* Container styles */
+.admin_board_container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f8f8f8;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  overflow-x: auto; /* Enable horizontal scrolling */
+}
+
+.post_button {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+}
+
+/* Table styles */
+.admin_board_table {
+  width: 100%;
+  border-collapse: collapse;
+  overflow-y: auto; /* Enable vertical scrolling within the fixed height */
+}
+
+.admin_board_table th,
+.admin_board_table td {
+  padding: 10px;
+  border: 1px solid #ccc;
+  white-space: nowrap; /* Prevent text wrapping */
+}
+
+/* Heading styles */
+.admin_board_heading {
+  background-color: #007bff;
+  color: #fff;
+  font-weight: bold;
+  text-align: center;
+}

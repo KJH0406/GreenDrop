@@ -81,7 +81,7 @@ function BoardPage() {
                 axios
                   .get(
                     "http://i9b103.p.ssafy.io:8000/board/search?question=" +
-                      searchWord,
+                      searchWord
                   )
                   .then((response) => {
                     // console.log(response);
