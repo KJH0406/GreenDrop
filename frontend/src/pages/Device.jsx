@@ -4,8 +4,6 @@ import classes from "./Device.module.css";
 import verseImg from "../assets/vs.png";
 import decorateImg_1 from "../assets/deviceUI_1.png";
 import decorateImg_2 from "../assets/deviceUI_2.png";
-// import ConfirmModal from "../components/DeviceUI/ConfirmModal";
-// import CompleteModal from "../components/DeviceUI/CompleteModal";
 // import success from "../assets/success.mp3"; 향후 사운드 추가
 import axios from "axios";
 import LeftCompleteModal from "../components/DeviceUI/LeftCompleteModal";
@@ -14,9 +12,11 @@ import LeftConfirmModal from "../components/DeviceUI/LeftConfirmModal";
 import RightConfirmModal from "../components/DeviceUI/RightConfirmModal";
 import LeftOverWeightModal from "../components/DeviceUI/LeftOverWeightModal";
 import RightOverWeightModal from "../components/DeviceUI/RightOverWeightModal";
+import LeftLightWeightModal from "../components/DeviceUI/LeftLightWeightModal";
+import RightLightWeightModal from "../components/DeviceUI/RightLightWeightModal";
 
 // API
-const api = "http://i9b103.p.ssafy.io:8000/";
+const api = "http://i9b103.p.ssafy.io:8000/api/";
 
 // 날짜 자동생성
 const getCurrentDate = () => {
@@ -42,10 +42,12 @@ function DevicePage() {
   const [port, setPort] = useState(null);
   const [LeftConfirm, setLeftConfirm] = useState(false);
   const [LeftComplete, setLeftComplete] = useState(false);
-  const [LeftOverModal, setLeftOverModal] = useState(false);
+  const [LeftOver, setLeftOver] = useState(false);
+  const [LeftLight, setLeftLight] = useState(false);
   const [RightConfirm, setRightConfirm] = useState(false);
   const [RightComplete, setRightComplete] = useState(false);
   const [RightOver, setRightOver] = useState(false);
+  const [RightLight, setRightLight] = useState(false);
   const [GameInfo, setGameInfo] = useState(null); // 데이터를 담을 상태
   const { question, leftAnswer, rightAnswer } = GameInfo || {}; // 데이터를 디스트럭처링하여 사용
 
@@ -113,21 +115,24 @@ function DevicePage() {
         if (portValue.includes("s")) {
           setLeftConfirm(false);
           setLeftComplete(false);
-          setLeftOverModal(false);
+          setLeftOver(false);
+          setLeftLight(false);
         }
 
         // 왼쪽 측정
         if (portValue.includes("m")) {
           setLeftConfirm(true);
           setLeftComplete(false);
-          setLeftOverModal(false);
+          setLeftOver(false);
+          setLeftLight(false);
         }
 
         // 왼쪽 수거
         if (portValue.includes("L")) {
           setLeftConfirm(false);
           setLeftComplete(true);
-          setLeftOverModal(false);
+          setLeftOver(false);
+          setLeftLight(false);
           setTimeout(() => {
             setLeftComplete(false);
           }, 2000);
@@ -146,16 +151,34 @@ function DevicePage() {
         if (portValue.includes("o")) {
           setLeftConfirm(false);
           setLeftComplete(false);
-          setLeftOverModal(true);
+          setLeftOver(true);
+          setLeftLight(false);
+        }
+
+        // 왼쪽 가벼움 경고
+        if (portValue.includes("e")) {
+          setLeftConfirm(false);
+          setLeftComplete(false);
+          setLeftOver(false);
+          setLeftLight(true);
         }
 
         // 오른쪽 수거 로직 구현
+
+        // 오른쪽 아무것도 없음
+        if (portValue.includes("S")) {
+          setRightConfirm(false);
+          setRightComplete(false);
+          setRightOver(false);
+          setRightLight(false);
+        }
 
         // 오른쪽 측정
         if (portValue.includes("M")) {
           setRightConfirm(true);
           setRightComplete(false);
           setRightOver(false);
+          setRightLight(false);
         }
 
         // 오른쪽 수거
@@ -163,6 +186,7 @@ function DevicePage() {
           setRightConfirm(false);
           setRightComplete(true);
           setRightOver(false);
+          setRightLight(false);
           setTimeout(() => {
             setRightComplete(false);
           }, 2000);
@@ -182,13 +206,14 @@ function DevicePage() {
           setRightConfirm(false);
           setRightComplete(false);
           setRightOver(true);
+          setRightLight(false);
         }
-
-        // 오른쪽 아무것도 없음
-        if (portValue.includes("S")) {
+        // 오른쪽 가벼움 경고
+        if (portValue.includes("E")) {
           setRightConfirm(false);
           setRightComplete(false);
           setRightOver(false);
+          setRightLight(true);
         }
       }
     } catch (error) {
@@ -229,18 +254,23 @@ function DevicePage() {
 
       {LeftConfirm && <LeftConfirmModal />}
       {LeftComplete && <LeftCompleteModal />}
-      {LeftOverModal && <LeftOverWeightModal />}
+      {LeftOver && <LeftOverWeightModal />}
+      {LeftLight && <LeftLightWeightModal />}
+
       {RightConfirm && <RightConfirmModal />}
       {RightComplete && <RightCompleteModal />}
       {RightOver && <RightOverWeightModal />}
+      {RightLight && <RightLightWeightModal />}
 
-      {/* UI 작업용 */}
-      {/* {<LeftConfirmModal />}
-      {<LeftCompleteModal />}
-      {<LeftOverWeightModal />}
-      {<RightConfirmModal />}
-      {<RightCompleteModal />}
-      {<RightOverWeightModal />} */}
+      {/* CSS 작업용 */}
+      {/* {<LeftConfirmModal />} */}
+      {/* {<LeftCompleteModal />} */}
+      {/* {<LeftOverWeightModal />} */}
+      {/* <LeftLightWeightModal /> */}
+      {/* {<RightConfirmModal />} */}
+      {/* {<RightCompleteModal />} */}
+      {/* {<RightOverWeightModal />} */}
+      {/* <RightLightWeightModal /> */}
 
       <img className={classes.decorate_left_img} src={decorateImg_1} alt="" />
       <img className={classes.decorate_right_img} src={decorateImg_2} alt="" />

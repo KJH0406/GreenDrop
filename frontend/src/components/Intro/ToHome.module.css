@@ -21,6 +21,7 @@
   color: lightsalmon;
   margin-top: 10%;
   margin-bottom: 10%;
+  font-weight: bolder;
 }
 
 @media (min-width: 500px) {
