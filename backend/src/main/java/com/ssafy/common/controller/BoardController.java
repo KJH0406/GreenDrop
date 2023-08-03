@@ -2,6 +2,7 @@ package com.ssafy.common.controller;
 
 import com.ssafy.common.dto.BoardDto;
 import com.ssafy.common.dto.response.BoardResponseDto;
+import com.ssafy.common.entity.Board;
 import com.ssafy.common.security.UserIp;
 import com.ssafy.common.service.BoardService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,6 +15,8 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -112,6 +115,13 @@ public class BoardController {
         Page<BoardResponseDto> boardResponseDtoPage = boardService.searchCategory(category,pageable);
 
         return new ResponseEntity<>(boardResponseDtoPage,HttpStatus.OK);
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<Object> getAllList(){
+        List<BoardResponseDto> boardList = boardService.findAll();
+
+        return new ResponseEntity<>(boardList, HttpStatus.OK);
     }
 
 }

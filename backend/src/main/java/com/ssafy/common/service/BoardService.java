@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -153,5 +154,24 @@ public class BoardService {
         return true;
     }
 
+    //Paging 적용 안하고 모든 게시글 목록 반환
+    public List<BoardResponseDto> findAll(){
+        List<Board> boardList =  boardRepository.findAll();
+        List<BoardResponseDto> result = new LinkedList<>();
+        for(Board board: boardList){
+            BoardResponseDto boardResponseDto = BoardResponseDto.builder()
+                    .boardSeq(board.getBoardSeq())
+                    .question(board.getQuestion())
+                    .leftAnswer(board.getLeftAnswer())
+                    .rightAnswer(board.getRightAnswer())
+                    .ip(board.getIp())
+                    .nickname(board.getNickname())
+                    .likeCount(board.getLikeCount())
+                    .lastModifiedDate(board.getLastModifiedDate())
+                    .build();
+            result.add(boardResponseDto);
+        }
+        return result;
+    }
 
 }
