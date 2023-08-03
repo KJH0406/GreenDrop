@@ -41,7 +41,7 @@ public class ManagerController {
     }
 
     @SuperAuthorize
-    @GetMapping("/list")
+    @GetMapping("/api/list")
     public ResponseEntity<Object> getManagerList(){
         List<ManagerListDto> managerList = managerService.getAllManager();
 

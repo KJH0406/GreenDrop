@@ -11,7 +11,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @RequiredArgsConstructor
-@RequestMapping("/game")
+@RequestMapping("/api/game")
 @RestController
 public class GameController {
     private final GameService gameService;
