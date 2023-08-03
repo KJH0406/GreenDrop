@@ -9,10 +9,10 @@ const AdminBoard = () => {
     const fetchPosts = async () => {
       try {
         const response = await axios.get(
-          "http://i9b103.p.ssafy.io:8000/board/list?page=2"
+          "http://i9b103.p.ssafy.io:8000/board/all"
         );
-        setPosts(response.data.content);
-        console.log(response.data.content);
+        setPosts(response.data);
+        console.log(response.data);
       } catch (error) {
         console.error("Error fetching posts:", error);
       }
@@ -25,7 +25,11 @@ const AdminBoard = () => {
     <div className={classes.admin_board_container}>
       <h1>벨런스 게임 게시판 관리 페이지 입니다.</h1>
       {posts.map((post) => (
-        <p key={post.boardSeq}>{post.question}</p>
+        <div key={post.boardSeq}>
+          <p>{post.question}</p>
+          <p>{post.leftAnswer}</p>
+          <p>{post.rightAnswer}</p>
+        </div>
       ))}
     </div>
   );
