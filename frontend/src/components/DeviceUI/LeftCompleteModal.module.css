@@ -1,12 +1,13 @@
 .device_modal_container {
   z-index: 1;
   position: absolute;
+  left: 5%;
   top: 7%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 60%;
-  height: 65%;
+  width: 30%;
+  height: 70%;
   padding: 5%;
   background-color: rgb(255, 255, 255, 0.9);
   border-radius: 30px;
@@ -24,16 +25,17 @@
 .device_modal_img {
   width: 300px;
   height: 300px;
-  content: url("../../assets/close.png");
+  content: url("../../assets/earth.png");
 }
 
 .device_modal_title {
-  margin-top: 2rem;
+  margin-top: 3rem;
   margin-bottom: 6rem;
-  font-size: 6rem;
-  color: red;
+  font-size: 3.3rem;
+  color: #494848;
 }
 .device_modal_content {
-  font-size: 2.5rem;
-  color: chocolate;
+  font-size: 2rem;
+  color: green;
+  line-height: 4rem;
 }

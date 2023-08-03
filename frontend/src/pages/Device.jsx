@@ -4,11 +4,16 @@ import classes from "./Device.module.css";
 import verseImg from "../assets/vs.png";
 import decorateImg_1 from "../assets/deviceUI_1.png";
 import decorateImg_2 from "../assets/deviceUI_2.png";
-import ConfirmModal from "../components/DeviceUI/ConfirmModal";
-import CompleteModal from "../components/DeviceUI/CompleteModal";
-import OverWeightModal from "../components/DeviceUI/OverWeightModal";
+// import ConfirmModal from "../components/DeviceUI/ConfirmModal";
+// import CompleteModal from "../components/DeviceUI/CompleteModal";
 // import success from "../assets/success.mp3"; 향후 사운드 추가
 import axios from "axios";
+import LeftCompleteModal from "../components/DeviceUI/LeftCompleteModal";
+import RightCompleteModal from "../components/DeviceUI/RightCompleteModal";
+import LeftConfirmModal from "../components/DeviceUI/LeftConfirmModal";
+import RightConfirmModal from "../components/DeviceUI/RightConfirmModal";
+import LeftOverWeightModal from "../components/DeviceUI/LeftOverWeightModal";
+import RightOverWeightModal from "../components/DeviceUI/RightOverWeightModal";
 
 // API
 const api = "http://i9b103.p.ssafy.io:8000/";
@@ -35,9 +40,12 @@ function DevicePage() {
 
   // 포트 관련 함수
   const [port, setPort] = useState(null);
-  const [showConfirmModal, setShowConfirmModal] = useState(false);
-  const [showThankYouModal, setShowThankYouModal] = useState(false);
-  const [showHeavyModal, setShowHeavyModal] = useState(false);
+  const [LeftConfirm, setLeftConfirm] = useState(false);
+  const [LeftComplete, setLeftComplete] = useState(false);
+  const [LeftOverModal, setLeftOverModal] = useState(false);
+  const [RightConfirm, setRightConfirm] = useState(false);
+  const [RightComplete, setRightComplete] = useState(false);
+  const [RightOver, setRightOver] = useState(false);
   const [GameInfo, setGameInfo] = useState(null); // 데이터를 담을 상태
   const { question, leftAnswer, rightAnswer } = GameInfo || {}; // 데이터를 디스트럭처링하여 사용
 
@@ -99,21 +107,30 @@ function DevicePage() {
         const portValue = data.trim().replace(/\s+/g, " ");
         console.log(portValue);
 
-        // 'm' 데이터를 처음 받았을 때 Confirm Modal 표시
-        if (portValue === "m") {
-          setShowThankYouModal(false);
-          setShowHeavyModal(false);
-          setShowConfirmModal(true);
+        // 왼쪽 수거 로직 구현
+
+        // 왼쪽 아무것도 없음
+        if (portValue.includes("s")) {
+          setLeftConfirm(false);
+          setLeftComplete(false);
+          setLeftOverModal(false);
+        }
+
+        // 왼쪽 측정
+        if (portValue.includes("m")) {
+          setLeftConfirm(true);
+          setLeftComplete(false);
+          setLeftOverModal(false);
         }
 
         // 왼쪽 수거
         if (portValue.includes("L")) {
-          setShowHeavyModal(false);
-          setShowConfirmModal(false);
-          setShowThankYouModal(true);
+          setLeftConfirm(false);
+          setLeftComplete(true);
+          setLeftOverModal(false);
           setTimeout(() => {
-            setShowThankYouModal(false);
-          }, 2000); // Close Thank You Modal after 2 seconds
+            setLeftComplete(false);
+          }, 2000);
 
           axios({
             url: `${api}plastic/L`,
@@ -125,14 +142,30 @@ function DevicePage() {
           });
         }
 
+        // 왼쪽 무거움 경고
+        if (portValue.includes("o")) {
+          setLeftConfirm(false);
+          setLeftComplete(false);
+          setLeftOverModal(true);
+        }
+
+        // 오른쪽 수거 로직 구현
+
+        // 오른쪽 측정
+        if (portValue.includes("M")) {
+          setRightConfirm(true);
+          setRightComplete(false);
+          setRightOver(false);
+        }
+
         // 오른쪽 수거
         if (portValue.includes("R")) {
-          setShowHeavyModal(false);
-          setShowConfirmModal(false);
-          setShowThankYouModal(true);
+          setRightConfirm(false);
+          setRightComplete(true);
+          setRightOver(false);
           setTimeout(() => {
-            setShowThankYouModal(false);
-          }, 2000); // Close Thank You Modal after 2 seconds
+            setRightComplete(false);
+          }, 2000);
 
           axios({
             url: `${api}plastic/R`,
@@ -144,17 +177,18 @@ function DevicePage() {
           });
         }
 
-        // 'o' 데이터를 받았을 때 Heavy Modal 표시
-        if (portValue.includes("o")) {
-          setShowConfirmModal(false);
-          setShowThankYouModal(false);
-          setShowHeavyModal(true);
+        // 오른쪽 무거움 경고
+        if (portValue.includes("O")) {
+          setRightConfirm(false);
+          setRightComplete(false);
+          setRightOver(true);
         }
 
-        if (portValue.includes("s")) {
-          setShowConfirmModal(false);
-          setShowThankYouModal(false);
-          setShowHeavyModal(false);
+        // 오른쪽 아무것도 없음
+        if (portValue.includes("S")) {
+          setRightConfirm(false);
+          setRightComplete(false);
+          setRightOver(false);
         }
       }
     } catch (error) {
@@ -193,14 +227,21 @@ function DevicePage() {
       {/* 오디오 관련 버튼 향후 재구성 */}
       {/* <input type="button" onClick={() => audio.play()} value="PLAY"></input> */}
 
-      {/* Confirm Modal */}
-      {showConfirmModal && <ConfirmModal />}
+      {LeftConfirm && <LeftConfirmModal />}
+      {LeftComplete && <LeftCompleteModal />}
+      {LeftOverModal && <LeftOverWeightModal />}
+      {RightConfirm && <RightConfirmModal />}
+      {RightComplete && <RightCompleteModal />}
+      {RightOver && <RightOverWeightModal />}
 
-      {/* Thank You Modal */}
-      {showThankYouModal && <CompleteModal />}
+      {/* UI 작업용 */}
+      {/* {<LeftConfirmModal />}
+      {<LeftCompleteModal />}
+      {<LeftOverWeightModal />}
+      {<RightConfirmModal />}
+      {<RightCompleteModal />}
+      {<RightOverWeightModal />} */}
 
-      {/* Heavy Modal */}
-      {showHeavyModal && <OverWeightModal />}
       <img className={classes.decorate_left_img} src={decorateImg_1} alt="" />
       <img className={classes.decorate_right_img} src={decorateImg_2} alt="" />
       <img className={classes.verse_img} src={verseImg} alt="" />
