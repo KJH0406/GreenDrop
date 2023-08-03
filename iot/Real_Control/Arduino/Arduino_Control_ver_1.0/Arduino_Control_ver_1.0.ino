@@ -21,7 +21,7 @@ void setup() {
   servo1.attach(7); // 왼쪽 서보모터는 7
   servo2.attach(2); // 오른쪽 서보모터는 2
   servo1.write(angle);
-  servo2.write(angle);
+  servo2.write(90 + angle);
 
   scale1.set_scale(K);
   scale2.set_scale(K);
@@ -37,6 +37,9 @@ void setup() {
 
 int count = 10;
 int filterCount = 10;
+
+int minimumCup = 100;
+int maximumCup = 206;
 
 unsigned int innerCount1 = 0; // 빈컵이라고 설정한 범위 내 일때의 카운트
 unsigned int offsetCount1 = 0; // 영점 조절을 위한 카운트
@@ -87,7 +90,7 @@ void loop() {
     }else{
       offsetZero1[offsetCount1++] = filteredGram1;
     }
-  }else if((filteredGram1 > 190) && (filteredGram1 < 206)){ // 필터된 무게가 빈컵의 무게 범위 내일 경우
+  }else if((filteredGram1 > minimumCup) && (filteredGram1 < maximumCup)){ // 필터된 무게가 빈컵의 무게 범위 내일 경우
     offsetCount1 = 0; // 범위 밖이 아니기 때문에 0으로 초기화
     outerCount1 = 0;
     Serial.println("m"); // measuring
@@ -98,7 +101,7 @@ void loop() {
     offsetCount1 = 0;
     innerCount1 = 0;
     if(outerCount1 >= count){
-      if(filteredGram1 >= 206){
+      if(filteredGram1 >= maximumCup){
         Serial.println("o"); // Overweight
       }
     }else{
@@ -121,7 +124,7 @@ void loop() {
     }else{
       offsetZero2[offsetCount2++] = filteredGram2;
     }
-  }else if((filteredGram2 > 190) && (filteredGram2 < 206)){ // 필터된 무게가 빈컵의 무게 범위 내일 경우
+  }else if((filteredGram2 > minimumCup) && (filteredGram2 < maximumCup)){ // 필터된 무게가 빈컵의 무게 범위 내일 경우
     offsetCount2 = 0; // 범위 밖이 아니기 때문에 0으로 초기화
     outerCount2 = 0;
     Serial.println("m"); // measuring
@@ -132,7 +135,7 @@ void loop() {
     offsetCount2 = 0;
     innerCount2 = 0;
     if(outerCount2 >= count){
-      if(filteredGram2 >= 206){
+      if(filteredGram2 >= maximumCup){
         Serial.println("o"); // Overweight
       }
     }else{
@@ -145,16 +148,19 @@ void loop() {
     Serial.println("s");
   }
 
-  if(flag1){
+  if(flag1){ // 왼쪽 빈 컵인지 확인했을 때
     flag1 = false;
     innerCount1 = 0;
     servo1.write(angle + 90);
+    servo2.write(angle - 90);
     Serial.println("L");
     delay(1000);
     servo1.write(angle);
+    servo2.write(90 + angle);
     delay(1000);
   }
-  if(flag2){
+
+  if(flag2){ // 오른쪽 빈 컵인지 확인했을 때
     flag2 = false;
     innerCount2 = 0;
     servo2.write(angle + 90);
@@ -164,7 +170,7 @@ void loop() {
     delay(1000);
   }
 
-  // Serial.println(filteredGram1);
+  Serial.println(filteredGram1);
 
   delay(200);
 }
