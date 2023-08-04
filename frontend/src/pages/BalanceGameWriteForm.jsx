@@ -52,7 +52,7 @@ function BalanceGameWriteFormPage() {
     } else {
       axios
         .post(
-          "http://i9b103.p.ssafy.io:8000/api/board/regist",
+          "https://i9b103.p.ssafy.io/api/board/regist",
           JSON.stringify(cardData),
           {
             headers: {

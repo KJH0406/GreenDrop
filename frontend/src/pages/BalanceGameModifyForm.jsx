@@ -23,7 +23,8 @@ function BalanceGameModifyFormPage() {
 
   useEffect(() => {
     axios
-      .get("http://i9b103.p.ssafy.io:8000/api/board/detail/" + boardSeq)
+
+      .get("https://i9b103.p.ssafy.io/api/board/detail/" + boardSeq)
       .then((response) => {
         // console.log(response);
         // setCard(response.data);
@@ -72,7 +73,7 @@ function BalanceGameModifyFormPage() {
     } else {
       axios
         .patch(
-          "http://i9b103.p.ssafy.io:8000/api/board/modify/" + boardSeq,
+          "https://i9b103.p.ssafy.io/api/board/modify/" + boardSeq,
           JSON.stringify(newCard),
           {
             headers: {

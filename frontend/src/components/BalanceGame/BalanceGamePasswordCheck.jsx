@@ -1,8 +1,8 @@
 import { useState } from "react";
 import classes from "../BalanceGame/BalanceGamePasswordCheck.module.css";
 // import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 function BalanceGamePasswordCheck(props) {
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("비밀번호를 입력해주세요");
@@ -14,7 +14,7 @@ function BalanceGamePasswordCheck(props) {
     };
     axios
       .post(
-        "http://i9b103.p.ssafy.io:8000/api/board/modify/" + props.boardSeq,
+        "https://i9b103.p.ssafy.io/api/board/modify/" + props.boardSeq,
         JSON.stringify(passwordJson),
         {
           headers: {
@@ -58,7 +58,7 @@ function BalanceGamePasswordCheck(props) {
     };
     axios
       .post(
-        "http://i9b103.p.ssafy.io:8000/board/modify/" + props.boardSeq,
+        "https://i9b103.p.ssafy.io/api/board/modify/" + props.boardSeq,
         JSON.stringify(passwordJson),
         {
           headers: {

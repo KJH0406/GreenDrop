@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import trashcan from "../../assets/trashcan.png";
-import { toggleIsOpenComment, getCommentList } from "../../store";
+import { getCommentList, toggleIsOpenComment } from "../../store";
 import classes from "./BalanceGameCommentModal.module.css";
 
 function BalanceGameCommentModal({
@@ -17,7 +17,7 @@ function BalanceGameCommentModal({
 
   useEffect(() => {
     axios
-      .get("http://i9b103.p.ssafy.io:8000/api/comment/" + boardSeq)
+      .get("https://i9b103.p.ssafy.io/api/comment/" + boardSeq)
       .then((response) => {
         console.log("응답", response.data);
 
@@ -29,7 +29,7 @@ function BalanceGameCommentModal({
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-  }, [dispatch, update]);
+  }, [dispatch, update, boardSeq]);
   const commentObj = useSelector((state) => {
     return state.commentObj;
   });
@@ -95,7 +95,7 @@ function BalanceGameCommentModal({
     } else {
       axios
         .post(
-          "http://i9b103.p.ssafy.io:8000/api/comment/regist/parent/" + boardSeq,
+          "https://i9b103.p.ssafy.io/api/comment/regist/parent/" + boardSeq,
           JSON.stringify(newComment),
           {
             headers: {
@@ -148,7 +148,7 @@ function BalanceGameCommentModal({
     } else {
       axios
         .post(
-          "http://i9b103.p.ssafy.io:8000/api/comment/regist/child/" + parentNum,
+          "https://i9b103.p.ssafy.io/api/comment/regist/child/" + parentNum,
           JSON.stringify(newComment),
           {
             headers: {

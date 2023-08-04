@@ -1,6 +1,6 @@
-import classes from "./BalanceGameCategoryList.module.css";
 import BalanceGameCategory from "./BalanceGameCategory";
-import { useState } from "react";
+import classes from "./BalanceGameCategoryList.module.css";
+
 function BalanceGameCategoryList(props) {
   console.log(props.categories);
   return (
@@ -16,7 +16,9 @@ function BalanceGameCategoryList(props) {
             setIsCategorySelected={() => {
               // 배열을 복사하여 해당 카테고리의 상태만 변경합니다.
               const updatedIsCategorySelected = [...props.isCategorySelected];
-              updatedIsCategorySelected[idx] = !updatedIsCategorySelected[idx];
+              const temp = updatedIsCategorySelected[idx];
+              updatedIsCategorySelected.fill(false);
+              updatedIsCategorySelected[idx] = !temp;
               props.setIsCategorySelected(updatedIsCategorySelected);
             }}
           />

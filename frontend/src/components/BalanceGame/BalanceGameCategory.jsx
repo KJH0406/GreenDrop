@@ -1,5 +1,4 @@
 import classes from "./BalanceGameCategory.module.css";
-import { useState } from "react";
 
 function BalanceGameCategory({
   category,
@@ -14,7 +13,7 @@ function BalanceGameCategory({
       onClick={() => {
         // setIsSelected(!isSelected);
         setIsCategorySelected();
-        selectedCategory(category);
+        selectedCategory(category, isCategorySelected);
       }}
     >
       {category}
