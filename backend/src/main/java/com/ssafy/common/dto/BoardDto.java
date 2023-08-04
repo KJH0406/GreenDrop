@@ -10,7 +10,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor (access = AccessLevel.PROTECTED)
 @Builder
 public class BoardDto {
-    private Long boardSeq;
     private String question;
     private String leftAnswer;
     private String rightAnswer;
@@ -25,7 +24,6 @@ public class BoardDto {
 
     public Board toEntity() {
         Board board = Board.builder()
-                .boardSeq(boardSeq)
                 .question(question)
                 .leftAnswer(leftAnswer)
                 .rightAnswer(rightAnswer)

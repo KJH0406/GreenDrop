@@ -49,7 +49,7 @@ public class BoardRepositoryImpl extends QuerydslRepositorySupport implements Bo
                 .leftJoin(board.boardCategories,boardCategory)
                 .leftJoin(boardCategory.category,category)
                 .where(board.isDeleted.eq(0))
-                .orderBy(board.likeCount.desc());
+                .orderBy(board.boardSeq.desc());
 
         List<BoardResponseDto> boardList = this.getQuerydsl().applyPagination(pageable, query).fetch();
         return new PageImpl<BoardResponseDto>(boardList, pageable, query.fetchCount());
