@@ -207,6 +207,7 @@ function BoardPage() {
               onClick={() => {
                 setIsCategorySelected(categoryArr);
                 handleBoardSearch();
+
               }}
             />
           </span>

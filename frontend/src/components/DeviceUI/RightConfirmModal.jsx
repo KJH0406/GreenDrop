@@ -1,6 +1,6 @@
-import classes from "./ConfirmModal.module.css";
+import classes from "./RightConfirmModal.module.css";
 
-function ConfirmModal() {
+function RightConfirmModal() {
   return (
     <div className={classes.device_modal_container}>
       <div className={`${classes.device_modal_img} `}></div>
@@ -8,10 +8,10 @@ function ConfirmModal() {
         내용물을 확인 중 입니다...
       </div>
       <div className={classes.device_modal_content}>
-        확인 중에 플라스틱 컵을 움직이지 말아주세요!
+        컵을 움직이지 말아주세요!
       </div>
     </div>
   );
 }
 
-export default ConfirmModal;
+export default RightConfirmModal;

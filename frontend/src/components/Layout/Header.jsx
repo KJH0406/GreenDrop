@@ -66,7 +66,7 @@ function Header() {
     { path: "guide", name: "분리수거 가이드" },
     { path: "location", name: "수거함 위치" },
     { path: "status", name: "수거 현황" },
-    { path: "admin", name: "관리자 페이지" },
+    { path: "login", name: "관리자 페이지" },
     { path: "device", name: "디바이스" },
   ];
 
@@ -85,9 +85,13 @@ function Header() {
           onClick={toggleSidebar}
         />
       </header>
-      <div className={classes.sidbar}>
-        {isSidebarOpen ? <Sidebar pageList={pageList} /> : <></>}
-      </div>
+      {isSidebarOpen ? (
+        <div className={classes.sidbar}>
+          <Sidebar pageList={pageList} />
+        </div>
+      ) : (
+        ""
+      )}
       {renderOverlay()}
     </div>
   );

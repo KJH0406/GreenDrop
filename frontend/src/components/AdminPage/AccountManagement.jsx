@@ -3,6 +3,8 @@ import axios from "axios";
 import classes from "./AccountManagement.module.css";
 import { Navigate } from "react-router-dom";
 
+const api = "http://i9b103.p.ssafy.io:8000/api/";
+
 function AccountManagement() {
   // 로그인한 사용자의 토큰 가져오기
   const userInfo = localStorage.getItem("loggedInUser");
@@ -31,18 +33,18 @@ function AccountManagement() {
       return <Navigate to="/admin" />;
     }
 
-    // Axios 인터셉터 등록
-    const axiosInterceptor = axios.interceptors.request.use((config) => {
-      config.headers.Authorization = `Bearer ${token}`;
-      return config;
-    });
+    // // Axios 인터셉터 등록
+    // const axiosInterceptor = axios.interceptors.request.use((config) => {
+    //   config.headers.Authorization = `Bearer ${token}`;
+    //   return config;
+    // });
 
-    // Axios 인터셉터 해제 함수 등록
-    return () => {
-      axios.interceptors.request.eject(axiosInterceptor);
-    };
+    // // Axios 인터셉터 해제 함수 등록
+    // return () => {
+    //   axios.interceptors.request.eject(axiosInterceptor);
+    // };
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // 컴포넌트가 처음 마운트될 때, 관리자 리스트를 서버에서 가져오도록 useEffect 사용
@@ -56,12 +58,15 @@ function AccountManagement() {
 
     // Axios를 사용하여 서버에서 관리자 리스트를 가져옴
     axios
-      .get("/api/manager-list")
+      .get(`${api}manager/list`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
       .then((response) => {
         // 서버 응답에서 관리자 리스트 추출하여 상태 변수에 저장
         setManagerList(response.data);
       })
       .catch((error) => {
+        console.log(token);
         console.error("관리자 리스트를 불러오는데 실패했습니다.", error);
       });
   }, [isSuper]); // 컴포넌트가 처음 마운트될 때와 isSuper 값이 변경될 때 실행
@@ -85,9 +90,10 @@ function AccountManagement() {
   const handleCreateAccount = () => {
     // 새로운 계정 정보를 서버에 보내는 요청을 보냄
     axios
-      .post("http://i9b103.p.ssafy.io:8000/manager/regist", {
+      .post("http://i9b103.p.ssafy.io:8000/api/manager/regist", {
         id: newAccountId,
         password: newPassword,
+        headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
         // 생성된 계정 정보를 서버에서 반환하면, 관리자 리스트에 추가

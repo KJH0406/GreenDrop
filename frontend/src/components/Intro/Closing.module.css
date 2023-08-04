@@ -10,6 +10,7 @@
   justify-content: center;
   background-image: url("../../assets/closing.jpg");
   background-size: cover;
+  background-position: center;
   margin: 0 auto;
   width: 100%;
   height: 600px;
@@ -18,20 +19,20 @@
 .closing_comment {
   z-index: 799;
   font-weight: bold;
-  letter-spacing: 2px;
+  letter-spacing: 1px;
 }
 
 @media (min-width: 500px) {
   .closing_comment {
     font-size: 2rem;
-    line-height: 3rem;
+    line-height: 2rem;
   }
 }
 
 @media (max-width: 500px) {
   .closing_comment {
     font-size: 1.4rem;
-    line-height: 2rem;
+    line-height: 1.5rem;
   }
 }
 .overlay {
