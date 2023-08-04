@@ -26,13 +26,18 @@ public class GameService {
 //        Board board = gameRepository.findOneByBoard_BoardSeq(boardSeq);
         BoardResponseDto boardResponseDto = boardRepository.oneBoard(boardSeq);
         Board board = boardResponseDto.toEntity(boardSeq);//
+        LocalDateTime nowTime = LocalDateTime.now();
+        int year = nowTime.getYear();
+        int month = nowTime.getMonthValue();
+        int day = nowTime.getDayOfMonth();
+        LocalDate date = LocalDate.of(year, month, day);
         Game game = Game.builder()
                 .board(board)
                 .question(board.getQuestion())
                 .leftAnswer(board.getLeftAnswer())
                 .rightAnswer(board.getRightAnswer())
-                .date(LocalDate.now())
-                .createdDate(LocalDateTime.now())
+                .date(date)
+                .createdDate(nowTime)
                 .leftCount(0)
                 .rightCount(0)
                 .build();
