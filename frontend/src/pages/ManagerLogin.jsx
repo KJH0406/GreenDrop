@@ -12,7 +12,7 @@ const MangerLogin = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://i9b103.p.ssafy.io:8000/manager/login",
+        "http://i9b103.p.ssafy.io:8000/api/manager/login",
         {
           id,
           password,

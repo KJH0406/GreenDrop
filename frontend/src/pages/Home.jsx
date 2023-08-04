@@ -24,7 +24,7 @@ function HomePage() {
     let now = yesterday.toISOString().slice(0, 10);
 
     axios
-      .get(`http://i9b103.p.ssafy.io:8000/game/${now}`)
+      .get(`https://i9b103.p.ssafy.io/api/game/${now}`)
       .then((result) => {
         setBalanceGame((prevBalanceGame) => {
           return [

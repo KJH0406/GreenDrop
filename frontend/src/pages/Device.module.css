@@ -87,7 +87,7 @@
 .title_box {
   margin: 4% 0;
   text-align: center;
-  padding: 1% 7%;
+  padding: 1% 3%;
   background-color: white;
   color: black;
   font-size: 3.3rem;
@@ -120,7 +120,7 @@
   justify-content: center;
   text-align: center;
   width: 100%;
-  height: 25%;
+  height: 20%;
   font-size: 3.5rem;
   color: white;
   border-radius: 2rem 2rem 0 0;
