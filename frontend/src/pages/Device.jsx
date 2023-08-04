@@ -16,7 +16,7 @@ import LeftLightWeightModal from "../components/DeviceUI/LeftLightWeightModal";
 import RightLightWeightModal from "../components/DeviceUI/RightLightWeightModal";
 
 // API
-const api = "http://i9b103.p.ssafy.io:8000/api/";
+const api = "https://i9b103.p.ssafy.io/api/";
 
 // 날짜 자동생성
 const getCurrentDate = () => {
