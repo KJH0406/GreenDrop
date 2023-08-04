@@ -4,6 +4,7 @@ import { useLocation } from "react-router-dom";
 import classes from "./Header.module.css";
 import hamburgerImg from "../../assets/hamburger.png";
 import closeImg from "../../assets/close.png";
+
 import Sidebar from "./Sidebar";
 
 function Header() {
@@ -59,15 +60,12 @@ function Header() {
 
   // 사이드 바 메뉴 리스트
   const pageList = [
-    { path: "", name: "서비스 소개" },
-    { path: "home", name: "홈" },
-    { path: "board", name: "밸런스 게임 게시판" },
-    { path: "greenStory", name: "그린 스토리" },
-    { path: "guide", name: "분리수거 가이드" },
-    { path: "location", name: "수거함 위치" },
+    { path: "intro", name: "서비스 소개" },
+    { path: "board", name: "밸런스 게임" },
     { path: "status", name: "수거 현황" },
-    { path: "login", name: "관리자 페이지" },
-    { path: "device", name: "디바이스" },
+    { path: "greenStory", name: "그린 스토리" },
+    { path: "guide", name: "분리배출 가이드" },
+    { path: "location", name: "수거함 위치" },
   ];
 
   return (

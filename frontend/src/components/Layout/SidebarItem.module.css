@@ -5,7 +5,6 @@
   padding: 1rem;
   height: 2.5rem;
   font-size: 1.3rem;
-  transition: right 0.3s ease-in-out;
 }
 .active {
   color: white;
@@ -16,4 +15,15 @@ a {
   font-weight: bolder;
   text-decoration: none;
   color: black;
+}
+.line_img {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.line_img img {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
 }
