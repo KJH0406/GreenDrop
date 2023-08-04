@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import classes from "./AdminBoard.module.css";
 
-const api = "http://i9b103.p.ssafy.io:8000/api/";
+const api = "https://i9b103.p.ssafy.io/api/";
 const postsPerPage = 15;
 
 const AdminBoard = () => {
@@ -110,7 +110,7 @@ const AdminBoard = () => {
               <button key={index} onClick={() => paginate(index + 1)}>
                 {index + 1}
               </button>
-            )
+            ),
           )}
         </div>
       )}
