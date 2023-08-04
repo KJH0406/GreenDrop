@@ -24,7 +24,8 @@ function BoardPage() {
 
   useEffect(() => {
     axios
-      .get("http://i9b103.p.ssafy.io:8000/api/board/list?page=1")
+
+      .get("https://i9b103.p.ssafy.io/api/board/list?page=2")
       .then((response) => {
         // console.log("응답", response);
         const fetchedCardList = [...response.data.content];
@@ -38,7 +39,8 @@ function BoardPage() {
 
   useEffect(() => {
     axios
-      .get("http://i9b103.p.ssafy.io:8000/api/category/list")
+
+      .get("https://i9b103.p.ssafy.io/api/category/list")
       .then((response) => {
         console.log(response.data);
         const fetchedCategories = [...response.data];
@@ -62,7 +64,8 @@ function BoardPage() {
 
   function handleBoardDelete(boardNo) {
     axios
-      .patch("http://i9b103.p.ssafy.io:8000/api/board/delete/" + boardNo)
+
+      .patch("https://i9b103.p.ssafy.io/api/board/delete/" + boardNo)
       .then(() => {
         setUpdate(update + 1);
       })
@@ -83,7 +86,8 @@ function BoardPage() {
 
   function handleCommentDelete(commentNum) {
     axios
-      .patch("http://i9b103.p.ssafy.io:8000/api/comment/delete/" + commentNum)
+
+      .patch("https://i9b103.p.ssafy.io/api/comment/delete/" + commentNum)
       .then(() => {
         setUpdate(update + 1);
       })
@@ -102,9 +106,8 @@ function BoardPage() {
 
   function handleBoardSearch() {
     axios
-      .get(
-        "http://i9b103.p.ssafy.io:8000/api/board/search?question=" + searchWord,
-      )
+
+      .get("https://i9b103.p.ssafy.io/api/board/search?question=" + searchWord)
       .then((response) => {
         // console.log(response);
         const fetchedData = [...response.data.content];
@@ -113,7 +116,8 @@ function BoardPage() {
   }
   function handleLikeCount(boardNo) {
     axios
-      .patch("http://i9b103.p.ssafy.io:8000/api/board/like/" + boardNo)
+
+      .patch("https://i9b103.p.ssafy.io/api/board/like/" + boardNo)
       .then(() => {
         console.log("좋아요");
         setUpdate(update + 1);
@@ -123,23 +127,26 @@ function BoardPage() {
       });
   }
 
-  function selectedCategory(category) {
-    axios
-      .get(
-        "http://i9b103.p.ssafy.io:8000/api/board/select?category=" + category,
-      )
-      .then((response) => {
-        const fetchedCardList = [...response.data.content];
-        // console.log("패치 된 카드 리스트", fetchedCardList);
-        dispatch(getBoardList(fetchedCardList));
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }
   const categoryArr = new Array(categories.length);
   categoryArr.fill(false);
   const [isCategorySelected, setIsCategorySelected] = useState(categoryArr);
+
+  function selectedCategory(category, isSelected) {
+    if (!isSelected) {
+      axios
+        .get("https://i9b103.p.ssafy.io/api/board/select?category=" + category)
+        .then((response) => {
+          const fetchedCardList = [...response.data.content];
+          // console.log("패치 된 카드 리스트", fetchedCardList);
+          dispatch(getBoardList(fetchedCardList));
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    } else {
+      setUpdate(update + 1);
+    }
+  }
 
   return (
     <div
@@ -207,7 +214,6 @@ function BoardPage() {
               onClick={() => {
                 setIsCategorySelected(categoryArr);
                 handleBoardSearch();
-
               }}
             />
           </span>

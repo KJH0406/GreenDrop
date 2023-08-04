@@ -2,9 +2,8 @@ import classes from "./BalanceGameCheckModal.module.css";
 
 import closeImg from "../../assets/close_green.png";
 
-import { useState } from "react";
-import BalanceGamePasswordCheck from "./BalanceGamePasswordCheck";
 import BalanceGameConfirm from "./BalanceGameConfirm";
+import BalanceGamePasswordCheck from "./BalanceGamePasswordCheck";
 function BalanceGameCheckModal(props) {
   return (
     <div

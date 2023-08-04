@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import commentImg from "../../assets/commentpng.png";
 import emptyHeartImg from "../../assets/empty_heartpng.png";
-import fullHeartImg from "../../assets/full_heartpng.png";
 import menuImg from "../../assets/list_menu.png";
 import { toggleIsOpenComment } from "../../store";
 import classes from "./BalanceGameCard.module.css";
