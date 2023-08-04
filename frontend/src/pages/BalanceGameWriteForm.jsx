@@ -4,6 +4,8 @@ import classes from "./BalanceGameWriteForm.module.css";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import BalanceGameCheckModal from "../components/BalanceGame/BalanceGameCheckModal";
+import { useNavigate } from "react-router-dom";
 function BalanceGameWriteFormPage() {
   const [question, setQuestion] = useState("");
   const [leftAnswer, setLeftAnswer] = useState("");
@@ -15,6 +17,11 @@ function BalanceGameWriteFormPage() {
   const categories = useSelector((state) => {
     return state.categories;
   });
+  const navigate = useNavigate();
+  const [showCheckModal, setShowCheckModal] = useState("");
+  const [confirm, setConfirm] = useState(false);
+  const [confirmModalData, setConfirmModalData] = useState("");
+
   const handleCardRegistration = () => {
     const cardData = {
       question: question,
@@ -28,28 +35,73 @@ function BalanceGameWriteFormPage() {
     console.log(JSON.stringify(cardData));
 
     // axios 요청 보내기
-    axios
-      .post(
-        "http://i9b103.p.ssafy.io:8000/board/regist",
-        JSON.stringify(cardData),
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        },
-      )
-      .then((response) => {
-        console.log(response);
-        // 요청에 대한 응답을 처리하는 코드를 추가할 수 있습니다.
-      })
-      .catch((error) => {
-        console.error("Error sending data:", error);
-        // 에러 처리 코드를 추가할 수 있습니다.
+    if (leftAnswer.length === 0 || rightAnswer.length === 0) {
+      setShowCheckModal({
+        title: "글 등록 실패",
+        category: "board",
+        type: "confirm",
+        action: "등록하기",
       });
+      setConfirm(true);
+      setConfirmModalData({
+        confirmTitle: "밸런스 게임을 작성해 주세요",
+        confirmCategory: "board",
+        confirmType: "regist",
+        confirmAction: "실패",
+      });
+    } else {
+      axios
+        .post(
+          "http://i9b103.p.ssafy.io:8000/api/board/regist",
+          JSON.stringify(cardData),
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          },
+        )
+        .then((response) => {
+          console.log(response);
+          // 요청에 대한 응답을 처리하는 코드를 추가할 수 있습니다.
+          navigate("/board");
+        })
+        .catch((error) => {
+          console.error("Error sending data:", error);
+          // 에러 처리 코드를 추가할 수 있습니다.
+          setShowCheckModal({
+            title: "글 등록 실패",
+            category: "board",
+            type: "confirm",
+            action: "등록하기",
+          });
+          setConfirm(true);
+          setConfirmModalData({
+            confirmTitle: "글 등록 실패했습니다.",
+            confirmCategory: "board",
+            confirmType: "regist",
+            confirmAction: "실패",
+          });
+        });
+    }
   };
 
   return (
     <div className={classes.regist_box}>
+      {showCheckModal ? (
+        <BalanceGameCheckModal
+          setShowCheckModal={setShowCheckModal}
+          confirm={confirm}
+          setConfirm={setConfirm}
+          confirmTitle={confirmModalData.confirmTitle}
+          confirmCategory={confirmModalData.confirmCategory}
+          confirmType={confirmModalData.confirmType}
+          confirmAction={confirmModalData.confirmAction}
+          setConfirmModalData={setConfirmModalData}
+        />
+      ) : (
+        <></>
+      )}
+
       <Link className={classes.title} to={"/board"}>
         <h2 className={classes.first_word}>Green &nbsp;</h2>
         <h2 className={classes.second_word}>Balance Game</h2>
@@ -107,8 +159,8 @@ function BalanceGameWriteFormPage() {
             >
               {categories.map((item, idx) => {
                 return (
-                  <option value={item} key={idx}>
-                    {item}
+                  <option value={item.item} key={idx}>
+                    {item.item}
                   </option>
                 );
               })}
