@@ -1,15 +1,16 @@
 .device_modal_container {
+  border-right: 50px solid #ffff00;
   z-index: 1;
   position: absolute;
   top: 7%;
   display: flex;
-  right: 5%;
+  right: 3%;
   flex-direction: column;
   align-items: center;
   width: 30%;
   height: 70%;
   padding: 5%;
-  background-color: rgb(255, 255, 255, 0.9);
+  background-color: rgb(255, 255, 255, 0.95);
   border-radius: 30px;
   animation: mount 0.7s ease-in-out;
 }
@@ -25,13 +26,13 @@
 .device_modal_img {
   width: 300px;
   height: 300px;
-  content: url("../../assets/cancel2.png");
+  content: url("../../assets/overWeight.png");
 }
 
 .device_modal_title {
-  margin-top: 7rem;
-  margin-bottom: 6rem;
-  font-size: 3.5rem;
+  margin-top: 4rem;
+  margin-bottom: 5rem;
+  font-size: 3.3rem;
   color: red;
 }
 .device_modal_content {

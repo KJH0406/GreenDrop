@@ -1,22 +1,18 @@
 import classes from "./BalanceGameCheckModal.module.css";
-import BalanceGameModifyCard from "./BalanceGameModifyCard";
-import BalanceGameConfirm from "./BalanceGameConfirm";
-import BalanceGameCommentDelete from "./BalanceGameCommentDelete";
+
 import closeImg from "../../assets/close_green.png";
 
-import { useState } from "react";
-function BalanceGameCheckModal({ isModify, setIsModify }) {
-  const [isConfirmed, setIsConfirmed] = useState(false);
-  const [ment] = useState(["삭제가", "수정이"]);
-  console.log("보드 시퀀스", isModify.boardSeq);
+import BalanceGameConfirm from "./BalanceGameConfirm";
+import BalanceGamePasswordCheck from "./BalanceGamePasswordCheck";
+function BalanceGameCheckModal(props) {
   return (
     <div
       className={classes.backdrop}
       onClick={() => {
-        if (isModify.flag) {
-          const newModify = { flag: false, boardSeq: "" };
-          setIsModify(newModify);
-        }
+        //모달 close
+        props.setShowCheckModal("");
+        props.setConfirmModalData("");
+        props.setConfirm(false);
       }}
     >
       <div
@@ -31,35 +27,37 @@ function BalanceGameCheckModal({ isModify, setIsModify }) {
             src={closeImg}
             alt=""
             onClick={() => {
-              const newModify = { flag: false, boardSeq: "" };
-              setIsModify(newModify);
+              props.setShowCheckModal("");
+              props.setConfirmModalData("");
+              props.setConfirm(false);
             }}
           />
         </div>
         <div className={classes.component_container}>
-          {!isModify.flag && !isModify.boardSeq && !isConfirmed ? (
-            <BalanceGameCommentDelete setIsConfirmed={setIsConfirmed} />
-          ) : !isModify.flag && !isModify.boardSeq && isConfirmed ? (
-            <BalanceGameConfirm
-              isModify={isModify}
-              setIsModify={setIsModify}
-              ment={ment[0]}
-            />
-          ) : !isModify.flag && isModify.boardSeq ? (
-            <BalanceGameConfirm
-              isModify={isModify}
-              setIsModify={setIsModify}
-              ment={ment[1]}
-            />
-          ) : isModify.boardSeq ? (
-            <BalanceGameModifyCard
-              isModify={isModify}
-              setIsModify={setIsModify}
-              isConfirmed={isConfirmed}
-              setIsConfirmed={setIsConfirmed}
+          {!props.confirm ? (
+            <BalanceGamePasswordCheck
+              boardSeq={props.boardSeq}
+              commentSeq={props.commentSeq}
+              title={props.title}
+              category={props.category}
+              type={props.type}
+              action={props.action}
+              setShowCheckModal={props.setShowCheckModal}
+              setConfirm={props.setConfirm}
+              setConfirmModalData={props.setConfirmModalData}
+              handleBoardDelete={props.handleBoardDelete}
+              handleCommentDelete={props.handleCommentDelete}
             />
           ) : (
-            <></>
+            <BalanceGameConfirm
+              confirmTitle={props.confirmTitle}
+              confirmCategory={props.confirmCategory}
+              confirmType={props.confirmType}
+              confirmAction={props.confirmAction}
+              setShowCheckModal={props.setShowCheckModal}
+              setConfirmModalData={props.setConfirmModalData}
+              setConfirm={props.setConfirm}
+            />
           )}
         </div>
       </div>

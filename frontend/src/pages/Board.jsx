@@ -1,26 +1,31 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import search from "../assets/search.png";
 import star from "../assets/star.png";
 import BalanceGameCategoryList from "../components/BalanceGame/BalanceGameCategoryList";
 import BalanceGameCheckModal from "../components/BalanceGame/BalanceGameCheckModal";
+import axios from "axios";
 import BalanceGameCommentModal from "../components/BalanceGame/BalanceGameCommentModal";
 import BalanceGameList from "../components/BalanceGame/BalanceGameList";
-import { getBoardList, searchBoard } from "../store";
+import { getBoardList, getCategoryList, searchBoard } from "../store";
 import classes from "./Board.module.css";
-import axios from "axios";
 
 function BoardPage() {
   const dispatch = useDispatch();
   const page = [{ path: "write", name: "밸런스 게임 게시판 글 작성" }];
+
+  const [showCheckModal, setShowCheckModal] = useState("");
+  const [confirmModalData, setConfirmModalData] = useState("");
   const isOpenComment = useSelector((state) => {
     return state.isOpenComment;
   });
+  const [update, setUpdate] = useState(0);
 
   useEffect(() => {
     axios
-      .get("http://i9b103.p.ssafy.io:8000/board/list?page=2")
+
+      .get("https://i9b103.p.ssafy.io/api/board/list?page=2")
       .then((response) => {
         // console.log("응답", response);
         const fetchedCardList = [...response.data.content];
@@ -30,15 +35,119 @@ function BoardPage() {
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-  }, [dispatch]); // Call the API only once when the component mounts
+  }, [dispatch, update]); // Call the API only once when the component mounts
+
+  useEffect(() => {
+    axios
+
+      .get("https://i9b103.p.ssafy.io/api/category/list")
+      .then((response) => {
+        console.log(response.data);
+        const fetchedCategories = [...response.data];
+        dispatch(getCategoryList(fetchedCategories));
+      });
+  }, [dispatch]);
+
   const cardList = useSelector((state) => state.balanceGameList); // Get cardList from the Redux store
   const [searchWord, setSearchWord] = useState("");
   // console.log("스토어에서 받아온 데이터", cardList);
-
+  const [confirm, setConfirm] = useState(false);
   const sidebarArr = new Array(cardList.length);
+
   sidebarArr.fill(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(sidebarArr);
-  const [isModify, setIsModify] = useState({ flag: false, boardSeq: "" });
+  const [selectedBoardSeq, setSelectedBoardSeq] = useState("");
+
+  const categories = useSelector((state) => {
+    return state.categories;
+  });
+
+  function handleBoardDelete(boardNo) {
+    axios
+
+      .patch("https://i9b103.p.ssafy.io/api/board/delete/" + boardNo)
+      .then(() => {
+        setUpdate(update + 1);
+      })
+      .catch((error) => {
+        console.error("글 삭제 실패");
+        setConfirm(true);
+        // setShowCheckModal이거를 null이 아니게 바꿔줘야함
+        setShowCheckModal(true);
+
+        setConfirmModalData({
+          confirmTitle: "글 삭제 실패",
+          confirmCategory: "board",
+          confirmType: "delete",
+          confirmAction: "실패",
+        });
+      });
+  }
+
+  function handleCommentDelete(commentNum) {
+    axios
+
+      .patch("https://i9b103.p.ssafy.io/api/comment/delete/" + commentNum)
+      .then(() => {
+        setUpdate(update + 1);
+      })
+      .catch((error) => {
+        console.error("댓글 삭제 실패");
+        // setConfirm(true);
+
+        setShowCheckModal({
+          title: "댓글 삭제 실패",
+          category: "comment",
+          type: "delete",
+          action: "실패",
+        });
+      });
+  }
+
+  function handleBoardSearch() {
+    axios
+
+      .get("https://i9b103.p.ssafy.io/api/board/search?question=" + searchWord)
+      .then((response) => {
+        // console.log(response);
+        const fetchedData = [...response.data.content];
+        dispatch(searchBoard(fetchedData));
+      });
+  }
+  function handleLikeCount(boardNo) {
+    axios
+
+      .patch("https://i9b103.p.ssafy.io/api/board/like/" + boardNo)
+      .then(() => {
+        console.log("좋아요");
+        setUpdate(update + 1);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
+  const categoryArr = new Array(categories.length);
+  categoryArr.fill(false);
+  const [isCategorySelected, setIsCategorySelected] = useState(categoryArr);
+
+  function selectedCategory(category, isSelected) {
+    if (!isSelected) {
+      axios
+        .get("https://i9b103.p.ssafy.io/api/board/select?category=" + category)
+        .then((response) => {
+          const fetchedCardList = [...response.data.content];
+          // console.log("패치 된 카드 리스트", fetchedCardList);
+          dispatch(getBoardList(fetchedCardList));
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    } else {
+      setUpdate(update + 1);
+    }
+  }
+
   return (
     <div
       className={classes.container}
@@ -48,13 +157,38 @@ function BoardPage() {
         }
       }}
     >
-      {isModify.flag ? (
-        <BalanceGameCheckModal isModify={isModify} setIsModify={setIsModify} />
+      {/* 게시판에서 체크 모달 띄우는 위치 */}
+      {showCheckModal ? (
+        <BalanceGameCheckModal
+          boardSeq={showCheckModal.boardSeq}
+          commentSeq={showCheckModal.commentSeq}
+          title={showCheckModal.title}
+          category={showCheckModal.category}
+          type={showCheckModal.type}
+          action={showCheckModal.action}
+          setShowCheckModal={setShowCheckModal}
+          confirmTitle={confirmModalData.confirmTitle}
+          confirmCategory={confirmModalData.confirmCategory}
+          confirmType={confirmModalData.confirmType}
+          confirmAction={confirmModalData.confirmAction}
+          setConfirmModalData={setConfirmModalData}
+          confirm={confirm}
+          setConfirm={setConfirm}
+          handleBoardDelete={handleBoardDelete}
+          handleCommentDelete={handleCommentDelete}
+        />
       ) : (
         <></>
       )}
       {isOpenComment.isOpenComment ? (
-        <BalanceGameCommentModal boardSeq={isOpenComment.boardSeq} />
+        <BalanceGameCommentModal
+          boardSeq={selectedBoardSeq}
+          setShowCheckModal={setShowCheckModal}
+          setConfirm={setConfirm}
+          setConfirmModalData={setConfirmModalData}
+          update={update}
+          setUpdate={setUpdate}
+        />
       ) : (
         <></>
       )}
@@ -78,16 +212,8 @@ function BoardPage() {
               alt="search"
               className={classes.search_btn}
               onClick={() => {
-                axios
-                  .get(
-                    "http://i9b103.p.ssafy.io:8000/board/search?question=" +
-                      searchWord,
-                  )
-                  .then((response) => {
-                    // console.log(response);
-                    const fetchedData = [...response.data.content];
-                    dispatch(searchBoard(fetchedData));
-                  });
+                setIsCategorySelected(categoryArr);
+                handleBoardSearch();
               }}
             />
           </span>
@@ -102,16 +228,22 @@ function BoardPage() {
             추천 카테고리 <img src={star} alt="star"></img>
           </div>
 
-          <BalanceGameCategoryList />
+          <BalanceGameCategoryList
+            categories={categories}
+            selectedCategory={selectedCategory}
+            isCategorySelected={isCategorySelected}
+            setIsCategorySelected={setIsCategorySelected}
+          />
         </div>
         {/* 글 리스트만 컴포넌트로  */}
         {/* 검색시 게임 리스트 state만 바꿔주면 아랑서 화면 출력될 듯(다시 전체 글로는 어떻게 돌아가지?) */}
         <BalanceGameList
+          setSelectedBoardSeq={setSelectedBoardSeq}
           cardList={cardList}
           isSidebarOpen={isSidebarOpen}
           setIsSidebarOpen={setIsSidebarOpen}
-          isModify={isModify}
-          setIsModify={setIsModify}
+          setShowCheckModal={setShowCheckModal}
+          handleLikeCount={handleLikeCount}
         />
       </div>
     </div>

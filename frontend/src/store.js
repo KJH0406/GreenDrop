@@ -14,8 +14,6 @@ let balanceGameList = createSlice({
   },
 });
 
-export let { getBoardList, searchBoard } = balanceGameList.actions;
-
 let isOpenComment = createSlice({
   name: "isOpenComment",
   initialState: { isOpenComment: false, boardSeq: "" },
@@ -33,88 +31,29 @@ let isOpenComment = createSlice({
 
 let categories = createSlice({
   name: "categories",
-  initialState: ["카테고리 등록", "스포츠", "요리", "진로"],
-});
-
-let commentObj = createSlice({
-  name: "commentObj",
-  initialState: [
-    {
-      comment: {
-        content: "닉네임 있는 댓글 등록중",
-        commentSeq: 11,
-        board: 6,
-        nickName: "닉네임",
-        ip: "127.0.0.1",
-        createdDate: "2023-07-26T12:53:01",
-      },
-      comments: [
-        {
-          content: "닉네임 있는 댓글 등록중",
-          commentSeq: 10,
-          board: 6,
-          nickName: "ssafy",
-          ip: "127.0.0.1",
-          createdDate: "2023-07-26T12:52:13",
-        },
-        {
-          content: "대댓글 테스트",
-          commentSeq: 13,
-          board: 6,
-          nickName: "ssafy",
-          ip: "127.0.0.1",
-          createdDate: "2023-07-26T12:54:58",
-        },
-        {
-          content: "대댓글 테스트",
-          commentSeq: 14,
-          board: 6,
-          nickName: "ssafy",
-          ip: "127.0.0.1",
-          createdDate: "2023-07-26T12:55:19",
-        },
-        {
-          content: "대댓글 테스트",
-          commentSeq: 15,
-          board: 6,
-          nickName: "ssafy",
-          ip: "127.0.0.1",
-          createdDate: "2023-07-26T12:55:25",
-        },
-        {
-          content: "시간 테스트",
-          commentSeq: 16,
-          board: 6,
-          nickName: "child",
-          ip: "127.0.0.1",
-          createdDate: "2023-07-27T13:19:55",
-        },
-      ],
-    },
-    {
-      comment: {
-        content: "대댓글 테스트",
-        commentSeq: 12,
-        board: 6,
-        nickName: "ssafy",
-        ip: "127.0.0.1",
-        createdDate: "2023-07-26T12:54:15",
-      },
-      comments: [],
-    },
-  ],
+  initialState: [],
   reducers: {
-    getCommentList(state, action) {
-      axios
-        .get("http://i9b103.p.ssafy.io:8000/comment" + action.payload)
-        .then((response) => {
-          state = [response];
-        });
+    getCategoryList(state, action) {
+      return action.payload;
     },
   },
 });
 
+let commentObj = createSlice({
+  name: "commentObj",
+  initialState: [],
+  reducers: {
+    getCommentList(state, action) {
+      console.log(action.payload);
+      return action.payload;
+    },
+  },
+});
+export let { getBoardList, searchBoard } = balanceGameList.actions;
+
+export let { getCommentList } = commentObj.actions;
 export let { toggleIsOpenComment, changeBoardSeq } = isOpenComment.actions;
+export let { getCategoryList } = categories.actions;
 
 export default configureStore({
   reducer: {

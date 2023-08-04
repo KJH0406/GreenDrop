@@ -12,11 +12,11 @@ const MangerLogin = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://i9b103.p.ssafy.io:8000/manager/login",
+        "https://i9b103.p.ssafy.io/api/manager/login",
         {
           id,
           password,
-        }
+        },
       );
 
       // 로그인 성공 처리

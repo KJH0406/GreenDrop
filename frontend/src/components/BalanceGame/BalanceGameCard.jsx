@@ -2,29 +2,53 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import commentImg from "../../assets/commentpng.png";
 import emptyHeartImg from "../../assets/empty_heartpng.png";
-import fullHeartImg from "../../assets/full_heartpng.png";
 import menuImg from "../../assets/list_menu.png";
-import { toggleIsOpenComment, changeBoardSeq } from "../../store";
+import { toggleIsOpenComment } from "../../store";
 import classes from "./BalanceGameCard.module.css";
 import BalanceGameCardSidebarList from "./BalanceGameCardSidebarList";
 
 function BalanceGameCard({
+  setSelectedBoardSeq,
   card,
   isSidebarOpen,
   setSidebarOpen,
-  isModify,
-  setIsModify,
+  setShowCheckModal,
+  handleLikeCount,
 }) {
   // 카드별로 독립적인 isSidebarOpen 상태를 관리합니다.
   // const [SidebarOpen, setSidebarOpen] = useState(false)
   const [commentCnt] = useState(0);
-  const [isLiked, setIsLiked] = useState(false);
 
   const isOpenComment = useSelector((state) => {
     return state.isOpenComment;
   });
   const dispatch = useDispatch();
+  function timePassed(date) {
+    let timeValue = new Date(date);
+    let today = new Date();
+    console.log("오늘:", today);
+    console.log("작성시", timeValue);
+    // 분을 나타냄
+    let time = (today - timeValue) / 1000 / 60;
 
+    if (time < 1) {
+      return "방금 전";
+    }
+    if (time < 60) {
+      return parseInt(time) + "분 전";
+    }
+    time = time / 60; // 시간
+    if (time < 24) {
+      return parseInt(time) + "시간 전";
+    }
+    time = time / 24;
+    if (time < 7) {
+      return parseInt(time) + "일 전";
+    }
+    return `${today.getFullYear()}년 ${
+      today.getMonth() + 1
+    }월 ${today.getDate()}일`;
+  }
   return (
     <div className={classes.outer_box}>
       <div className={classes.top}>
@@ -47,7 +71,7 @@ function BalanceGameCard({
           {isSidebarOpen ? (
             <BalanceGameCardSidebarList
               boardSeq={card.boardSeq}
-              setIsModify={setIsModify}
+              setShowCheckModal={setShowCheckModal}
             />
           ) : (
             <></>
@@ -58,7 +82,9 @@ function BalanceGameCard({
         <div className={`${classes.top_item_left} ${classes.subject}`}>
           {card.question}
         </div>
-        <div className={classes.top_item_right}>{card.lastModifiedDate}</div>
+        <div className={classes.top_item_right}>
+          {timePassed(card.lastModifiedDate)}
+        </div>
       </div>
       <div className={classes.middle}>
         <div className={`${classes.middle_item} ${classes.middle_item_left}`}>
@@ -72,25 +98,16 @@ function BalanceGameCard({
       </div>
       <div className={classes.bottom}>
         <div className={classes.bottom_left}>
-          {isLiked ? (
-            <img
-              src={fullHeartImg}
-              className={classes.bottom_like_img}
-              alt=""
-              onClick={() => {
-                setIsLiked(!isLiked);
-              }}
-            />
-          ) : (
-            <img
-              src={emptyHeartImg}
-              className={classes.bottom_like_img}
-              alt=""
-              onClick={() => {
-                setIsLiked(!isLiked);
-              }}
-            />
-          )}
+          <img
+            src={emptyHeartImg}
+            className={classes.bottom_like_img}
+            alt=""
+            onClick={() => {
+              setSelectedBoardSeq(card.boardSeq);
+              handleLikeCount(card.boardSeq);
+              console.log(card);
+            }}
+          />
 
           <span className={classes.bottom_like}>{card.likeCount}</span>
 
@@ -102,8 +119,8 @@ function BalanceGameCard({
               console.log("comment");
               //axios로 해당 boardSeq의 댓글 데이터만 store에 저장
               //기존에 조회한 댓글 데이터는 날림 -> 인스타그램도 이렇게 하는듯
-              dispatch(changeBoardSeq(card.boardSeq));
               dispatch(toggleIsOpenComment(isOpenComment.isOpenComment));
+              setSelectedBoardSeq(card.boardSeq);
             }}
           />
           {/* 댓글 수 출력 어떻게 할 지 고민 */}

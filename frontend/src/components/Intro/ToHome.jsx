@@ -15,7 +15,7 @@ function ToHome() {
         }}
       ></div>
       <div className={classes.tohome_sub_title}>
-        <p>자라나는 새싹을 클릭해보세요! : )</p>
+        <p>자라나는 새싹을 터치해보세요! : )</p>
       </div>
     </div>
   );

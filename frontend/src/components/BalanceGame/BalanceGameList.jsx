@@ -1,11 +1,12 @@
 import BalanceGameCard from "./BalanceGameCard";
 import classes from "./BalanceGameList.module.css";
 function BalanceGameList({
+  setSelectedBoardSeq,
   cardList,
   isSidebarOpen,
   setIsSidebarOpen,
-  isModify,
-  setIsModify,
+  setShowCheckModal,
+  handleLikeCount,
 }) {
   // 카드별로 독립적인 isSidebarOpen 상태를 관리하기 위한 배열을 만듭니다.
   return (
@@ -13,6 +14,7 @@ function BalanceGameList({
       {cardList.map((card, index) => {
         return (
           <BalanceGameCard
+            setSelectedBoardSeq={setSelectedBoardSeq}
             key={index}
             card={card}
             // 현재 카드의 isSidebarOpen 상태를 전달합니다.
@@ -24,8 +26,8 @@ function BalanceGameList({
               updatedIsSidebarOpen[index] = !updatedIsSidebarOpen[index];
               setIsSidebarOpen(updatedIsSidebarOpen);
             }}
-            isModify={isModify}
-            setIsModify={setIsModify}
+            setShowCheckModal={setShowCheckModal}
+            handleLikeCount={handleLikeCount}
           />
         );
       })}

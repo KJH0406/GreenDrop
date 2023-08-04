@@ -9,6 +9,7 @@
   padding-bottom: 1.5rem;
   justify-content: center;
   align-content: center;
+  position: relative;
 }
 .outer_box {
   width: 80%;

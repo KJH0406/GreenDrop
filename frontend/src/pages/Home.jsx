@@ -7,7 +7,13 @@ import classes from "./Home.module.css";
 function HomePage() {
   let navigate = useNavigate();
 
-  let [balanceGame, setBalanceGame] = useState([{ question: "" }, { leftAnswer: "" }, { rightAnswer: "" }, { leftCount: "" }, { rightCount: "" }]);
+  let [balanceGame, setBalanceGame] = useState([
+    { question: "" },
+    { leftAnswer: "" },
+    { rightAnswer: "" },
+    { leftCount: "" },
+    { rightCount: "" },
+  ]);
 
   useEffect(() => {
     let today = new Date();
@@ -18,16 +24,16 @@ function HomePage() {
     let now = yesterday.toISOString().slice(0, 10);
 
     axios
-      .get(`http://i9b103.p.ssafy.io:8000/game/${now}`)
-      .then(result => {
+      .get(`https://i9b103.p.ssafy.io/api/game/${now}`)
+      .then((result) => {
         setBalanceGame((prevBalanceGame) => {
           return [
-          { ...prevBalanceGame[0], question: result.data.question },
-          { ...prevBalanceGame[1], leftAnswer: result.data.leftAnswer },
-          { ...prevBalanceGame[2], rightAnswer: result.data.rightAnswer },
-          { ...prevBalanceGame[3], leftCount: result.data.leftCount },
-          { ...prevBalanceGame[4], rightCount: result.data.rightCount },
-        ];
+            { ...prevBalanceGame[0], question: result.data.question },
+            { ...prevBalanceGame[1], leftAnswer: result.data.leftAnswer },
+            { ...prevBalanceGame[2], rightAnswer: result.data.rightAnswer },
+            { ...prevBalanceGame[3], leftCount: result.data.leftCount },
+            { ...prevBalanceGame[4], rightCount: result.data.rightCount },
+          ];
         });
       })
       .catch(() => {
@@ -63,7 +69,7 @@ function HomePage() {
         <div className={classes.result_title}>지난 밸런스 게임 결과!</div>
         <div className={classes.result_balance_game}>
           <div className={classes.result_balance_game_title}>
-            { balanceGame[0].question }
+            {balanceGame[0].question}
           </div>
           <div className={classes.result_answer}>
             <div className={classes.result_left}>
@@ -111,7 +117,13 @@ function HomePage() {
         </div>
 
         <div className={classes.balance_game_button}>
-          <button onClick={() => { navigate("/board");  } }>밸런스 게임 등록하러 가기!</button>
+          <button
+            onClick={() => {
+              navigate("/board");
+            }}
+          >
+            밸런스 게임 등록하러 가기!
+          </button>
         </div>
       </div>
     </div>

@@ -10,7 +10,7 @@
   width: 30%;
   height: 70%;
   padding: 5%;
-  background-color: rgb(255, 255, 255, 0.9);
+  background-color: rgb(255, 255, 255, 0.95);
   border-radius: 30px;
   animation: mount 0.7s ease-in-out;
 }
@@ -38,10 +38,10 @@
 }
 
 .device_modal_title {
-  margin-top: 5rem;
+  margin-top: 4rem;
   margin-bottom: 6rem;
   font-size: 3rem;
-  color: #494848;
+  color: black;
 }
 .device_modal_content {
   font-size: 2.5rem;
