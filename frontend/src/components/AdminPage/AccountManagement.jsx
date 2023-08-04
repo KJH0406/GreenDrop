@@ -41,12 +41,12 @@ function AccountManagement() {
       alert("최고 관리자만 접근 가능한 기능입니다.");
       return <Navigate to="/admin" />;
     }
-  }, []);
+  }, [isSuper]);
 
   // 컴포넌트가 처음 마운트될 때, 관리자 리스트를 서버에서 가져오도록 useEffect 사용
   useEffect(() => {
     axios
-      .get(`${api}manager/api/list`, {
+      .get(`${api}manager/list`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
@@ -59,7 +59,7 @@ function AccountManagement() {
       .catch((error) => {
         console.error("관리자 리스트를 불러오는데 실패했습니다.", error);
       });
-  }, [isSuper]);
+  }, [isSuper, token]);
 
   const handleDelete = (managerSeq) => {
     axios
