@@ -12,7 +12,7 @@ function TotalCount() {
     let now = date.toISOString().slice(0, 10);
 
     axios
-      .get(`http://i9b103.p.ssafy.io:8000/plastic/list/${now}`)
+      .get(`https://i9b103.p.ssafy.io/api/plastic/list/${now}`)
       .then((result) => {
         setTodayCount(parseInt(result.data.todayCount).toLocaleString("ko-KR"));
       })
@@ -21,7 +21,7 @@ function TotalCount() {
       });
 
     axios
-      .get("http://i9b103.p.ssafy.io:8000/plastic/list")
+      .get("https://i9b103.p.ssafy.io/api/plastic/list")
       .then((result) => {
         setTotalCount(parseInt(result.data.totalCount).toLocaleString("ko-KR"));
       })
