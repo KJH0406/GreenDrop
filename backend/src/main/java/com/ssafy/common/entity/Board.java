@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import java.io.Serializable;
@@ -44,6 +45,9 @@ public class Board implements Serializable {
     @LastModifiedDate
     @Column(name = "last_modified_date")
     private LocalDateTime lastModifiedDate;
+    @CreatedDate
+    @Column(name = "created_date")
+    private LocalDateTime createdDate;
     @JsonManagedReference(value = "board-category")
     @OneToMany(mappedBy = "board" , cascade = CascadeType.ALL)
     private List<BoardCategory> boardCategories = new ArrayList<>();
