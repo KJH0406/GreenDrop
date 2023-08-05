@@ -20,7 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -121,13 +120,8 @@ public class BoardService {
         boardRepository.updateLikeCount(board);
     }
 
-    /* 좋아요 순으로 내림차순 정렬해서 pagenation => 5개 */
-    public Page<BoardResponseDto> findAllBoardList(Pageable pageable){
-        return boardRepository.allBoardList(pageable);
-    }
-
-    public Page<BoardResponseDto> searchKeyword(String keyword, Pageable pageable){
-        return boardRepository.searchKeyword(keyword,pageable);
+    public List<BoardResponseDto> searchKeyword(String keyword){
+        return boardRepository.searchKeyword(keyword);
     }
 
     public Page<BoardResponseDto> searchCategory(String item, Pageable pageable){
@@ -154,24 +148,8 @@ public class BoardService {
         return true;
     }
 
-    //Paging 적용 안하고 모든 게시글 목록 반환
-    public List<BoardResponseDto> findAll(){
-        List<Board> boardList =  boardRepository.findAll();
-        List<BoardResponseDto> result = new LinkedList<>();
-        for(Board board: boardList){
-            BoardResponseDto boardResponseDto = BoardResponseDto.builder()
-                    .boardSeq(board.getBoardSeq())
-                    .question(board.getQuestion())
-                    .leftAnswer(board.getLeftAnswer())
-                    .rightAnswer(board.getRightAnswer())
-                    .ip(board.getIp())
-                    .nickname(board.getNickname())
-                    .likeCount(board.getLikeCount())
-                    .lastModifiedDate(board.getLastModifiedDate())
-                    .build();
-            result.add(boardResponseDto);
-        }
-        return result;
+    public List<BoardResponseDto> findAllNew() {
+        return boardRepository.newBoardList();
     }
 
 }
