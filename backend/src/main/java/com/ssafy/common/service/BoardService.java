@@ -3,8 +3,10 @@ package com.ssafy.common.service;
 import com.ssafy.common.dto.BoardDto;
 import com.ssafy.common.dto.response.BoardResponseDto;
 import com.ssafy.common.entity.Board;
+import com.ssafy.common.entity.BoardCategory;
 import com.ssafy.common.entity.Category;
 import com.ssafy.common.entity.Comment;
+import com.ssafy.common.repository.BoardCategoryRepository;
 import com.ssafy.common.repository.BoardRepository;
 import com.ssafy.common.repository.CategoryRepository;
 import com.ssafy.common.repository.CommentRepository;
@@ -36,6 +38,7 @@ public class BoardService {
     private final ModelMapper modelMapper;
     private final CommentService commentService;
     private final CommentRepository commentRepository;
+    private final BoardCategoryRepository boardCategoryRepository;
 
     @Transactional
     public void saveBoard(BoardDto boardDto , String ipAdress) {
@@ -70,7 +73,7 @@ public class BoardService {
         //if(!passwordResult){
         //TODO : 에러처리 예정 (Exception 핸들러 구현 후 작성 예정)
         //}
-        return (passwordMatchResult == sameUserIp);
+        return (passwordMatchResult== true && sameUserIp == true);
     }
 
     @Transactional
@@ -95,19 +98,46 @@ public class BoardService {
     @Transactional
     public void modifyBoard(Long boardNo , BoardDto boardDto){
         Board board = boardRepository.getReferenceById(boardNo);
-        BoardDto originDto = modelMapper.map(board,BoardDto.class);
-
-        originDto.setQuestion(boardDto.getQuestion());
-        originDto.setLeftAnswer(boardDto.getLeftAnswer());
-        originDto.setRightAnswer(boardDto.getRightAnswer());
-        originDto.setLastmodifiedDate(LocalDateTime.now());
-
-        boardRepository.save(originDto.toEntity());
-
         Optional<Category> category = categoryRepository.findByItem(boardDto.getCategory());
 
+        Board modifyBoard = Board.builder()
+                .boardSeq(boardNo)
+                .createdDate(board.getCreatedDate())
+                .lastModifiedDate(LocalDateTime.now())
+                .rightAnswer(boardDto.getRightAnswer())
+                .leftAnswer(boardDto.getLeftAnswer())
+                .ip(board.getIp())
+                .likeCount(board.getLikeCount())
+                .question(boardDto.getQuestion())
+                .nickname(board.getNickname())
+                .password(board.getPassword())
+                .isDeleted(board.getIsDeleted())
+                .build();
+        boardRepository.save(modifyBoard);
+
+        Optional<BoardCategory> boardCategoryOptional = boardCategoryRepository.findBoardCategoryByBoard_BoardSeq(board.getBoardSeq()); // BoardSeq(boardNo).get();
+
         if(category.isPresent()){
-            boardCategoryService.updateBoardAndCategory(category.get(),originDto.toEntity());
+            if(boardCategoryOptional.isPresent()){
+
+                BoardCategory bc = boardCategoryOptional.get();
+
+                BoardCategory boardCategory = bc.builder()
+                        .boardCategorySeq(bc.getBoardCategorySeq())
+                        .category(category.get())
+                        .createdDate(bc.getCreatedDate())
+                        .board(bc.getBoard())
+                        .build();
+                boardCategoryRepository.delete(bc);
+                boardCategoryRepository.save(boardCategory);
+
+            }
+
+            else {
+                boardCategoryService.saveBoardAndCategory(category.get(),modifyBoard);
+
+            }
+
         }
         else {
             boardCategoryService.deleteBoardAndCategory(board);
