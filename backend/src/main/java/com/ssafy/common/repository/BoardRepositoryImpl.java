@@ -52,19 +52,19 @@ public class BoardRepositoryImpl extends QuerydslRepositorySupport implements Bo
     }
 
     @Override
-    public Page<BoardResponseDto> searchKeyword(String keyword, Pageable pageable) {
-        JPQLQuery<BoardResponseDto> query = queryFactory
+    public List<BoardResponseDto> searchKeyword(String keyword) {
+       List<BoardResponseDto> query = queryFactory
                 .select(Projections.fields(BoardResponseDto.class,
+                        board.boardSeq,
                         board.question, board.leftAnswer, board.rightAnswer,board.nickname,
                         board.lastModifiedDate,board.likeCount,category.item))
                 .from(board)
                 .leftJoin(board.boardCategories,boardCategory)
                 .leftJoin(boardCategory.category,category)
                 .where(containKeyword(keyword),board.isDeleted.eq(0))
-                .orderBy(board.likeCount.desc());
+                .orderBy(board.boardSeq.desc()).fetch();
 
-        List<BoardResponseDto> keywords = this.getQuerydsl().applyPagination(pageable, query).fetch();
-        return new PageImpl<BoardResponseDto>(keywords, pageable, query.fetchCount());
+        return query;
     }
 
     @Override

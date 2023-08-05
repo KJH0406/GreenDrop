@@ -99,11 +99,10 @@ public class BoardController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<Page<BoardResponseDto>> searchBoard(
-            @RequestParam String question,
-            @PageableDefault(size = 5) Pageable pageable
+    public ResponseEntity<List<BoardResponseDto>> searchBoard(
+            @RequestParam String question
     ) {
-        Page<BoardResponseDto> searchKeywords = boardService.searchKeyword(question,pageable);
+        List<BoardResponseDto> searchKeywords = boardService.searchKeyword(question);
         return new ResponseEntity<>(searchKeywords,HttpStatus.OK);
     }
 

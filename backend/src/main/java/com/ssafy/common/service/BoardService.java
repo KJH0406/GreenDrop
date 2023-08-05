@@ -120,8 +120,8 @@ public class BoardService {
         boardRepository.updateLikeCount(board);
     }
 
-    public Page<BoardResponseDto> searchKeyword(String keyword, Pageable pageable){
-        return boardRepository.searchKeyword(keyword,pageable);
+    public List<BoardResponseDto> searchKeyword(String keyword){
+        return boardRepository.searchKeyword(keyword);
     }
 
     public Page<BoardResponseDto> searchCategory(String item, Pageable pageable){
