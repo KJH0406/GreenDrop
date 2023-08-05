@@ -11,6 +11,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Slf4j
@@ -27,7 +28,7 @@ public class BoardCategoryService {
         BoardCategoryRequestDto boardCategoryRequestDto = new BoardCategoryRequestDto();
         boardCategoryRequestDto.setBoard(board);
         boardCategoryRequestDto.setCategory(category);
-
+        boardCategoryRequestDto.setCreatedDate(LocalDateTime.now());
         boardCategoryRepository.save(boardCategoryRequestDto.toEntity());
     }
 
