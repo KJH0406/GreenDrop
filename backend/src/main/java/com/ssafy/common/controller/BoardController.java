@@ -93,8 +93,8 @@ public class BoardController {
     }
     
     @GetMapping("/list")
-    public ResponseEntity<Page<BoardResponseDto>> allBoardList(@PageableDefault(size = 5) Pageable pageable){
-        Page<BoardResponseDto> boardList = boardService.findAllBoardList(pageable);
+    public ResponseEntity<List<BoardResponseDto>> allBoardList(){
+        List<BoardResponseDto> boardList = boardService.findAllNew();
         return new ResponseEntity<>(boardList,HttpStatus.OK);
     }
 
@@ -115,13 +115,6 @@ public class BoardController {
         Page<BoardResponseDto> boardResponseDtoPage = boardService.searchCategory(category,pageable);
 
         return new ResponseEntity<>(boardResponseDtoPage,HttpStatus.OK);
-    }
-
-    @GetMapping("/all")
-    public ResponseEntity<Object> getAllList(){
-        List<BoardResponseDto> boardList = boardService.findAll();
-
-        return new ResponseEntity<>(boardList, HttpStatus.OK);
     }
 
 }
