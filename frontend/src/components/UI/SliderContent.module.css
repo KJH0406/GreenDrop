@@ -6,10 +6,21 @@
 .slider_item_img {
   margin: 0 auto;
   background-size: cover;
-  background-image: url("../../assets/slide1.jpg");
   border-radius: 2rem;
   margin-bottom: 7.5%;
   box-shadow: 8px 8px 8px rgba(0, 0, 0, 0.6);
+}
+
+.slider_item_img1 {
+  background-image: url("../../assets/slide1.jpg");
+}
+
+.slider_item_img2 {
+  background-image: url("../../assets/slide2.jpg");
+}
+
+.slider_item_img3 {
+  background-image: url("../../assets/slide3.jpg");
 }
 
 .slider_item_title {
