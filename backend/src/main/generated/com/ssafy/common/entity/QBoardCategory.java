@@ -28,6 +28,8 @@ public class QBoardCategory extends EntityPathBase<BoardCategory> {
 
     public final QCategory category;
 
+    public final DateTimePath<java.time.LocalDateTime> createdDate = createDateTime("createdDate", java.time.LocalDateTime.class);
+
     public QBoardCategory(String variable) {
         this(BoardCategory.class, forVariable(variable), INITS);
     }
