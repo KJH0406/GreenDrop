@@ -46,11 +46,12 @@ public class BoardService {
             boardDto.setPassword(encodepwd);
         }
         boardDto.setLastmodifiedDate(LocalDateTime.now());
-        boardRepository.save(boardDto.toEntity());
+        Board board = boardDto.toEntity();
+        boardRepository.save(board);
 
         Optional<Category> category = categoryRepository.findByItem(boardDto.getCategory());
         if(category.isPresent()){
-            boardCategoryService.saveBoardAndCategory(category.get(),boardDto.toEntity());
+            boardCategoryService.saveBoardAndCategory(category.get(),board);
         }
 
     }

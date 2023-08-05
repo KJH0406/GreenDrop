@@ -3,6 +3,9 @@ package com.ssafy.common.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+
+import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -16,6 +19,9 @@ public class BoardCategory {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "board_category_seq")
     private Long boardCategorySeq;
+    @CreatedDate
+    @Column(name = "create_date")
+    private LocalDateTime createdDate;
 
     @JsonBackReference(value = "board-category")
     @ManyToOne(targetEntity = Board.class ,fetch = FetchType.LAZY)
