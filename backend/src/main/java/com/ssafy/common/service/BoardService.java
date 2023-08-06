@@ -14,9 +14,6 @@ import com.ssafy.common.security.Encoder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -142,9 +139,7 @@ public class BoardService {
 
         if(category.isPresent()){
             if(boardCategoryOptional.isPresent()){
-
                 BoardCategory bc = boardCategoryOptional.get();
-
                 BoardCategory boardCategory = bc.builder()
                         .boardCategorySeq(bc.getBoardCategorySeq())
                         .category(category.get())
@@ -153,14 +148,10 @@ public class BoardService {
                         .build();
                 boardCategoryRepository.delete(bc);
                 boardCategoryRepository.save(boardCategory);
-
             }
-
             else {
                 boardCategoryService.saveBoardAndCategory(category.get(),modifyBoard);
-
             }
-
         }
         else {
             boardCategoryService.deleteBoardAndCategory(board);
@@ -178,7 +169,7 @@ public class BoardService {
         return boardRepository.searchKeyword(keyword);
     }
 
-    public Page<BoardResponseDto> searchCategory(String item, Pageable pageable){
+    public List<BoardResponseDto> searchCategory(String item){
         Long categoryNum = categoryRepository.findByItem(item).orElseThrow().getCategorySeq();
         List<Long> boardList = boardRepository.searchCategory(categoryNum);
 
@@ -187,10 +178,11 @@ public class BoardService {
             Board board = boardRepository.getReferenceById(boardNum);
             BoardResponseDto boardResponseDto = modelMapper.map(board, BoardResponseDto.class);
             boardResponseDto.setItem(item);
+            boardResponseDto.setCommentCount(countComment(boardNum));
             resultBoard.add(boardResponseDto);
         }
 
-        return new PageImpl<>(resultBoard, pageable,resultBoard.size());
+        return resultBoard;
     }
 
     public boolean userPasswordExistCheck(Long boardNo){
@@ -220,11 +212,9 @@ public class BoardService {
     public List<BoardResponseDto> likeCountList(){
 
         List<BoardResponseDto> boardResponseDtoList = boardRepository.orderByLikeList();
-
         for (BoardResponseDto brd : boardResponseDtoList){
             brd.setCommentCount(countComment(brd.getBoardSeq()));
         }
-
         return boardResponseDtoList;
     }
 
