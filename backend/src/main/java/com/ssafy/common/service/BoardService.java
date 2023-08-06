@@ -158,7 +158,12 @@ public class BoardService {
     }
 
     public List<BoardResponseDto> searchKeyword(String keyword){
-        return boardRepository.searchKeyword(keyword);
+        List<BoardResponseDto> boardResponseDtoList = boardRepository.searchKeyword(keyword);
+
+        for (BoardResponseDto brd : boardResponseDtoList){
+            brd.setCommentCount(countComment(brd.getBoardSeq()));
+        }
+        return boardResponseDtoList;
     }
 
     public List<BoardResponseDto> searchCategory(String item){
