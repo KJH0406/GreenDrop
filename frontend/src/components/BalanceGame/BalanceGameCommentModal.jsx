@@ -10,11 +10,15 @@ function BalanceGameCommentModal({
   setShowCheckModal,
   setConfirm,
   setConfirmModalData,
-  update,
-  setUpdate,
+
+  getOrderedBoardList,
+  selectedCategoryItem,
+  isLikeSelected,
 }) {
   const dispatch = useDispatch();
-
+  const [commentUpdate, setCommentUpdate] = useState(0);
+  console.log("카테고리 정렬 선택", selectedCategoryItem);
+  console.log("좋아요 정렬 선택", isLikeSelected);
   useEffect(() => {
     axios
       .get("https://i9b103.p.ssafy.io/api/comment/" + boardSeq)
@@ -29,7 +33,7 @@ function BalanceGameCommentModal({
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-  }, [dispatch, update, boardSeq]);
+  }, [dispatch, commentUpdate, boardSeq]);
   const commentObj = useSelector((state) => {
     return state.commentObj;
   });
@@ -42,17 +46,22 @@ function BalanceGameCommentModal({
   const isOpenComment = useSelector((state) => {
     return state.isOpenComment;
   });
-  const [nickname, setNickname] = useState("");
+  const [nickname, setNickname] = useState(null);
   const [password, setPassword] = useState("");
   const [comment, setComment] = useState("");
-  const [parentNum, setParentNum] = useState("");
+
+  const [inputNickname, setInputNickname] = useState("");
+  const [inputPassword, setInputPassword] = useState("");
+  const [inputComment, setInputComment] = useState("");
+
+  const [parentNum, setParentNum] = useState(null);
   // const [commentNum, setCommentNum] = useState("");
   // console.log(new Date().toISOString().slice(0, -5))
   function timePassed(date) {
     let timeValue = new Date(date);
     let today = new Date();
-    console.log("오늘:", today);
-    console.log("작성시", timeValue);
+    // console.log("오늘:", today);
+    // console.log("작성시", timeValue);
     // 분을 나타냄
     let time = (today - timeValue) / 1000 / 60;
 
@@ -74,20 +83,29 @@ function BalanceGameCommentModal({
       today.getMonth() + 1
     }월 ${today.getDate()}일`;
   }
-
   // console.log(boardSeq);
   //부모 댓글 등록
   function handleCommentRegist() {
     const newComment = {
-      nickName: nickname,
+      nickName: nickname || null,
       password: password,
       content: comment,
     };
-    if (comment.length === 0) {
+    console.log(newComment);
+    if (newComment.content.length === 0) {
       setConfirm(true);
       setShowCheckModal(true);
       setConfirmModalData({
         confirmTitle: "댓글을 작성해주세요",
+        confirmCategory: "comment",
+        confirmType: "regist",
+        confirmAction: "실패",
+      });
+    } else if (!newComment.password) {
+      setConfirm(true);
+      setShowCheckModal(true);
+      setConfirmModalData({
+        confirmTitle: "비밀번호를 입력하세요",
         confirmCategory: "comment",
         confirmType: "regist",
         confirmAction: "실패",
@@ -104,11 +122,14 @@ function BalanceGameCommentModal({
           },
         )
         .then(() => {
-          setComment("");
-          setUpdate(update + 1);
-          setNickname("");
+          setCommentUpdate(commentUpdate + 1);
+          getOrderedBoardList();
+          setNickname(null);
           setPassword("");
           setComment("");
+          setInputNickname("");
+          setInputPassword("");
+          setInputComment("");
         })
         .catch((error) => {
           console.error(newComment);
@@ -130,17 +151,27 @@ function BalanceGameCommentModal({
   // 대댓글 등록
   function handleChildCommentRegist() {
     // console.log(parentNum);
+
     const newComment = {
-      nickName: nickname,
+      nickName: nickname || null,
       password: password,
       content: comment,
     };
     console.log(newComment);
-    if (comment.length === 0) {
+    if (newComment.content.length === 0) {
       setConfirm(true);
       setShowCheckModal(true);
       setConfirmModalData({
         confirmTitle: "답글을 작성해주세요",
+        confirmCategory: "comment",
+        confirmType: "regist",
+        confirmAction: "실패",
+      });
+    } else if (!newComment.password) {
+      setConfirm(true);
+      setShowCheckModal(true);
+      setConfirmModalData({
+        confirmTitle: "비밀번호를 입력하세요",
         confirmCategory: "comment",
         confirmType: "regist",
         confirmAction: "실패",
@@ -157,12 +188,14 @@ function BalanceGameCommentModal({
           },
         )
         .then(() => {
-          setComment("");
-          setUpdate(update + 1);
-
-          setNickname("");
+          setCommentUpdate(commentUpdate + 1);
+          getOrderedBoardList();
+          setNickname(null);
           setPassword("");
           setComment("");
+          setInputNickname("");
+          setInputPassword("");
+          setInputComment("");
         })
         .catch((error) => {
           //대댓글 등록 실패
@@ -307,8 +340,10 @@ function BalanceGameCommentModal({
                     type="text"
                     className={classes.password_input}
                     placeholder="닉네임을 입력하세요."
-                    value={nickname}
+                    value={inputNickname}
                     onChange={(e) => {
+                      // setNickname(e.target.value);
+                      setInputNickname(e.target.value);
                       setNickname(e.target.value);
                     }}
                   />
@@ -318,8 +353,9 @@ function BalanceGameCommentModal({
                     type="password"
                     className={classes.password_input}
                     placeholder="비밀번호를 입력하세요."
-                    value={password}
+                    value={inputPassword}
                     onChange={(e) => {
+                      setInputPassword(e.target.value);
                       setPassword(e.target.value);
                     }}
                   />
@@ -330,8 +366,9 @@ function BalanceGameCommentModal({
                     className={classes.input_tag}
                     // value={parentUser || ` `}
                     placeholder="답글을 등록하세요"
-                    value={comment}
+                    value={inputComment}
                     onChange={(e) => {
+                      setInputComment(e.target.value);
                       setComment(e.target.value);
                     }}
                   />
@@ -355,8 +392,9 @@ function BalanceGameCommentModal({
                     type="text"
                     className={classes.password_input}
                     placeholder="닉네임을 입력하세요."
-                    value={nickname}
+                    value={inputNickname}
                     onChange={(e) => {
+                      setInputNickname(e.target.value);
                       setNickname(e.target.value);
                     }}
                   />
@@ -366,8 +404,9 @@ function BalanceGameCommentModal({
                     type="password"
                     className={classes.password_input}
                     placeholder="비밀번호를 입력하세요."
-                    value={password}
+                    value={inputPassword}
                     onChange={(e) => {
+                      setInputPassword(e.target.value);
                       setPassword(e.target.value);
                     }}
                   />
@@ -377,8 +416,9 @@ function BalanceGameCommentModal({
                     type="text"
                     className={classes.input_tag}
                     placeholder="댓글을 등록하세요"
-                    value={comment}
+                    value={inputComment}
                     onChange={(e) => {
+                      setInputComment(e.target.value);
                       setComment(e.target.value);
                     }}
                   />

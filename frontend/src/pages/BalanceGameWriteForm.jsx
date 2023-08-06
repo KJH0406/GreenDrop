@@ -1,19 +1,34 @@
 import axios from "axios";
 import classes from "./BalanceGameWriteForm.module.css";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import BalanceGameCheckModal from "../components/BalanceGame/BalanceGameCheckModal";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { getCategoryList } from "../store";
 function BalanceGameWriteFormPage() {
   const [question, setQuestion] = useState("");
   const [leftAnswer, setLeftAnswer] = useState("");
   const [rightAnswer, setRightAnswer] = useState("");
-  const [nickname, setNickname] = useState("");
+  const [nickname, setNickname] = useState(null);
   const [category, setCategory] = useState("");
-  const [password, setPassword] = useState("");
+  const [password, setPassword] = useState(null);
   // const [card, setCard] = useState("");
+  const dispatch = useDispatch();
+  useEffect(() => {
+    axios
+
+      .get("https://i9b103.p.ssafy.io/api/category/list")
+      .then((response) => {
+        console.log("useState", ...response.data);
+        const fetchedCategories = [...response.data];
+        dispatch(getCategoryList(fetchedCategories));
+        setCategory(fetchedCategories[0].item);
+      });
+  }, [dispatch]);
+
   const categories = useSelector((state) => {
     return state.categories;
   });
@@ -27,7 +42,7 @@ function BalanceGameWriteFormPage() {
       question: question,
       leftAnswer: leftAnswer,
       rightAnswer: rightAnswer,
-      nickname: nickname,
+      nickname: nickname || null,
       password: password,
       category: category,
     };
@@ -45,6 +60,20 @@ function BalanceGameWriteFormPage() {
       setConfirm(true);
       setConfirmModalData({
         confirmTitle: "밸런스 게임을 작성해 주세요",
+        confirmCategory: "board",
+        confirmType: "regist",
+        confirmAction: "실패",
+      });
+    } else if (!password) {
+      setShowCheckModal({
+        title: "글 등록 실패",
+        category: "board",
+        type: "confirm",
+        action: "등록하기",
+      });
+      setConfirm(true);
+      setConfirmModalData({
+        confirmTitle: "비밀번호를 작성해 주세요",
         confirmCategory: "board",
         confirmType: "regist",
         confirmAction: "실패",
@@ -152,7 +181,6 @@ function BalanceGameWriteFormPage() {
             <select
               name="category"
               className={classes.category}
-              defaultValue={"카테고리 등록"}
               onChange={(e) => {
                 setCategory(e.target.value);
               }}

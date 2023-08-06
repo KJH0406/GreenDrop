@@ -21,14 +21,12 @@ function BoardPage() {
     return state.isOpenComment;
   });
   const [update, setUpdate] = useState(0);
-
   useEffect(() => {
     axios
-
-      .get("https://i9b103.p.ssafy.io/api/board/list?page=2")
+      .get("https://i9b103.p.ssafy.io/api/board/list")
       .then((response) => {
-        // console.log("응답", response);
-        const fetchedCardList = [...response.data.content];
+        console.log("응답", response);
+        const fetchedCardList = [...response.data];
         // console.log("패치 된 카드 리스트", fetchedCardList);
         dispatch(getBoardList(fetchedCardList));
       })
@@ -42,7 +40,7 @@ function BoardPage() {
 
       .get("https://i9b103.p.ssafy.io/api/category/list")
       .then((response) => {
-        console.log(response.data);
+        // console.log(...response.data);
         const fetchedCategories = [...response.data];
         dispatch(getCategoryList(fetchedCategories));
       });
@@ -64,7 +62,6 @@ function BoardPage() {
 
   function handleBoardDelete(boardNo) {
     axios
-
       .patch("https://i9b103.p.ssafy.io/api/board/delete/" + boardNo)
       .then(() => {
         setUpdate(update + 1);
@@ -84,12 +81,13 @@ function BoardPage() {
       });
   }
 
+  //수정할 부분(새 글 불러)
   function handleCommentDelete(commentNum) {
     axios
 
       .patch("https://i9b103.p.ssafy.io/api/comment/delete/" + commentNum)
       .then(() => {
-        setUpdate(update + 1);
+        getOrderedBoardList();
       })
       .catch((error) => {
         console.error("댓글 삭제 실패");
@@ -110,38 +108,89 @@ function BoardPage() {
       .get("https://i9b103.p.ssafy.io/api/board/search?question=" + searchWord)
       .then((response) => {
         // console.log(response);
-        const fetchedData = [...response.data.content];
+        const fetchedData = [...response.data];
         dispatch(searchBoard(fetchedData));
       });
   }
+
+  const handleOnKey = (e) => {
+    if (e.key === "Enter") {
+      handleBoardSearch(); // Enter 입력이 되면 클릭 이벤트 실행
+    }
+  };
+
   function handleLikeCount(boardNo) {
     axios
-
       .patch("https://i9b103.p.ssafy.io/api/board/like/" + boardNo)
       .then(() => {
         console.log("좋아요");
-        setUpdate(update + 1);
+        getOrderedBoardList();
       })
       .catch((error) => {
         console.error(error);
       });
   }
 
-  const categoryArr = new Array(categories.length);
-  categoryArr.fill(false);
-  const [isCategorySelected, setIsCategorySelected] = useState(categoryArr);
-
-  function selectedCategory(category, isSelected) {
-    if (!isSelected) {
+  function getOrderedBoardList() {
+    if (selectedCategoryItem) {
       axios
-        .get("https://i9b103.p.ssafy.io/api/board/select?category=" + category)
+        .get(
+          "https://i9b103.p.ssafy.io/api/board/select?category=" +
+            selectedCategoryItem,
+        )
         .then((response) => {
-          const fetchedCardList = [...response.data.content];
+          const fetchedCardList = [...response.data];
           // console.log("패치 된 카드 리스트", fetchedCardList);
           dispatch(getBoardList(fetchedCardList));
         })
         .catch((error) => {
           console.error(error);
+        });
+    } else if (isLikeSelected) {
+      axios
+        .get("https://i9b103.p.ssafy.io/api/board/like/list")
+        .then((response) => {
+          const fetchedData = [...response.data];
+          dispatch(searchBoard(fetchedData));
+        });
+    } else {
+      setUpdate(update + 1);
+    }
+  }
+
+  const categoryArr = new Array(categories.length);
+  categoryArr.fill(false);
+  const [isCategorySelected, setIsCategorySelected] = useState(categoryArr);
+
+  const [selectedCategoryItem, setSelectedCategoryItem] = useState("");
+
+  function selectedCategory(category, isSelected) {
+    if (!isSelected) {
+      setSelectedCategoryItem(category);
+      axios
+        .get("https://i9b103.p.ssafy.io/api/board/select?category=" + category)
+        .then((response) => {
+          const fetchedCardList = [...response.data];
+          // console.log("패치 된 카드 리스트", fetchedCardList);
+          dispatch(getBoardList(fetchedCardList));
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    } else {
+      setUpdate(update + 1);
+      setSelectedCategoryItem(null);
+    }
+  }
+
+  const [isLikeSelected, setIsLikeSelected] = useState(false);
+  function likeList(isLikeList) {
+    if (isLikeList) {
+      axios
+        .get("https://i9b103.p.ssafy.io/api/board/like/list")
+        .then((response) => {
+          const fetchedData = [...response.data];
+          dispatch(searchBoard(fetchedData));
         });
     } else {
       setUpdate(update + 1);
@@ -188,6 +237,9 @@ function BoardPage() {
           setConfirmModalData={setConfirmModalData}
           update={update}
           setUpdate={setUpdate}
+          getOrderedBoardList={getOrderedBoardList}
+          selectedCategoryItem={selectedCategoryItem}
+          isLikeSelected={isLikeSelected}
         />
       ) : (
         <></>
@@ -206,6 +258,7 @@ function BoardPage() {
               onChange={(e) => {
                 setSearchWord(e.target.value);
               }}
+              onKeyDown={handleOnKey}
             />
             <img
               src={search}
@@ -233,6 +286,10 @@ function BoardPage() {
             selectedCategory={selectedCategory}
             isCategorySelected={isCategorySelected}
             setIsCategorySelected={setIsCategorySelected}
+            setIsLikeSelected={setIsLikeSelected}
+            setSelectedCategoryItem={setSelectedCategoryItem}
+            isLikeSelected={isLikeSelected}
+            likeList={likeList}
           />
         </div>
         {/* 글 리스트만 컴포넌트로  */}

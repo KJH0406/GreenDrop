@@ -5,15 +5,27 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import BalanceGameCheckModal from "../components/BalanceGame/BalanceGameCheckModal";
-
+import { useDispatch } from "react-redux";
+import { getCategoryList } from "../store";
 function BalanceGameModifyFormPage() {
+  const dispatch = useDispatch();
   const location = useLocation();
   // const boardSeq = StateParams.get("boardSeq") || "Default Value";
   const boardSeq = location.state.boardSeq || "Default Value";
   const categories = useSelector((state) => {
     return state.categories;
   });
+  useEffect(() => {
+    axios
 
+      .get("https://i9b103.p.ssafy.io/api/category/list")
+      .then((response) => {
+        // console.log(...response.data);
+        const fetchedCategories = [...response.data];
+        dispatch(getCategoryList(fetchedCategories));
+        setCategory(fetchedCategories[0].item);
+      });
+  }, [dispatch]);
   const [newCard, setNewCard] = useState("");
 
   const navigate = useNavigate();
@@ -49,13 +61,21 @@ function BalanceGameModifyFormPage() {
       question: question,
       leftAnswer: leftAnswer,
       rightAnswer: rightAnswer,
-      item: category,
+      category: category,
     };
 
     setNewCard(updatedCard);
   }, [question, leftAnswer, rightAnswer, category]);
 
   const handleModifyCard = () => {
+    // const updatedCard = {
+    //     question: question,
+    //     leftAnswer: leftAnswer,
+    //     rightAnswer: rightAnswer,
+    //     category: category,
+    //   };
+
+    //   setNewCard(updatedCard);
     if (leftAnswer.length === 0 || rightAnswer.length === 0) {
       setShowCheckModal({
         title: "글 수정 실패",
@@ -71,6 +91,7 @@ function BalanceGameModifyFormPage() {
         confirmAction: "실패",
       });
     } else {
+      console.log("수정할 카드", newCard);
       axios
         .patch(
           "https://i9b103.p.ssafy.io/api/board/modify/" + boardSeq,
@@ -103,6 +124,7 @@ function BalanceGameModifyFormPage() {
         });
     }
   };
+  console.log(category);
   return (
     <div className={classes.regist_box}>
       {showCheckModal ? (
@@ -174,7 +196,7 @@ function BalanceGameModifyFormPage() {
             <select
               name="category"
               className={classes.category}
-              defaultValue={category || ""}
+              defaultValue={category}
               onChange={(e) => {
                 setCategory(e.target.value);
               }}
