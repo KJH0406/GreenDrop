@@ -33,6 +33,7 @@ public class CommentService {
 
         commentDto.setIp(ip);
         commentDto.setIsChild(0);
+        commentDto.setCreatedDate(LocalDateTime.now());
 
         if (commentDto.getPassword() != null) {
             String encodepwd = encoder.encode(commentDto.getPassword());
@@ -48,6 +49,7 @@ public class CommentService {
 
         commentDto.setIp(ip);
         commentDto.setIsChild(1);
+        commentDto.setCreatedDate(LocalDateTime.now());
         if (commentDto.getPassword() != null) {
             String encodepwd = encoder.encode(commentDto.getPassword());
             commentDto.setPassword(encodepwd);
@@ -128,6 +130,5 @@ public class CommentService {
         }
 
     }
-
-
+    
 }
