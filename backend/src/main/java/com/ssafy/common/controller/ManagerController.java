@@ -24,8 +24,12 @@ public class ManagerController {
     @SuperAuthorize
     @PostMapping("/regist")
     public ResponseEntity<?> registManager(@RequestBody ManagerRequestDto managerRequestDto){
-        managerService.registManager(managerRequestDto);
-
+        try {
+            managerService.registManager(managerRequestDto);
+        }catch (IllegalArgumentException e){
+            //아이디가 중복될 경우, 403 Forbidden 반환
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

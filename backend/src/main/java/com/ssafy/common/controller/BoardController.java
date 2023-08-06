@@ -44,25 +44,18 @@ public class BoardController {
     @PostMapping("/check/{boardNo}")
     public ResponseEntity<Object> checkUserPassword(
             @PathVariable Long boardNo,
-            @RequestBody String password,
-            HttpServletRequest request
+            @RequestBody String password
     ) {
-
-        if(!boardService.userPasswordExistCheck(boardNo)){
-            //TODO : log 내용 Error handler로 뺄 예정
-            log.info("게시글 등록 시 비밀번호를 입력하지 않은 게시물이라 접근 권한이 없습니다.");
-            return new ResponseEntity<>(5,HttpStatus.FORBIDDEN);
-        }
 
         JSONObject parser = new JSONObject(password);
         Integer userCheck =
-            boardService.checkPasswordUser(boardNo,parser.getString("password"),userIp.searchIP(request));
+            boardService.checkPasswordUser(boardNo,parser.getString("password"));
 
-        if(userCheck>1) {
+        if(userCheck==2) {
             //TODO : 비밀번호 불일치 시 Error 처리 예정 -> Service단으로 Custom Error class 생성 후 이동예정
             return new ResponseEntity<>(userCheck,HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(userCheck,HttpStatus.OK);
+        return new ResponseEntity<>(1,HttpStatus.OK);
     }
 
     @PatchMapping("/delete/{boardNo}")

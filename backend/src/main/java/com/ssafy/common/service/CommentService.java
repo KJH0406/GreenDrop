@@ -2,7 +2,6 @@ package com.ssafy.common.service;
 
 import com.ssafy.common.dto.CommentDto;
 import com.ssafy.common.dto.response.CommentResponseDto;
-import com.ssafy.common.entity.Board;
 import com.ssafy.common.entity.Comment;
 import com.ssafy.common.repository.BoardRepository;
 import com.ssafy.common.repository.CommentRepository;
@@ -113,38 +112,22 @@ public class CommentService {
         commentRepository.save(deleteComment);
     }
 
-    public Integer checkPasswordUser(Long commentNo, String pwd , String userIp){
+    public Integer checkPasswordUser(Long commentNo, String pwd){
         Comment comment = commentRepository.getReferenceById(commentNo);
         String encodePassword = comment.getPassword();
         boolean passwordMatchResult = encoder.matches(pwd,encodePassword);
 
-        boolean sameUserIp = userIp.equals(comment.getIp());
-
         //if(!passwordResult){
         //TODO : 에러처리 예정 (Exception 핸들러 구현 후 작성 예정)
         //}
-        if(sameUserIp == true && passwordMatchResult == true){
+        if(passwordMatchResult == true){
             return 1;
         }
-        else if(sameUserIp == false && passwordMatchResult == true){
+        else {
             return 2;
         }
-        else if(sameUserIp == true && passwordMatchResult == false){
-            return 3;
-        }
-        else {
-            return 4;
-        }
 
     }
 
-    public boolean userPasswordExistCheck(Long commentNo){
-        String password = commentRepository.getReferenceById(commentNo).getPassword();
-
-        if(password == null){
-            return false;
-        }
-        return true;
-    }
 
 }
