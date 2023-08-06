@@ -63,27 +63,19 @@ public class BoardService {
         return boardRepository.oneBoard(boardId);
     }
 
-    public Integer checkPasswordUser(Long boardNo, String pwd , String userIp){
+    public Integer checkPasswordUser(Long boardNo, String pwd){
         Board board = boardRepository.findById(boardNo).get();
         String encodePassword = board.getPassword();
         boolean passwordMatchResult = encoder.matches(pwd,encodePassword);
 
-        boolean sameUserIp = userIp.equals(board.getIp());
-
         //if(!passwordResult){
         //TODO : 에러처리 예정 (Exception 핸들러 구현 후 작성 예정)
         //}
-        if(sameUserIp == true && passwordMatchResult == true){
+        if(passwordMatchResult == true){
             return 1;
         }
-        else if(sameUserIp == false && passwordMatchResult == true){
-            return 2;
-        }
-        else if(sameUserIp == true && passwordMatchResult == false){
-            return 3;
-        }
         else {
-            return 4;
+            return 2;
         }
     }
 
@@ -191,15 +183,6 @@ public class BoardService {
         }
 
         return new PageImpl<>(resultBoard, pageable,resultBoard.size());
-    }
-
-    public boolean userPasswordExistCheck(Long boardNo){
-        String password = boardRepository.getReferenceById(boardNo).getPassword();
-
-        if(password == null){
-            return false;
-        }
-        return true;
     }
 
     public List<BoardResponseDto> findAllNew() {
