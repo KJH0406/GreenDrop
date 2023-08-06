@@ -14,7 +14,7 @@ function BalanceGamePasswordCheck(props) {
     };
     axios
       .post(
-        "https://i9b103.p.ssafy.io/api/board/modify/" + props.boardSeq,
+        "https://i9b103.p.ssafy.io/api/board/check/" + props.boardSeq,
         JSON.stringify(passwordJson),
         {
           headers: {
@@ -24,31 +24,28 @@ function BalanceGamePasswordCheck(props) {
       )
       .then((response) => {
         console.log(response);
-        console.log("일치", password);
+
+        // console.log("일치", password);
         setMessage("비밀번호가 일치합니다.");
 
-        //페이지 이동을 할지 말지를 결정해야함
+        // //페이지 이동을 할지 말지를 결정해야함
         navigate("modify", { state: { boardSeq: props.boardSeq } });
       })
       .catch((error) => {
         console.log(error);
-        if (error.response && error.response.status === 404) {
-          // 400 에러가 발생한 경우
-          console.error("Error 404: Bad Request");
-          setMessage("비밀번호가 일치하지 않습니다.");
-        } else if (error.response && error.response.status === 403) {
-          console.error("비밀번호를 입력해주세요");
-          setMessage("비밀번호를 입력해주세요.");
-        } else if (error.response && error.response.status === 400) {
-          console.error("본인 IP와 글 작성자 IP와 다릅니다");
-          setMessage("본인 IP와 글 작성자 IP와 다릅니다");
+        // console.log(error.response.data);
+        // console.log(error.response.status);
+
+        if (
+          error.response &&
+          error.response.status === 400 &&
+          error.response.data === 2
+        ) {
+          //비밀번호 일치, IP 불일치
+          setMessage("비밀번호가 틀렸습니다.");
         } else {
-          console.error("Error sending data:", error);
-          // 기타 다른 에러가 발생한 경우 처리할 작업을 추가할 수 있습니다.
+          console.error("Error sending data: ", error);
         }
-      })
-      .finally(() => {
-        props.setShowCheckModal("");
       });
   };
 
@@ -58,7 +55,45 @@ function BalanceGamePasswordCheck(props) {
     };
     axios
       .post(
-        "https://i9b103.p.ssafy.io/api/board/modify/" + props.boardSeq,
+        "https://i9b103.p.ssafy.io/api/board/check/" + props.boardSeq,
+        JSON.stringify(passwordJson),
+        {
+          headers: {
+            "Content-Type": `application/json`,
+          },
+        },
+      )
+      .then((response) => {
+        console.log(response);
+        // console.log("일치", password);
+        setMessage("비밀번호가 일치합니다.");
+
+        props.handleBoardDelete(props.boardSeq);
+        props.setShowCheckModal("");
+      })
+      .catch((error) => {
+        console.log(error);
+        if (
+          error.response &&
+          error.response.status === 400 &&
+          error.response.data === 2
+        ) {
+          //비밀번호 일치, IP 불일치
+          setMessage("비밀번호가 틀렸습니다.");
+        } else {
+          console.error("Error sending data: ", error);
+        }
+      });
+  };
+
+  const hadleCommentPasswordCheckDelete = () => {
+    const passwordJson = {
+      password: password,
+    };
+    // api URL 수정되면 변경하기
+    axios
+      .post(
+        "https://i9b103.p.ssafy.io/api/comment/check/" + props.commentSeq,
         JSON.stringify(passwordJson),
         {
           headers: {
@@ -71,26 +106,20 @@ function BalanceGamePasswordCheck(props) {
         console.log("일치", password);
         setMessage("비밀번호가 일치합니다.");
 
-        props.handleBoardDelete(props.boardSeq);
+        props.handleCommentDelete(props.commentSeq);
         props.setShowCheckModal("");
       })
       .catch((error) => {
         console.log(error);
-        if (error.response && error.response.status === 404) {
-          // 400 에러가 발생한 경우
-          console.error("Error 404: Bad Request");
-          setMessage("비밀번호가 일치하지 않습니다.");
-        } else if (error.response && error.response.status === 403) {
-          console.error("비밀번호를 입력해주세요");
-          setMessage("비밀번호를 입력해주세요.");
-        } else if (error.response && error.response.status === 400) {
-          console.error("본인 IP와 글 작성자 IP와 다릅니다");
-          setMessage(
-            "본인 IP와 글 작성자 IP와 다르거나 비밀번호가 일치하지 않습니다",
-          );
+        if (
+          error.response &&
+          error.response.status === 400 &&
+          error.response.data === 2
+        ) {
+          //비밀번호 일치, IP 불일치
+          setMessage("비밀번호가 틀렸습니다.");
         } else {
-          console.error("Error sending data:", error);
-          // 기타 다른 에러가 발생한 경우 처리할 작업을 추가할 수 있습니다.
+          console.error("Error sending data: ", error);
         }
       });
   };
@@ -128,7 +157,7 @@ function BalanceGamePasswordCheck(props) {
           className={classes.confirm_btn}
           onClick={() => {
             // 게시글 삭제 함수
-            // 현재는 비밀번호 확인 없이 삭제함
+            // 현재는 비밀번호 확인 하고 삭제함
             hadleBoardPasswordCheckDelete();
           }}
         >
@@ -150,7 +179,8 @@ function BalanceGamePasswordCheck(props) {
             // 댓글 삭제 함수
             //나중에 비밀번호 체크 비동기 통신 들어가야 함
             // handleCommentDelete();
-            props.handleCommentDelete(props.commentSeq);
+            // props.handleCommentDelete(props.commentSeq);
+            hadleCommentPasswordCheckDelete();
           }}
         >
           {props.action}

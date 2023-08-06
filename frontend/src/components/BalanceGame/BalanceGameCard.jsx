@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import commentImg from "../../assets/commentpng.png";
 import emptyHeartImg from "../../assets/empty_heartpng.png";
@@ -15,10 +14,6 @@ function BalanceGameCard({
   setShowCheckModal,
   handleLikeCount,
 }) {
-  // 카드별로 독립적인 isSidebarOpen 상태를 관리합니다.
-  // const [SidebarOpen, setSidebarOpen] = useState(false)
-  const [commentCnt] = useState(0);
-
   const isOpenComment = useSelector((state) => {
     return state.isOpenComment;
   });
@@ -26,8 +21,8 @@ function BalanceGameCard({
   function timePassed(date) {
     let timeValue = new Date(date);
     let today = new Date();
-    console.log("오늘:", today);
-    console.log("작성시", timeValue);
+    // console.log("오늘:", today);
+    // console.log("작성시", timeValue);
     // 분을 나타냄
     let time = (today - timeValue) / 1000 / 60;
 
@@ -124,7 +119,7 @@ function BalanceGameCard({
             }}
           />
           {/* 댓글 수 출력 어떻게 할 지 고민 */}
-          <span className={classes.bottom_comment}>{commentCnt}</span>
+          <span className={classes.bottom_comment}>{card.commentCount}</span>
         </div>
         <div className={classes.bottom_right}>{card.item}</div>
       </div>

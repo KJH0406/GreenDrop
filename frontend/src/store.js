@@ -35,6 +35,10 @@ let categories = createSlice({
     getCategoryList(state, action) {
       return action.payload;
     },
+    // retCategoryList(state) {
+    //   console.log(state);
+    //   // return state
+    // },
   },
 });
 
