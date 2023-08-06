@@ -116,4 +116,9 @@ public class BoardController {
         return new ResponseEntity<>(boardResponseDtoPage,HttpStatus.OK);
     }
 
+    @GetMapping("/like/list")
+    public ResponseEntity<List<BoardResponseDto>> likeBoardList(){
+        return new ResponseEntity<>(boardService.likeCountList(),HttpStatus.OK);
+    }
+
 }

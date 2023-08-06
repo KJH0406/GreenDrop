@@ -92,6 +92,22 @@ public class BoardRepositoryImpl extends QuerydslRepositorySupport implements Bo
         return query;
     }
 
+    @Override
+    public List<BoardResponseDto> orderByLikeList() {
+        List<BoardResponseDto> query = queryFactory
+                .select(Projections.fields(BoardResponseDto.class,
+                        board.boardSeq,
+                        board.question,board.leftAnswer,board.rightAnswer, board.ip,board.likeCount
+                        ,board.nickname,board.lastModifiedDate,category.item))
+                .from(board)
+                .leftJoin(board.boardCategories,boardCategory)
+                .leftJoin(boardCategory.category,category)
+                .where(board.isDeleted.eq(0))
+                .orderBy(board.likeCount.desc()).fetch();
+
+        return query;
+    }
+
     private BooleanExpression containKeyword(String keyword) {
         return board.question.containsIgnoreCase(keyword);
     }
