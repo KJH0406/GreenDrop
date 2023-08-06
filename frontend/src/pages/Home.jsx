@@ -28,6 +28,7 @@ function HomePage() {
     axios
       .get(`https://i9b103.p.ssafy.io/api/game/${now}`)
       .then((result) => {
+        console.log(result);
         setBalanceGame((prevBalanceGame) => {
           return [
             { ...prevBalanceGame[0], question: result.data.question },

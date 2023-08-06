@@ -4,6 +4,16 @@ import classes from "./AdminBoard.module.css";
 
 const api = "https://i9b103.p.ssafy.io/api/";
 const postsPerPage = 15;
+const formatDate = (dateStr) => {
+  const date = new Date(dateStr);
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  const hours = String(date.getHours()).padStart(2, "0");
+  const minutes = String(date.getMinutes()).padStart(2, "0");
+  const seconds = String(date.getSeconds()).padStart(2, "0");
+  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+};
 
 const AdminBoard = () => {
   const [posts, setPosts] = useState([]);
@@ -11,18 +21,24 @@ const AdminBoard = () => {
   const [selectedPosts, setSelectedPosts] = useState([]); // State for selected post ids
   const tableContainerRef = useRef(null);
 
-  useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const response = await axios.get(`${api}board/all`);
-        setPosts(response.data);
-        console.log(response.data);
-      } catch (error) {
-        console.error("Error fetching posts:", error);
-      }
-    };
+  //너무 길면 생략
+  const truncateText = (text, maxLength) => {
+    if (text.length > maxLength) {
+      return text.substring(0, maxLength) + "...";
+    }
+    return text;
+  };
 
-    fetchPosts();
+  useEffect(() => {
+    axios
+      .get(`${api}board/list`)
+      .then((response) => {
+        console.log(response.data);
+        setPosts(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching posts:", error);
+      });
   }, []);
 
   // Calculate the index of the first and last posts to be displayed on the current page
@@ -52,7 +68,6 @@ const AdminBoard = () => {
   const subTheme = () => {
     if (selectedPosts.length === 1) {
       axios.post(`${api}game/regist/${selectedPosts[0]}`).then((response) => {
-        console.log(response);
         // Do something with the response if needed
       });
     } else {
@@ -64,7 +79,7 @@ const AdminBoard = () => {
     <div className={classes.admin_board_container}>
       <h1>벨런스 게임 게시판 관리 페이지 입니다.</h1>
       <div className={classes.post_button}>
-        <button onClick={subTheme}>주제 등록하기</button>
+        <button onClick={subTheme}>오늘의 주제 등록하기</button>
       </div>
 
       <div ref={tableContainerRef}>
@@ -77,6 +92,8 @@ const AdminBoard = () => {
                 <th>왼쪽 선택지</th>
                 <th>오른쪽 선택지</th>
                 <th>좋아요 수</th>
+                <th>닉네임</th>
+                <th>수정날짜</th>
                 <th>선택</th>
               </tr>
             </thead>
@@ -84,10 +101,12 @@ const AdminBoard = () => {
               {currentPosts.map((post) => (
                 <tr key={post.boardSeq}>
                   <td>{post.boardSeq}</td>
-                  <td>{post.question}</td>
-                  <td>{post.leftAnswer}</td>
-                  <td>{post.rightAnswer}</td>
+                  <td>{truncateText(post.question, 20)}</td>
+                  <td>{truncateText(post.leftAnswer, 20)}</td>
+                  <td>{truncateText(post.rightAnswer, 20)}</td>
                   <td>{post.likeCount}</td>
+                  <td>{post.nickname}</td>
+                  <td>{formatDate(post.lastModifiedDate)}</td>
                   <td>
                     <input
                       type="checkbox"
@@ -110,7 +129,7 @@ const AdminBoard = () => {
               <button key={index} onClick={() => paginate(index + 1)}>
                 {index + 1}
               </button>
-            ),
+            )
           )}
         </div>
       )}
