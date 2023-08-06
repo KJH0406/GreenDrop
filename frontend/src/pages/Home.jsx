@@ -28,7 +28,6 @@ function HomePage() {
     axios
       .get(`https://i9b103.p.ssafy.io/api/game/${now}`)
       .then((result) => {
-        console.log(result);
         setBalanceGame((prevBalanceGame) => {
           return [
             { ...prevBalanceGame[0], question: result.data.question },
@@ -44,17 +43,17 @@ function HomePage() {
       });
   }, []);
 
-  let leftPercentage =
+  let leftPercentage = ((parseInt(balanceGame[3].leftCount) + parseInt(balanceGame[4].rightCount)) !== 0) ?
     (parseInt(balanceGame[3].leftCount) /
       (parseInt(balanceGame[3].leftCount) +
         parseInt(balanceGame[4].rightCount))) *
-    100;
+    100 : 0;
 
-  let rightPercentage =
+  let rightPercentage = ((parseInt(balanceGame[3].leftCount) + parseInt(balanceGame[4].rightCount)) !== 0) ?
     (parseInt(balanceGame[4].rightCount) /
       (parseInt(balanceGame[3].leftCount) +
         parseInt(balanceGame[4].rightCount))) *
-    100;
+    100 : 0;
 
   return (
     <div className={classes.homepage}>
@@ -85,10 +84,15 @@ function HomePage() {
               parseInt(balanceGame[4].rightCount) ? (
                 <div className={classes.result_king}></div>
               ) : (
-                <div className={classes.result_nan}></div>
+                parseInt(balanceGame[3].leftCount) ===
+              parseInt(balanceGame[4].rightCount) ?
+                <div className={classes.result_tie}></div>
+                : <div className={classes.result_nan}></div>
               )}
               <div className={classes.result_content}>
-                {balanceGame[1].leftAnswer}
+                <div className={classes.content}>
+                  {balanceGame[1].leftAnswer}
+                </div>
               </div>
               <div className={classes.result_percentage}>
                 {leftPercentage.toFixed(1)}%
@@ -102,10 +106,15 @@ function HomePage() {
               parseInt(balanceGame[4].rightCount) ? (
                 <div className={classes.result_king}></div>
               ) : (
-                <div className={classes.result_nan}></div>
+                parseInt(balanceGame[3].leftCount) ===
+              parseInt(balanceGame[4].rightCount) ?
+                <div className={classes.result_tie}></div>
+                : <div className={classes.result_nan}></div>
               )}
               <div className={classes.result_content}>
-                {balanceGame[2].rightAnswer}
+                <div className={classes.content}>
+                  {balanceGame[2].rightAnswer}
+                </div>
               </div>
               <div className={classes.result_percentage}>
                 {rightPercentage.toFixed(1)}%
