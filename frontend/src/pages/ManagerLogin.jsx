@@ -16,7 +16,7 @@ const MangerLogin = () => {
         {
           id,
           password,
-        },
+        }
       );
 
       // 로그인 성공 처리

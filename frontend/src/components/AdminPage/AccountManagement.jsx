@@ -90,11 +90,22 @@ function AccountManagement() {
         }
       )
       .then((response) => {
-        setManagerList((prevList) => [
-          ...prevList,
-          { id: response.data.id, date: response.data.date },
-        ]);
+        axios
+          .get(`${api}manager/list`, {
+            headers: { Authorization: `Bearer ${token}` },
+          })
+          .then((response) => {
+            const modifiedManagerList = response.data.map((account) => ({
+              ...account,
+              createdDate: new Date(account.createdDate).toLocaleDateString(),
+            }));
+            setManagerList(modifiedManagerList);
+          })
+          .catch((error) => {
+            console.error("관리자 리스트를 불러오는데 실패했습니다.", error);
+          });
       })
+
       .catch((error) => {
         console.error("계정 생성 중 오류가 발생했습니다.", error);
       });
@@ -126,9 +137,9 @@ function AccountManagement() {
           <p>비고</p>
         </div>
 
-        {getCurrentManagerList().map((account) => (
+        {getCurrentManagerList().map((account, idx) => (
           <div
-            key={account.managerSeq}
+            key={idx}
             className={`${classes.account_box} ${
               selectedAccountId === account.id ? classes.selected_account : ""
             }`}
