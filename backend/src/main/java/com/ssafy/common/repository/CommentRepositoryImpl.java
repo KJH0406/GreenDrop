@@ -35,4 +35,10 @@ public class CommentRepositoryImpl extends QuerydslRepositorySupport implements 
                 .where(comment.parentId.eq(parentId))
                 .fetch();
     }
+    @Override
+    public List<Comment> noDeletedComment(Long boardNo) {
+        return queryFactory.selectFrom(comment)
+                .where(comment.isDeleted.eq(0).and(comment.board.boardSeq.eq(boardNo)))
+                .fetch();
+    }
 }
