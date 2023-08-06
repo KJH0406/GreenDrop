@@ -60,19 +60,12 @@ public class CommentController {
     @PostMapping("/check/{commentNo}")
     public ResponseEntity<Integer> checkUserPassword(
             @PathVariable Long commentNo,
-            @RequestBody String password,
-            HttpServletRequest request
+            @RequestBody String password
     ) {
-        if(!commentService.userPasswordExistCheck(commentNo)){
-            //TODO : log 내용 Error handler로 뺄 예정
-            log.info("댓글 등록 시 비밀번호를 입력하지 않은 댓글이라 접근 권한이 없습니다.");
-            return new ResponseEntity<>(5,HttpStatus.FORBIDDEN);
-        }
-
         JSONObject parser = new JSONObject(password);
         Integer userCheck =
-                commentService.checkPasswordUser(commentNo,parser.getString("password"),userIp.searchIP(request));
-        if(userCheck>1) {
+                commentService.checkPasswordUser(commentNo,parser.getString("password"));
+        if(userCheck==2) {
             //TODO : 비밀번호 불일치 시 Error 처리 예정 -> Service단으로 Custom Error class 생성 후 이동예정
             return new ResponseEntity<>(userCheck,HttpStatus.BAD_REQUEST);
         }
