@@ -26,6 +26,9 @@ public class ManagerService {
     @Transactional
     public void registManager(ManagerRequestDto request){
         Encoder encoder = new Encoder();
+        if(isExistId(request.id())){
+            throw new IllegalArgumentException("아이디가 이미 존재합니다.");
+        }
         managerRepository.save(request.toRegistEntity(encoder)); //패스워드 암호화를 위한 encoder 추가
     }
 
@@ -74,5 +77,12 @@ public class ManagerService {
                 .role(manager.getRole())
                 .build();
         managerRepository.save(newManager);
+    }
+
+    //(아이디 중복 확인용) 입력된 아이디가 존재하는지 확인
+    public boolean isExistId(String id){
+        long result = managerRepository.countById(id);
+        if(result == 0) return false;
+        else return true;
     }
 }
