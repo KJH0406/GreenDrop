@@ -27,8 +27,8 @@ public class ManagerController {
         try {
             managerService.registManager(managerRequestDto);
         }catch (IllegalArgumentException e){
-            //아이디가 중복될 경우, 403 Forbidden 반환
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            //아이디가 중복될 경우, 409 Conflict 반환
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }
