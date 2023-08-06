@@ -45,7 +45,7 @@ public class BoardController {
         return new ResponseEntity<>(boardResponseDto,HttpStatus.OK);
     }
 
-    @PostMapping("/modify/{boardNo}")
+    @PostMapping("/check/{boardNo}")
     public ResponseEntity<Object> checkUserPassword(
             @PathVariable Long boardNo,
             @RequestBody String password,
