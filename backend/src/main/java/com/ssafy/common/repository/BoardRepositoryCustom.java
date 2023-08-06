@@ -12,4 +12,5 @@ public interface BoardRepositoryCustom {
     List<BoardResponseDto> searchKeyword(String keyword);
     List<Long> searchCategory(Long categorySeq);
     List<BoardResponseDto> newBoardList();
+    List<BoardResponseDto> orderByLikeList();
 }
