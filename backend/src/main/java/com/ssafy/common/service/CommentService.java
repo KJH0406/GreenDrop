@@ -2,6 +2,7 @@ package com.ssafy.common.service;
 
 import com.ssafy.common.dto.CommentDto;
 import com.ssafy.common.dto.response.CommentResponseDto;
+import com.ssafy.common.entity.Board;
 import com.ssafy.common.entity.Comment;
 import com.ssafy.common.repository.BoardRepository;
 import com.ssafy.common.repository.CommentRepository;
@@ -94,12 +95,56 @@ public class CommentService {
     @Transactional
     public void deleteComment(Long commentNo) {
         Comment comment = commentRepository.getReferenceById(commentNo);
-        CommentDto commentDto = modelMapper.map(comment, CommentDto.class);
 
-        commentDto.setIsDeleted(1);
-        commentDto.setDeletedDateTime(LocalDateTime.now());
+        Comment deleteComment = Comment.builder()
+                .isDeleted(1)
+                .deletedDateTime(LocalDateTime.now())
+                .ip(comment.getIp())
+                .createdDate(comment.getCreatedDate())
+                .password(comment.getPassword())
+                .nickName(comment.getNickName())
+                .commentSeq(commentNo)
+                .isChild(comment.getIsChild())
+                .parentId(comment.getParentId())
+                .content(comment.getContent())
+                .board(comment.getBoard())
+                .build();
 
-        commentRepository.save(commentDto.toEntity());
+        commentRepository.save(deleteComment);
+    }
+
+    public Integer checkPasswordUser(Long commentNo, String pwd , String userIp){
+        Comment comment = commentRepository.getReferenceById(commentNo);
+        String encodePassword = comment.getPassword();
+        boolean passwordMatchResult = encoder.matches(pwd,encodePassword);
+
+        boolean sameUserIp = userIp.equals(comment.getIp());
+
+        //if(!passwordResult){
+        //TODO : 에러처리 예정 (Exception 핸들러 구현 후 작성 예정)
+        //}
+        if(sameUserIp == true && passwordMatchResult == true){
+            return 1;
+        }
+        else if(sameUserIp == false && passwordMatchResult == true){
+            return 2;
+        }
+        else if(sameUserIp == true && passwordMatchResult == false){
+            return 3;
+        }
+        else {
+            return 4;
+        }
+
+    }
+
+    public boolean userPasswordExistCheck(Long commentNo){
+        String password = commentRepository.getReferenceById(commentNo).getPassword();
+
+        if(password == null){
+            return false;
+        }
+        return true;
     }
 
 }

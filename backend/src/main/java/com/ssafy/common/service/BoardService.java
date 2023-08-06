@@ -63,7 +63,7 @@ public class BoardService {
         return boardRepository.oneBoard(boardId);
     }
 
-    public boolean checkPasswordUser(Long boardNo, String pwd , String userIp){
+    public Integer checkPasswordUser(Long boardNo, String pwd , String userIp){
         Board board = boardRepository.findById(boardNo).get();
         String encodePassword = board.getPassword();
         boolean passwordMatchResult = encoder.matches(pwd,encodePassword);
@@ -73,7 +73,18 @@ public class BoardService {
         //if(!passwordResult){
         //TODO : 에러처리 예정 (Exception 핸들러 구현 후 작성 예정)
         //}
-        return (passwordMatchResult== true && sameUserIp == true);
+        if(sameUserIp == true && passwordMatchResult == true){
+            return 1;
+        }
+        else if(sameUserIp == false && passwordMatchResult == true){
+            return 2;
+        }
+        else if(sameUserIp == true && passwordMatchResult == false){
+            return 3;
+        }
+        else {
+            return 4;
+        }
     }
 
     @Transactional
@@ -202,7 +213,7 @@ public class BoardService {
     }
 
     public Integer countComment(Long boardNo){
-        List<Comment> commentList = commentRepository.findByComment(boardNo);
+        List<Comment> commentList = commentRepository.noDeletedComment(boardNo);
         return commentList.size();
     }
 
