@@ -3,6 +3,8 @@ package com.ssafy.common.dto.request;
 import com.ssafy.common.entity.Category;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -16,6 +18,7 @@ public class CategoryRequestDto {
         Category category = Category.builder()
                 .categorySeq(categorySeq)
                 .item(item)
+                .createdDate(LocalDateTime.now())
                 .build();
         return category;
     }
