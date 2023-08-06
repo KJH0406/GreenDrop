@@ -81,10 +81,22 @@ public class BoardService {
         Board board = boardRepository.getReferenceById(boardNo);
         BoardDto boardDto = modelMapper.map(board,BoardDto.class);
 
-        boardDto.setIsDeleted(1);
-        boardDto.setDeletedDate(LocalDateTime.now());
-        boardRepository.save(boardDto.toEntity());
+        Board deleteBoard = Board.builder()
+                .isDeleted(1)
+                .deletedDate(LocalDateTime.now())
+                .question(board.getQuestion())
+                .rightAnswer(board.getRightAnswer())
+                .leftAnswer(board.getLeftAnswer())
+                .likeCount(board.getLikeCount())
+                .ip(board.getIp())
+                .createdDate(board.getCreatedDate())
+                .password(board.getPassword())
+                .nickname(board.getNickname())
+                .lastModifiedDate(board.getLastModifiedDate())
+                .boardSeq(boardNo)
+                .build();
 
+        boardRepository.save(deleteBoard);
         AllDeleteComment(boardNo);
     }
 
@@ -180,7 +192,29 @@ public class BoardService {
     }
 
     public List<BoardResponseDto> findAllNew() {
-        return boardRepository.newBoardList();
+        List<BoardResponseDto> boardResponseDtoList = boardRepository.newBoardList();
+
+        for (BoardResponseDto brd : boardResponseDtoList){
+            brd.setCommentCount(countComment(brd.getBoardSeq()));
+        }
+
+        return boardResponseDtoList;
+    }
+
+    public Integer countComment(Long boardNo){
+        List<Comment> commentList = commentRepository.findByComment(boardNo);
+        return commentList.size();
+    }
+
+    public List<BoardResponseDto> likeCountList(){
+
+        List<BoardResponseDto> boardResponseDtoList = boardRepository.orderByLikeList();
+
+        for (BoardResponseDto brd : boardResponseDtoList){
+            brd.setCommentCount(countComment(brd.getBoardSeq()));
+        }
+
+        return boardResponseDtoList;
     }
 
 }

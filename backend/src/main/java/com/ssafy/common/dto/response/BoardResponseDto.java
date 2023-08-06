@@ -1,6 +1,7 @@
 package com.ssafy.common.dto.response;
 
 import com.ssafy.common.entity.Board;
+import com.ssafy.common.entity.QCategory;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
