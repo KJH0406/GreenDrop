@@ -9,4 +9,6 @@ public interface CommentRepositoryCustom {
     List<Comment> findByComment(Long boardNo);
     List<Comment> findByParentId(Long parentId);
 
+    List<Comment> noDeletedComment(Long boardNo);
+
 }
