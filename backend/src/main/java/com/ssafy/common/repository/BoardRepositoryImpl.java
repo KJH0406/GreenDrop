@@ -70,6 +70,7 @@ public class BoardRepositoryImpl extends QuerydslRepositorySupport implements Bo
                 .select(boardCategory.board.boardSeq)
                 .from(boardCategory)
                 .where(boardCategory.category.categorySeq.eq(categorySeq),board.isDeleted.eq(0))
+                .orderBy(board.boardSeq.desc())
                 .fetch();
 
         return boardSeqList;
