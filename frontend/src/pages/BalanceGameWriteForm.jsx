@@ -8,6 +8,8 @@ import BalanceGameCheckModal from "../components/BalanceGame/BalanceGameCheckMod
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { getCategoryList } from "../store";
+import backImg from "../assets/back.png";
+
 function BalanceGameWriteFormPage() {
   const [question, setQuestion] = useState("");
   const [leftAnswer, setLeftAnswer] = useState("");
@@ -87,7 +89,7 @@ function BalanceGameWriteFormPage() {
             headers: {
               "Content-Type": "application/json",
             },
-          },
+          }
         )
         .then((response) => {
           console.log(response);
@@ -131,10 +133,16 @@ function BalanceGameWriteFormPage() {
         <></>
       )}
 
-      <Link className={classes.title} to={"/board"}>
+      {/* <Link className={classes.title} to={"/board"}>
         <h2 className={classes.first_word}>Green &nbsp;</h2>
         <h2 className={classes.second_word}>Balance Game</h2>
-      </Link>
+      </Link> */}
+      <div style={{ display: "flex" }}>
+        <Link to={"/board"}>
+          <img className={classes.back_img} src={backImg} alt="" />
+        </Link>
+      </div>
+
       <div className={classes.outer_box}>
         <div className={classes.top}>
           <div className={`${classes.top_item} `}>
@@ -226,9 +234,6 @@ function BalanceGameWriteFormPage() {
             handleCardRegistration();
           }}
         ></input>
-        <Link className={classes.regist_btn} to={"/board"}>
-          목록으로
-        </Link>
       </div>
     </div>
   );
