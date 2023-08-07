@@ -10,13 +10,13 @@ function BalanceGameCommentModal({
   setShowCheckModal,
   setConfirm,
   setConfirmModalData,
-
+  commentUpdate,
+  setCommentUpdate,
   getOrderedBoardList,
   selectedCategoryItem,
   isLikeSelected,
 }) {
   const dispatch = useDispatch();
-  const [commentUpdate, setCommentUpdate] = useState(0);
   console.log("카테고리 정렬 선택", selectedCategoryItem);
   console.log("좋아요 정렬 선택", isLikeSelected);
   useEffect(() => {
