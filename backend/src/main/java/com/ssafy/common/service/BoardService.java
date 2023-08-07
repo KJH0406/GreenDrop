@@ -45,6 +45,7 @@ public class BoardService {
             String encodepwd = encoder.encode(boardDto.getPassword());
             boardDto.setPassword(encodepwd);
         }
+        boardDto.setCreatedDate(LocalDateTime.now());
         boardDto.setLastmodifiedDate(LocalDateTime.now());
         Board board = boardDto.toEntity();
         boardRepository.save(board);
