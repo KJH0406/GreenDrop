@@ -31,7 +31,6 @@
 }
 .comment_inner_box {
   display: flex;
-
   height: 90%;
   padding: 1rem;
   flex-direction: column;
@@ -240,6 +239,9 @@
 }
 
 @media (max-width: 500px) {
+  .comment_outer_box {
+    padding-bottom: 15%;
+  }
   .comment_top {
     margin-bottom: 1rem;
   }
