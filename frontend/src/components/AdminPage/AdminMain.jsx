@@ -107,10 +107,10 @@ function AdminMain() {
         setTodayOptions((todaySeries) => {
           return {
             ...todaySeries,
-            series: [result.data.leftCount+3, result.data.rightCount+1],
+            series: [result.data.leftCount, result.data.rightCount],
             options: {
               ...todaySeries.options,
-              labels: [`1번 선택지 : ${result.data.leftCount+3}개`, `2번 선택지 : ${result.data.rightCount+1}개`],
+              labels: [`1번 선택지 : ${result.data.leftCount}개`, `2번 선택지 : ${result.data.rightCount}개`],
             },
           };
         });
