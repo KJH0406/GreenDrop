@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import search from "../assets/search.png";
+// import search from "../assets/search.png";
 import star from "../assets/star.png";
 import BalanceGameCategoryList from "../components/BalanceGame/BalanceGameCategoryList";
 import BalanceGameCheckModal from "../components/BalanceGame/BalanceGameCheckModal";
@@ -49,7 +49,7 @@ function BoardPage() {
   }, [dispatch]);
 
   const cardList = useSelector((state) => state.balanceGameList); // Get cardList from the Redux store
-  const [searchWord, setSearchWord] = useState("");
+  // const [searchWord, setSearchWord] = useState("");
   // console.log("스토어에서 받아온 데이터", cardList);
   const [confirm, setConfirm] = useState(false);
   const sidebarArr = new Array(cardList.length);
@@ -82,6 +82,7 @@ function BoardPage() {
         });
       });
   }
+  const [commentUpdate, setCommentUpdate] = useState(0);
 
   //수정할 부분(새 글 불러)
   function handleCommentDelete(commentNum) {
@@ -89,6 +90,8 @@ function BoardPage() {
 
       .patch("https://i9b103.p.ssafy.io/api/comment/delete/" + commentNum)
       .then(() => {
+        setCommentUpdate(commentUpdate + 1);
+
         getOrderedBoardList();
       })
       .catch((error) => {
@@ -103,23 +106,24 @@ function BoardPage() {
         });
       });
   }
+  // 검색 함수
+  // function handleBoardSearch() {
+  //   axios
 
-  function handleBoardSearch() {
-    axios
+  //     .get("https://i9b103.p.ssafy.io/api/board/search?question=" + searchWord)
+  //     .then((response) => {
+  //       // console.log(response);
+  //       const fetchedData = [...response.data];
+  //       dispatch(searchBoard(fetchedData));
+  //     });
+  // }
 
-      .get("https://i9b103.p.ssafy.io/api/board/search?question=" + searchWord)
-      .then((response) => {
-        // console.log(response);
-        const fetchedData = [...response.data];
-        dispatch(searchBoard(fetchedData));
-      });
-  }
-
-  const handleOnKey = (e) => {
-    if (e.key === "Enter") {
-      handleBoardSearch(); // Enter 입력이 되면 클릭 이벤트 실행
-    }
-  };
+  // 검색시 엔터로 검색 가능하게 하던 함수
+  // const handleOnKey = (e) => {
+  //   if (e.key === "Enter") {
+  //     handleBoardSearch(); // Enter 입력이 되면 클릭 이벤트 실행
+  //   }
+  // };
 
   function handleLikeCount(boardNo) {
     axios
@@ -138,7 +142,7 @@ function BoardPage() {
       axios
         .get(
           "https://i9b103.p.ssafy.io/api/board/select?category=" +
-            selectedCategoryItem
+            selectedCategoryItem,
         )
         .then((response) => {
           const fetchedCardList = [...response.data];
@@ -154,6 +158,7 @@ function BoardPage() {
         .then((response) => {
           const fetchedData = [...response.data];
           dispatch(searchBoard(fetchedData));
+          console.log(fetchedData);
         });
     } else {
       setUpdate(update + 1);
@@ -175,6 +180,7 @@ function BoardPage() {
           const fetchedCardList = [...response.data];
           // console.log("패치 된 카드 리스트", fetchedCardList);
           dispatch(getBoardList(fetchedCardList));
+          console.log(fetchedCardList);
         })
         .catch((error) => {
           console.error(error);
@@ -191,8 +197,9 @@ function BoardPage() {
       axios
         .get("https://i9b103.p.ssafy.io/api/board/like/list")
         .then((response) => {
-          const fetchedData = [...response.data];
-          dispatch(searchBoard(fetchedData));
+          const fetchedCardList = [...response.data];
+          dispatch(searchBoard(fetchedCardList));
+          console.log(fetchedCardList);
         });
     } else {
       setUpdate(update + 1);
@@ -237,11 +244,11 @@ function BoardPage() {
           setShowCheckModal={setShowCheckModal}
           setConfirm={setConfirm}
           setConfirmModalData={setConfirmModalData}
-          update={update}
-          setUpdate={setUpdate}
           getOrderedBoardList={getOrderedBoardList}
           selectedCategoryItem={selectedCategoryItem}
           isLikeSelected={isLikeSelected}
+          commentUpdate={commentUpdate}
+          setCommentUpdate={setCommentUpdate}
         />
       ) : (
         <></>
