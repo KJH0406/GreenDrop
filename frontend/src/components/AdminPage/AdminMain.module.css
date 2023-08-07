@@ -101,15 +101,16 @@
 
 .chart_table {
   width: 95%;
+  height: 100%;
   margin: auto;
   border-collapse: collapse;
 }
 
 .chart_table thead th, td {
-  padding: 22px 10px;
+  padding: 20px 10px;
 }
 
 .chart_table tbody th, td {
-  padding: 22px 10px;
+  padding: 0px 10px;
   border-top: 1px solid #444444;
 }
