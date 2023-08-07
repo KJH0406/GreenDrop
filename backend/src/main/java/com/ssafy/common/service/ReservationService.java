@@ -1,7 +1,9 @@
 package com.ssafy.common.service;
 
 import com.ssafy.common.dto.request.ReservationRequestDto;
+import com.ssafy.common.entity.Board;
 import com.ssafy.common.entity.Reservation;
+import com.ssafy.common.repository.BoardRepository;
 import com.ssafy.common.repository.ReservationRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -15,10 +17,11 @@ import java.util.List;
 @Service
 public class ReservationService {
     private final ReservationRepository reservationRepository;
-
+    private final BoardRepository boardRepository;
     public void registReservation(ReservationRequestDto reservationRequestDto) {
+        Board board = boardRepository.findByBoardSeq(reservationRequestDto.getBoardSeq());
         Reservation reservation = Reservation.builder()
-                .board(reservationRequestDto.getBoard())
+                .board(board)
                 .managerId(reservationRequestDto.getManagerId())
                 .dateTime(reservationRequestDto.getDateTime())
                 .build();
@@ -26,18 +29,15 @@ public class ReservationService {
         reservationRepository.save(reservation);
     }
 
+    @Transactional
     public void deleteReservation(Long reservationSeq){
-        reservationRepository.delete(
-                Reservation.builder()
-                        .reservationSeq(reservationSeq)
-                        .build()
-        );
+        reservationRepository.deleteByReservationSeq(reservationSeq);
     }
 
     public List<Reservation> findReservationByDate() {
         List<Reservation> reservationList = reservationRepository.findByAfterNow(LocalDateTime.now());
         if (reservationList.size() == 0) {
-            return (List) Reservation.builder().build();
+            return null;
         }
         return reservationList;
     }

@@ -19,7 +19,8 @@ public class Reservation implements Comparable<Reservation>, Serializable {
     @Column(name = "reservation_seq")
     private Long reservationSeq;
 
-    @ManyToOne(targetEntity = Board.class)
+    @JsonIgnore
+    @ManyToOne(targetEntity = Board.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "board_seq", referencedColumnName = "board_seq")
     private Board board;
 

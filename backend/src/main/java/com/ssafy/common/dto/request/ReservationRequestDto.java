@@ -13,13 +13,13 @@ import java.time.LocalDateTime;
 public class ReservationRequestDto {
     private Long reservationSeq;
     private String managerId;
-    private Board board;
+    private Long boardSeq;
     private LocalDateTime dateTime;
 
     public Reservation toEntity(){
         Reservation reservation = Reservation.builder()
                 .managerId(managerId)
-                .board(board)
+//                .board(board)
                 .dateTime(dateTime)
                 .build();
         return reservation;
