@@ -240,7 +240,7 @@
 
 @media (max-width: 500px) {
   .comment_outer_box {
-    padding-bottom: 15%;
+    padding-bottom: 20%;
   }
   .comment_top {
     margin-bottom: 1rem;
@@ -267,8 +267,5 @@
   }
   .input_tag {
     width: 80%;
-  }
-  .comment_outer_box {
-    padding-bottom: 5%;
   }
 }
