@@ -3,17 +3,17 @@
   flex-direction: column;
   /* width: 100%; */
   position: relative;
-
+  height: 100vh;
   padding-left: 1.5rem;
   padding-right: 1.5rem;
   padding-bottom: 1.5rem;
-  justify-content: center;
   align-content: center;
 }
 .outer_box {
   /* align-items: center; */
-
+  /* width: 80%; */
   margin: 3%;
+
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -65,7 +65,7 @@ input:focus {
   text-align: center;
 
   border: none;
-  background-color: #f8f8f8;
+  background-color: transparent;
   border-radius: 20px;
 }
 .input_tag:focus::placeholder {
@@ -107,7 +107,7 @@ input:focus {
   border: none;
   text-align: center;
   align-items: center;
-  background-color: #f8f8f8;
+  background-color: transparent;
   width: 100%;
   height: 200px;
   overflow-y: scroll;
@@ -192,7 +192,6 @@ input:focus {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  /* height: 180px; */
 }
 .info_input {
   display: flex;
@@ -234,6 +233,7 @@ input:focus {
     font-size: 1.5rem;
     height: 400px;
     padding: 1.5rem;
+
     margin-bottom: 5%;
   }
   .input_tag {

@@ -3,8 +3,10 @@ package com.ssafy.common.service;
 import com.ssafy.common.dto.BoardDto;
 import com.ssafy.common.dto.response.BoardResponseDto;
 import com.ssafy.common.entity.Board;
+import com.ssafy.common.entity.BoardCategory;
 import com.ssafy.common.entity.Category;
 import com.ssafy.common.entity.Comment;
+import com.ssafy.common.repository.BoardCategoryRepository;
 import com.ssafy.common.repository.BoardRepository;
 import com.ssafy.common.repository.CategoryRepository;
 import com.ssafy.common.repository.CommentRepository;
@@ -12,15 +14,11 @@ import com.ssafy.common.security.Encoder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,6 +35,7 @@ public class BoardService {
     private final ModelMapper modelMapper;
     private final CommentService commentService;
     private final CommentRepository commentRepository;
+    private final BoardCategoryRepository boardCategoryRepository;
 
     @Transactional
     public void saveBoard(BoardDto boardDto , String ipAdress) {
@@ -47,11 +46,12 @@ public class BoardService {
             boardDto.setPassword(encodepwd);
         }
         boardDto.setLastmodifiedDate(LocalDateTime.now());
-        boardRepository.save(boardDto.toEntity());
+        Board board = boardDto.toEntity();
+        boardRepository.save(board);
 
         Optional<Category> category = categoryRepository.findByItem(boardDto.getCategory());
         if(category.isPresent()){
-            boardCategoryService.saveBoardAndCategory(category.get(),boardDto.toEntity());
+            boardCategoryService.saveBoardAndCategory(category.get(),board);
         }
 
     }
@@ -60,17 +60,20 @@ public class BoardService {
         return boardRepository.oneBoard(boardId);
     }
 
-    public boolean checkPasswordUser(Long boardNo, String pwd , String userIp){
+    public Integer checkPasswordUser(Long boardNo, String pwd){
         Board board = boardRepository.findById(boardNo).get();
         String encodePassword = board.getPassword();
         boolean passwordMatchResult = encoder.matches(pwd,encodePassword);
 
-        boolean sameUserIp = userIp.equals(board.getIp());
-
         //if(!passwordResult){
         //TODO : 에러처리 예정 (Exception 핸들러 구현 후 작성 예정)
         //}
-        return (passwordMatchResult == sameUserIp);
+        if(passwordMatchResult == true){
+            return 1;
+        }
+        else {
+            return 2;
+        }
     }
 
     @Transactional
@@ -78,10 +81,22 @@ public class BoardService {
         Board board = boardRepository.getReferenceById(boardNo);
         BoardDto boardDto = modelMapper.map(board,BoardDto.class);
 
-        boardDto.setIsDeleted(1);
-        boardDto.setDeletedDate(LocalDateTime.now());
-        boardRepository.save(boardDto.toEntity());
+        Board deleteBoard = Board.builder()
+                .isDeleted(1)
+                .deletedDate(LocalDateTime.now())
+                .question(board.getQuestion())
+                .rightAnswer(board.getRightAnswer())
+                .leftAnswer(board.getLeftAnswer())
+                .likeCount(board.getLikeCount())
+                .ip(board.getIp())
+                .createdDate(board.getCreatedDate())
+                .password(board.getPassword())
+                .nickname(board.getNickname())
+                .lastModifiedDate(board.getLastModifiedDate())
+                .boardSeq(boardNo)
+                .build();
 
+        boardRepository.save(deleteBoard);
         AllDeleteComment(boardNo);
     }
 
@@ -95,19 +110,40 @@ public class BoardService {
     @Transactional
     public void modifyBoard(Long boardNo , BoardDto boardDto){
         Board board = boardRepository.getReferenceById(boardNo);
-        BoardDto originDto = modelMapper.map(board,BoardDto.class);
-
-        originDto.setQuestion(boardDto.getQuestion());
-        originDto.setLeftAnswer(boardDto.getLeftAnswer());
-        originDto.setRightAnswer(boardDto.getRightAnswer());
-        originDto.setLastmodifiedDate(LocalDateTime.now());
-
-        boardRepository.save(originDto.toEntity());
-
         Optional<Category> category = categoryRepository.findByItem(boardDto.getCategory());
 
+        Board modifyBoard = Board.builder()
+                .boardSeq(boardNo)
+                .createdDate(board.getCreatedDate())
+                .lastModifiedDate(LocalDateTime.now())
+                .rightAnswer(boardDto.getRightAnswer())
+                .leftAnswer(boardDto.getLeftAnswer())
+                .ip(board.getIp())
+                .likeCount(board.getLikeCount())
+                .question(boardDto.getQuestion())
+                .nickname(board.getNickname())
+                .password(board.getPassword())
+                .isDeleted(board.getIsDeleted())
+                .build();
+        boardRepository.save(modifyBoard);
+
+        Optional<BoardCategory> boardCategoryOptional = boardCategoryRepository.findBoardCategoryByBoard_BoardSeq(board.getBoardSeq()); // BoardSeq(boardNo).get();
+
         if(category.isPresent()){
-            boardCategoryService.updateBoardAndCategory(category.get(),originDto.toEntity());
+            if(boardCategoryOptional.isPresent()){
+                BoardCategory bc = boardCategoryOptional.get();
+                BoardCategory boardCategory = bc.builder()
+                        .boardCategorySeq(bc.getBoardCategorySeq())
+                        .category(category.get())
+                        .createdDate(bc.getCreatedDate())
+                        .board(bc.getBoard())
+                        .build();
+                boardCategoryRepository.delete(bc);
+                boardCategoryRepository.save(boardCategory);
+            }
+            else {
+                boardCategoryService.saveBoardAndCategory(category.get(),modifyBoard);
+            }
         }
         else {
             boardCategoryService.deleteBoardAndCategory(board);
@@ -121,16 +157,16 @@ public class BoardService {
         boardRepository.updateLikeCount(board);
     }
 
-    /* 좋아요 순으로 내림차순 정렬해서 pagenation => 5개 */
-    public Page<BoardResponseDto> findAllBoardList(Pageable pageable){
-        return boardRepository.allBoardList(pageable);
+    public List<BoardResponseDto> searchKeyword(String keyword){
+        List<BoardResponseDto> boardResponseDtoList = boardRepository.searchKeyword(keyword);
+
+        for (BoardResponseDto brd : boardResponseDtoList){
+            brd.setCommentCount(countComment(brd.getBoardSeq()));
+        }
+        return boardResponseDtoList;
     }
 
-    public Page<BoardResponseDto> searchKeyword(String keyword, Pageable pageable){
-        return boardRepository.searchKeyword(keyword,pageable);
-    }
-
-    public Page<BoardResponseDto> searchCategory(String item, Pageable pageable){
+    public List<BoardResponseDto> searchCategory(String item){
         Long categoryNum = categoryRepository.findByItem(item).orElseThrow().getCategorySeq();
         List<Long> boardList = boardRepository.searchCategory(categoryNum);
 
@@ -139,39 +175,35 @@ public class BoardService {
             Board board = boardRepository.getReferenceById(boardNum);
             BoardResponseDto boardResponseDto = modelMapper.map(board, BoardResponseDto.class);
             boardResponseDto.setItem(item);
+            boardResponseDto.setCommentCount(countComment(boardNum));
             resultBoard.add(boardResponseDto);
         }
 
-        return new PageImpl<>(resultBoard, pageable,resultBoard.size());
+        return resultBoard;
     }
 
-    public boolean userPasswordExistCheck(Long boardNo){
-        String password = boardRepository.getReferenceById(boardNo).getPassword();
+    public List<BoardResponseDto> findAllNew() {
+        List<BoardResponseDto> boardResponseDtoList = boardRepository.newBoardList();
 
-        if(password == null){
-            return false;
+        for (BoardResponseDto brd : boardResponseDtoList){
+            brd.setCommentCount(countComment(brd.getBoardSeq()));
         }
-        return true;
+
+        return boardResponseDtoList;
     }
 
-    //Paging 적용 안하고 모든 게시글 목록 반환
-    public List<BoardResponseDto> findAll(){
-        List<Board> boardList =  boardRepository.findAll();
-        List<BoardResponseDto> result = new LinkedList<>();
-        for(Board board: boardList){
-            BoardResponseDto boardResponseDto = BoardResponseDto.builder()
-                    .boardSeq(board.getBoardSeq())
-                    .question(board.getQuestion())
-                    .leftAnswer(board.getLeftAnswer())
-                    .rightAnswer(board.getRightAnswer())
-                    .ip(board.getIp())
-                    .nickname(board.getNickname())
-                    .likeCount(board.getLikeCount())
-                    .lastModifiedDate(board.getLastModifiedDate())
-                    .build();
-            result.add(boardResponseDto);
+    public Integer countComment(Long boardNo){
+        List<Comment> commentList = commentRepository.noDeletedComment(boardNo);
+        return commentList.size();
+    }
+
+    public List<BoardResponseDto> likeCountList(){
+
+        List<BoardResponseDto> boardResponseDtoList = boardRepository.orderByLikeList();
+        for (BoardResponseDto brd : boardResponseDtoList){
+            brd.setCommentCount(countComment(brd.getBoardSeq()));
         }
-        return result;
+        return boardResponseDtoList;
     }
 
 }

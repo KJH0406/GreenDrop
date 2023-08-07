@@ -33,6 +33,7 @@ public class CommentService {
 
         commentDto.setIp(ip);
         commentDto.setIsChild(0);
+        commentDto.setCreatedDate(LocalDateTime.now());
 
         if (commentDto.getPassword() != null) {
             String encodepwd = encoder.encode(commentDto.getPassword());
@@ -48,6 +49,7 @@ public class CommentService {
 
         commentDto.setIp(ip);
         commentDto.setIsChild(1);
+        commentDto.setCreatedDate(LocalDateTime.now());
         if (commentDto.getPassword() != null) {
             String encodepwd = encoder.encode(commentDto.getPassword());
             commentDto.setPassword(encodepwd);
@@ -94,12 +96,39 @@ public class CommentService {
     @Transactional
     public void deleteComment(Long commentNo) {
         Comment comment = commentRepository.getReferenceById(commentNo);
-        CommentDto commentDto = modelMapper.map(comment, CommentDto.class);
 
-        commentDto.setIsDeleted(1);
-        commentDto.setDeletedDateTime(LocalDateTime.now());
+        Comment deleteComment = Comment.builder()
+                .isDeleted(1)
+                .deletedDateTime(LocalDateTime.now())
+                .ip(comment.getIp())
+                .createdDate(comment.getCreatedDate())
+                .password(comment.getPassword())
+                .nickName(comment.getNickName())
+                .commentSeq(commentNo)
+                .isChild(comment.getIsChild())
+                .parentId(comment.getParentId())
+                .content(comment.getContent())
+                .board(comment.getBoard())
+                .build();
 
-        commentRepository.save(commentDto.toEntity());
+        commentRepository.save(deleteComment);
     }
 
+    public Integer checkPasswordUser(Long commentNo, String pwd){
+        Comment comment = commentRepository.getReferenceById(commentNo);
+        String encodePassword = comment.getPassword();
+        boolean passwordMatchResult = encoder.matches(pwd,encodePassword);
+
+        //if(!passwordResult){
+        //TODO : 에러처리 예정 (Exception 핸들러 구현 후 작성 예정)
+        //}
+        if(passwordMatchResult == true){
+            return 1;
+        }
+        else {
+            return 2;
+        }
+
+    }
+    
 }

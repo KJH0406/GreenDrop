@@ -268,4 +268,7 @@
   .input_tag {
     width: 80%;
   }
+  .comment_outer_box {
+    padding-bottom: 5%;
+  }
 }

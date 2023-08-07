@@ -13,4 +13,6 @@ public interface ManagerRepository extends JpaRepository<Manager, Byte> {
     List<Manager> findAll();
 
     Long deleteByManagerSeq(Short managerSeq);
+
+    Long countById(String id);
 }

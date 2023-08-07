@@ -12,9 +12,7 @@
   position: relative;
 }
 .outer_box {
-  width: 80%;
   justify-content: center;
-  /* align-items: center; */
 
   margin: 5%;
   display: flex;
