@@ -60,6 +60,7 @@ public class BoardResponseDto{
                 .question(question)
                 .leftAnswer(leftAnswer)
                 .rightAnswer(rightAnswer)
+                .nickname(nickname)
                 .build();
    }
 }
