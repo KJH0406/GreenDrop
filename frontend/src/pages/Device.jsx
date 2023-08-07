@@ -272,6 +272,7 @@ function DevicePage() {
       {/* {<RightCompleteModal />} */}
       {/* {<RightOverWeightModal />} */}
       {/* <RightLightWeightModal /> */}
+      {/* */}
 
       <img className={classes.decorate_left_img} src={decorateImg_1} alt="" />
       <img className={classes.decorate_right_img} src={decorateImg_2} alt="" />
