@@ -78,13 +78,12 @@ function BalanceGameCard({
           {card.question}
         </div>
         <div className={classes.top_item_right}>
-          {timePassed(card.lastModifiedDate)}
+          {timePassed(card.createdDate)}
         </div>
       </div>
       <div className={classes.middle}>
         <div className={`${classes.middle_item} ${classes.middle_item_left}`}>
           <div className={classes.answer}>{card.leftAnswer}</div>
-          <div className={classes.cover_bar}></div>
         </div>
         <div className={`${classes.middle_item} ${classes.middle_item_right}`}>
           <div className={classes.answer}>{card.rightAnswer}</div>

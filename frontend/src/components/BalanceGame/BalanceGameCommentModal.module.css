@@ -242,9 +242,7 @@
 }
 
 @media (max-width: 500px) {
-  .comment_outer_box {
-    padding-bottom: 20%;
-  }
+
   .comment_top {
     margin-bottom: 1rem;
   }
