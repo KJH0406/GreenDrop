@@ -37,7 +37,9 @@ public class BoardRepositoryImpl extends QuerydslRepositorySupport implements Bo
     public BoardResponseDto oneBoard(Long boardNo) {
         List<BoardResponseDto> query = queryFactory
                 .select(Projections.fields(BoardResponseDto.class,
+                        board.boardSeq,
                         board.question,board.leftAnswer,board.rightAnswer, board.ip,board.likeCount
+                        ,board.createdDate, board.lastModifiedDate
                         ,board.nickname,board.lastModifiedDate,category.item))
                 .from(board)
                 .leftJoin(board.boardCategories,boardCategory)
@@ -53,7 +55,7 @@ public class BoardRepositoryImpl extends QuerydslRepositorySupport implements Bo
                 .select(Projections.fields(BoardResponseDto.class,
                         board.boardSeq,
                         board.question, board.leftAnswer, board.rightAnswer,board.nickname,
-                        board.lastModifiedDate,board.likeCount,category.item))
+                        board.createdDate,board.likeCount,category.item))
                 .from(board)
                 .leftJoin(board.boardCategories,boardCategory)
                 .leftJoin(boardCategory.category,category)
@@ -83,7 +85,7 @@ public class BoardRepositoryImpl extends QuerydslRepositorySupport implements Bo
                 .select(Projections.fields(BoardResponseDto.class,
                         board.boardSeq,
                         board.question,board.leftAnswer,board.rightAnswer, board.ip,board.likeCount
-                        ,board.nickname,board.lastModifiedDate,category.item))
+                        ,board.nickname,board.createdDate,category.item))
                 .from(board)
                 .leftJoin(board.boardCategories,boardCategory)
                 .leftJoin(boardCategory.category,category)
@@ -99,7 +101,7 @@ public class BoardRepositoryImpl extends QuerydslRepositorySupport implements Bo
                 .select(Projections.fields(BoardResponseDto.class,
                         board.boardSeq,
                         board.question,board.leftAnswer,board.rightAnswer, board.ip,board.likeCount
-                        ,board.nickname,board.lastModifiedDate,category.item))
+                        ,board.nickname,board.createdDate,category.item))
                 .from(board)
                 .leftJoin(board.boardCategories,boardCategory)
                 .leftJoin(boardCategory.category,category)
