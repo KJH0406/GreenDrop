@@ -58,6 +58,9 @@ function BoardPage() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(sidebarArr);
   const [selectedBoardSeq, setSelectedBoardSeq] = useState("");
 
+  const [selectedCategoryItem, setSelectedCategoryItem] = useState("");
+  const [isSelectedCategory, setIsSeletedCategory] = useState(false);
+
   const categories = useSelector((state) => {
     return state.categories;
   });
@@ -66,7 +69,7 @@ function BoardPage() {
     axios
       .patch("https://i9b103.p.ssafy.io/api/board/delete/" + boardNo)
       .then(() => {
-        setUpdate(update + 1);
+        getOrderedBoardList();
       })
       .catch((error) => {
         console.error("글 삭제 실패");
@@ -169,11 +172,10 @@ function BoardPage() {
   categoryArr.fill(false);
   const [isCategorySelected, setIsCategorySelected] = useState(categoryArr);
 
-  const [selectedCategoryItem, setSelectedCategoryItem] = useState("");
-
   function selectedCategory(category, isSelected) {
     if (!isSelected) {
       setSelectedCategoryItem(category);
+      setIsSeletedCategory(true);
       axios
         .get("https://i9b103.p.ssafy.io/api/board/select?category=" + category)
         .then((response) => {
@@ -188,6 +190,7 @@ function BoardPage() {
     } else {
       setUpdate(update + 1);
       setSelectedCategoryItem(null);
+      setIsSeletedCategory(false);
     }
   }
 
