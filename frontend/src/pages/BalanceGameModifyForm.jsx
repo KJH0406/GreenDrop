@@ -105,7 +105,7 @@ function BalanceGameModifyFormPage() {
             headers: {
               "Content-Type": "application/json",
             },
-          }
+          },
         )
         .then(() => {
           console.log("수정완료");
@@ -129,6 +129,8 @@ function BalanceGameModifyFormPage() {
         });
     }
   };
+  const [isModifyDisable, setIsModifyDisable] = useState(false);
+
   return (
     <div className={classes.regist_box}>
       {showCheckModal ? (
@@ -232,8 +234,10 @@ function BalanceGameModifyFormPage() {
           className={classes.regist_btn}
           value="밸런스 게임 수정하기"
           onClick={() => {
+            setIsModifyDisable(true);
             handleModifyCard();
           }}
+          disabled={isModifyDisable ? true : false}
         ></input>
         <Link className={classes.regist_btn} to={"/board"}>
           목록으로

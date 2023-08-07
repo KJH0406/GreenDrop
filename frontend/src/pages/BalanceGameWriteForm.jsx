@@ -89,7 +89,7 @@ function BalanceGameWriteFormPage() {
             headers: {
               "Content-Type": "application/json",
             },
-          }
+          },
         )
         .then((response) => {
           console.log(response);
@@ -115,7 +115,7 @@ function BalanceGameWriteFormPage() {
         });
     }
   };
-
+  const [isRegistDisable, setIsRegistDisable] = useState(false);
   return (
     <div className={classes.regist_box}>
       {showCheckModal ? (
@@ -167,7 +167,6 @@ function BalanceGameWriteFormPage() {
                 console.log(leftAnswer);
               }}
             ></textarea>
-            <div className={classes.cover_bar}></div>
           </div>
           <div
             className={`${classes.middle_item} ${classes.middle_item_right}`}
@@ -231,8 +230,10 @@ function BalanceGameWriteFormPage() {
           className={classes.regist_btn}
           value="밸런스 게임 등록하기"
           onClick={() => {
+            setIsRegistDisable(true);
             handleCardRegistration();
           }}
+          disabled={isRegistDisable ? true : false}
         ></input>
       </div>
     </div>
