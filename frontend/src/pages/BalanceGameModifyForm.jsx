@@ -5,8 +5,10 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import BalanceGameCheckModal from "../components/BalanceGame/BalanceGameCheckModal";
-
+import { useDispatch } from "react-redux";
+import { getCategoryList } from "../store";
 function BalanceGameModifyFormPage() {
+  const dispatch = useDispatch();
   const location = useLocation();
   // const boardSeq = StateParams.get("boardSeq") || "Default Value";
   const boardSeq = location.state.boardSeq || "Default Value";
@@ -14,6 +16,20 @@ function BalanceGameModifyFormPage() {
     return state.categories;
   });
 
+  const [tempCategorie, setTempCategorie] = useState();
+
+  // 로직
+  useEffect(() => {
+    axios
+
+      .get("https://i9b103.p.ssafy.io/api/category/list")
+      .then((response) => {
+        // console.log(...response.data);
+        const fetchedCategories = [...response.data];
+        dispatch(getCategoryList(fetchedCategories));
+        setCategory(fetchedCategories[0].item);
+      });
+  }, [dispatch]);
   const [newCard, setNewCard] = useState("");
 
   const navigate = useNavigate();
@@ -26,19 +42,20 @@ function BalanceGameModifyFormPage() {
 
       .get("https://i9b103.p.ssafy.io/api/board/detail/" + boardSeq)
       .then((response) => {
-        // console.log(response);
-        // setCard(response.data);
         setQuestion(response.data.question);
         setLeftAnswer(response.data.leftAnswer);
         setRightAnswer(response.data.rightAnswer);
         setCategory(response.data.item);
         setNickname(response.data.nickname);
+
+        setTempCategorie(response.data.item);
       })
 
       .catch((error) => {
         console.log(error);
       });
   }, [boardSeq]);
+
   const [question, setQuestion] = useState("");
   const [leftAnswer, setLeftAnswer] = useState("");
   const [rightAnswer, setRightAnswer] = useState("");
@@ -49,13 +66,21 @@ function BalanceGameModifyFormPage() {
       question: question,
       leftAnswer: leftAnswer,
       rightAnswer: rightAnswer,
-      item: category,
+      category: tempCategorie,
     };
 
     setNewCard(updatedCard);
-  }, [question, leftAnswer, rightAnswer, category]);
+  }, [question, leftAnswer, rightAnswer, tempCategorie]);
 
   const handleModifyCard = () => {
+    // const updatedCard = {
+    //     question: question,
+    //     leftAnswer: leftAnswer,
+    //     rightAnswer: rightAnswer,
+    //     category: category,
+    //   };
+
+    //   setNewCard(updatedCard);
     if (leftAnswer.length === 0 || rightAnswer.length === 0) {
       setShowCheckModal({
         title: "글 수정 실패",
@@ -71,6 +96,7 @@ function BalanceGameModifyFormPage() {
         confirmAction: "실패",
       });
     } else {
+      console.log("수정할 카드", newCard);
       axios
         .patch(
           "https://i9b103.p.ssafy.io/api/board/modify/" + boardSeq,
@@ -79,7 +105,7 @@ function BalanceGameModifyFormPage() {
             headers: {
               "Content-Type": "application/json",
             },
-          },
+          }
         )
         .then(() => {
           console.log("수정완료");
@@ -174,9 +200,9 @@ function BalanceGameModifyFormPage() {
             <select
               name="category"
               className={classes.category}
-              defaultValue={category || ""}
+              value={tempCategorie}
               onChange={(e) => {
-                setCategory(e.target.value);
+                setTempCategorie(e.target.value);
               }}
             >
               {categories.map((item, idx) => {

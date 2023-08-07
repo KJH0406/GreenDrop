@@ -11,16 +11,31 @@
   .totalSection {
     font-size: 2rem;
   }
+  
+  .todayCount {
+    font-size: 5rem;
+  }
+
+  .todayCountText {
+    font-size: 2rem;
+  }
 }
 
 @media (max-width: 500px) {
   .totalSection {
     font-size: 1.2rem;
   }
+
+  .todayCount {
+    font-size: 4rem;
+  }
+
+  .todayCountText {
+    font-size: 1.5rem;
+  }
 }
 
 .todayCount {
-  font-size: 5rem;
   color: #1DA154;
 }
 

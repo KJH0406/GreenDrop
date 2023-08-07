@@ -10,36 +10,7 @@ function StatusPage() {
     series: [
       {
         name: "일주일",
-        data: [
-          {
-            x: "07/21",
-            y: 292,
-          },
-          {
-            x: "07/22",
-            y: 777,
-          },
-          {
-            x: "07/23",
-            y: 456,
-          },
-          {
-            x: "07/24",
-            y: 486,
-          },
-          {
-            x: "07/25",
-            y: 666,
-          },
-          {
-            x: "07/26",
-            y: 175,
-          },
-          {
-            x: "07/27",
-            y: 102,
-          },
-        ],
+        data: [],
       },
     ],
     plotOptions: {
@@ -67,7 +38,7 @@ function StatusPage() {
     series: [
       {
         name: "오늘",
-        data: [29, 15, 12, 77, 29, 33, 0, 0, 0, 0, 0],
+        data: [],
       },
     ],
     chart: {
@@ -124,7 +95,7 @@ function StatusPage() {
     let now = date.toISOString().slice(0, 10);
 
     axios
-      .get(`https://i9b103.p.ssafy.io/plastic/list/data/${now}`)
+      .get(`https://i9b103.p.ssafy.io/api/plastic/list/data/${now}`)
       .then((result) => {
         setDailyOptions((dailySeries) => {
           return {
@@ -143,7 +114,7 @@ function StatusPage() {
       });
 
     axios
-      .get("https://i9b103.p.ssafy.io/plastic/list/week")
+      .get("https://i9b103.p.ssafy.io/api/plastic/list/week")
       .then((result) => {
         setWeeklyOptions((weeklySeries) => {
           return {

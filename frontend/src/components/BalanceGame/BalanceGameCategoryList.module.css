@@ -6,3 +6,52 @@
   overflow: auto;
   white-space: nowrap;
 }
+
+.box {
+  display: flex;
+  margin-right: 2%;
+  background-color: #525252;
+  border: none;
+  border-radius: 20px;
+  color: white;
+  width: auto;
+  padding: 9px;
+}
+.box_selected {
+  display: flex;
+  margin-right: 2%;
+  background-color: #0b9a47;
+  border: none;
+  border-radius: 20px;
+  color: white;
+  width: auto;
+  padding: 9px;
+}
+
+.box:hover {
+  display: flex;
+  margin-right: 2%;
+  background-color: #0b9a47;
+  border: none;
+  border-radius: 20px;
+  color: white;
+  width: auto;
+  padding: 9px;
+}
+@media (min-width: 500px) {
+  .box {
+    font-size: 1.3rem;
+  }
+  .box_selected {
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .box {
+    font-size: 0.8rem;
+  }
+  .box_selected {
+    font-size: 0.8rem;
+  }
+}

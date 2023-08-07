@@ -32,10 +32,21 @@
   .result_balance_game_title {
     font-size: 1.8rem;
   }
+  
+  .result_king {
+    height: 30%;
+  }
+
+  .result_tie {
+    height: 30%;
+  }
+
+  .result_nan {
+    height: 30%;
+  }
 
   .result_content {
     font-size: 1.2rem;
-    margin-bottom: 2rem;
   }
 
   .result_percentage {
@@ -74,15 +85,27 @@
   }
 
   .result_answer {
-    height: 250px;
+    height: 300px;
   }
 
   .result_balance_game_title {
     font-size: 1rem;
   }
 
+  .result_king {
+    height: 20%;
+  }
+
+  .result_tie {
+    height: 20%;
+  }
+
+  .result_nan {
+    height: 20%;
+  }
+
   .result_content {
-    font-size: 1rem;
+    font-size: 0.8rem;
   }
 
   .result_percentage {
@@ -111,7 +134,8 @@
   margin: 1.5rem 1.5rem;
   text-align: center;
   color: white;
-  text-shadow: 2px 2px 2px gray;
+  font-weight: bolder;
+  text-shadow: 1px 1px 1cap black;
 }
 
 .collection_image {
@@ -168,6 +192,7 @@
   align-items: center;
   background-color: #ff8484;
   border-radius: 20px;
+  padding-bottom: 1rem;
 }
 
 .result_right {
@@ -178,23 +203,36 @@
   align-items: center;
   background-color: #958cff;
   border-radius: 20px;
+  padding-bottom: 1rem;
 }
 
 .result_king {
   margin: 1rem;
   width: 30%;
-  height: 30%;
   content: url("../assets/winner.png");
+}
+
+.result_tie {
+  margin: 1rem;
+  width: 30%;
+  content: url("../assets/tie.png");
 }
 
 .result_nan {
   margin: 1rem;
   width: 30%;
-  height: 30%;
 }
 
 .result_content {
+  height: 120px;
   width: 90%;
+  display: flex;
+  align-items: center;
+}
+
+.result_content .content {
+  width: 100%;
+  word-wrap: break-word;
   word-break: keep-all;
 }
 
@@ -222,5 +260,5 @@
 
 .balance_game_button button:hover {
   transition: all 0.2s linear;
-  transform:scale(1.1);
+  transform: scale(1.1);
 }

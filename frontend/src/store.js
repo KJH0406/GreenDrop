@@ -1,5 +1,4 @@
 import { configureStore, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
 
 let balanceGameList = createSlice({
   name: "balanceGameList",
@@ -36,6 +35,10 @@ let categories = createSlice({
     getCategoryList(state, action) {
       return action.payload;
     },
+    // retCategoryList(state) {
+    //   console.log(state);
+    //   // return state
+    // },
   },
 });
 
