@@ -279,7 +279,7 @@ input:focus {
   .outer_box {
     font-size: 0.8rem;
     height: 300px;
-    padding: 1.5rem;
+    padding: 1rem;
     margin-bottom: 10%;
   }
   .input_tag {
