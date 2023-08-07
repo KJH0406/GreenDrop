@@ -13,7 +13,7 @@
   width: 90%;
   background-size: cover;
   border-radius: 2rem;
-  margin-bottom: 7.5%;
+  /* margin-bottom: 2%; */
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.6);
 }
 
@@ -41,12 +41,13 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 }
 
 .slider_item_title {
   width: 90%;
   height: 55%;
-  margin: auto;
+
   font-weight: bolder;
   word-wrap: break-word;
   word-break: keep-all;
@@ -54,8 +55,8 @@
 
 .slider_item_subtitle {
   width: 90%;
-  height: 45%;
-  margin: auto;
+  height: 5%;
+  /* margin: auto; */
   word-wrap: break-word;
   word-break: keep-all;
 }
@@ -71,12 +72,12 @@
 
   .slider_item_title {
     font-size: 2rem;
-    margin-bottom: 3%;
+    /* margin-bottom: 3%; */
   }
 
   .slider_item_subtitle {
     font-size: 1.2rem;
-    margin-bottom: 4%;
+    /* margin-bottom: 4%; */
   }
 
   .slider_comment_title {
@@ -96,7 +97,7 @@
 
   .slider_item_title {
     font-size: 1.5rem;
-    margin-bottom: 4%;
+    margin-bottom: 1%;
   }
 
   .slider_item_subtitle {
