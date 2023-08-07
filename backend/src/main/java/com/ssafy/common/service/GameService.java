@@ -40,6 +40,7 @@ public class GameService {
                 .createdDate(nowTime)
                 .leftCount(0)
                 .rightCount(0)
+                .nickname(board.getNickname())
                 .build();
         gameRepository.save(game);
     }
