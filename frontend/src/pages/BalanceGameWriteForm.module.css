@@ -11,15 +11,20 @@
   align-content: center;
 }
 .outer_box {
-  width: 80%;
-  justify-content: center;
   /* align-items: center; */
 
-  margin: 5%;
+  margin: 3%;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   box-shadow: 3px 3px 3px 3px #a8a8a8;
   border-radius: 10px;
+}
+
+.back_img {
+  width: 30px;
+  height: 30px;
+  margin-top: 10px;
 }
 
 .title {
@@ -201,12 +206,14 @@ input:focus {
   border-radius: 10px;
 }
 .regist_btn {
+  margin-top: 2%;
+  padding: 0 2%;
   background-color: #0b9a47;
   /* border: 1px solid #0b9a47; */
   border: none;
   color: white;
   border-radius: 10px;
-  width: 90%;
+  width: fit-content;
   margin-bottom: 3%;
   font-weight: 550;
 }

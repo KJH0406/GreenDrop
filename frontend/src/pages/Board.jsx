@@ -11,6 +11,8 @@ import BalanceGameList from "../components/BalanceGame/BalanceGameList";
 import { getBoardList, getCategoryList, searchBoard } from "../store";
 import classes from "./Board.module.css";
 
+import deviceImg from "../assets/device (1).png";
+
 function BoardPage() {
   const dispatch = useDispatch();
   const page = [{ path: "write", name: "밸런스 게임 게시판 글 작성" }];
@@ -136,7 +138,7 @@ function BoardPage() {
       axios
         .get(
           "https://i9b103.p.ssafy.io/api/board/select?category=" +
-            selectedCategoryItem,
+            selectedCategoryItem
         )
         .then((response) => {
           const fetchedCardList = [...response.data];
@@ -247,30 +249,16 @@ function BoardPage() {
       <div className={classes.outer_box}>
         {/* <h1>Green Balance Game</h1> */}
         <Link className={classes.title} to={"/board"}>
-          <h2>Green &nbsp;</h2>
-          <h2 className={classes.second_word}>Balance Game</h2>
-        </Link>
-        <div className={classes.row} id={classes.search}>
-          <span className={classes.search_area}>
-            <input
-              type="text"
-              className={classes.search_input}
-              onChange={(e) => {
-                setSearchWord(e.target.value);
-              }}
-              onKeyDown={handleOnKey}
-            />
+          <h2 className={classes.second_word}>
             <img
-              src={search}
-              alt="search"
-              className={classes.search_btn}
-              onClick={() => {
-                setIsCategorySelected(categoryArr);
-                handleBoardSearch();
-              }}
-            />
-          </span>
-        </div>
+              className={classes.second_word_img}
+              src={deviceImg}
+              alt=""
+            ></img>
+            밸런스 게임
+          </h2>
+        </Link>
+
         <div className={classes.row}>
           <Link className={classes.regist_btn} to={page[0].path}>
             밸런스 게임 등록하기
