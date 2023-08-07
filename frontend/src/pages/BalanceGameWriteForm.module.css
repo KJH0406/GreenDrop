@@ -234,6 +234,7 @@ input:focus {
     font-size: 1.5rem;
     height: 400px;
     padding: 1.5rem;
+    margin-bottom: 5%;
   }
   .input_tag {
     font-size: large;
@@ -279,6 +280,7 @@ input:focus {
     font-size: 0.8rem;
     height: 300px;
     padding: 1rem;
+    margin-bottom: 10%;
   }
   .input_tag {
     font-size: medium;
