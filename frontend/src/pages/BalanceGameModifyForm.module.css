@@ -12,9 +12,7 @@
   position: relative;
 }
 .outer_box {
-  width: 80%;
   justify-content: center;
-  /* align-items: center; */
 
   margin: 5%;
   display: flex;
@@ -273,6 +271,7 @@ input:focus {
     font-size: 0.8rem;
     height: 300px;
     padding: 1rem;
+    margin-bottom: 10%;
   }
   .input_tag {
     font-size: medium;
