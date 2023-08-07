@@ -48,6 +48,8 @@ public class Game implements Comparable<Game> , Serializable {
     @Column(name = "right_amount")
     private Integer rightCount;
 
+    private String nickname;
+
 
     @Override
     public int compareTo(Game o) {

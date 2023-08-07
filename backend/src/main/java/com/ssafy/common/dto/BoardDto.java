@@ -19,6 +19,7 @@ public class BoardDto {
     private Integer likeCount;
     private Integer isDeleted;
     private LocalDateTime deletedDate;
+    private LocalDateTime createdDate;
     private LocalDateTime lastmodifiedDate;
     private String category;
 
@@ -32,6 +33,7 @@ public class BoardDto {
                 .password(password)
                 .likeCount(likeCount)
                 .isDeleted(isDeleted)
+                .createdDate(createdDate)
                 .deletedDate(deletedDate)
                 .lastModifiedDate(lastmodifiedDate)
                 .build();

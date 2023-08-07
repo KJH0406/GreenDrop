@@ -1,7 +1,6 @@
 package com.ssafy.common.dto.response;
 
 import com.ssafy.common.entity.Board;
-import com.ssafy.common.entity.QCategory;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,11 +21,12 @@ public class BoardResponseDto{
     private String ip;
     private String nickname;
     private Integer likeCount;
+    private LocalDateTime createdDate;
     private LocalDateTime lastModifiedDate;
     private String item;
     private Integer commentCount;
 
-    public BoardResponseDto (Long boardSeq,String question, String leftAnswer, String rightAnswer, String ip, String nickname, Integer likeCount ,LocalDateTime lastModifiedDate,String item,Integer commentCount) {
+    public BoardResponseDto (Long boardSeq,String question, String leftAnswer, String rightAnswer, String ip, String nickname, Integer likeCount ,LocalDateTime createdDate,LocalDateTime lastModifiedDate,String item,Integer commentCount) {
 //        return new BoardResponseDto(question, leftAnswer, rightAnswer, ip, nickname, likeCount,lastModifiedDate,item);
     this.boardSeq = boardSeq;
         this.question = question;
@@ -35,6 +35,7 @@ public class BoardResponseDto{
     this.ip = ip;
     this.nickname = nickname;
     this.likeCount = likeCount;
+    this.createdDate = createdDate;
     this.lastModifiedDate = lastModifiedDate;
     this.item=item;
     this.commentCount = commentCount;
@@ -48,6 +49,7 @@ public class BoardResponseDto{
                 .ip(board.getIp())
                 .nickname(board.getNickname())
                 .likeCount(board.getLikeCount())
+                .createdDate(board.getCreatedDate())
                 .lastModifiedDate(board.getLastModifiedDate())
                 .item(item)
                 .commentCount(cCount)
@@ -60,6 +62,7 @@ public class BoardResponseDto{
                 .question(question)
                 .leftAnswer(leftAnswer)
                 .rightAnswer(rightAnswer)
+                .nickname(nickname)
                 .build();
    }
 }
