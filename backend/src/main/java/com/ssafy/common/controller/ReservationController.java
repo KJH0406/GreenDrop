@@ -1,6 +1,7 @@
 package com.ssafy.common.controller;
 
 import com.ssafy.common.dto.request.ReservationRequestDto;
+import com.ssafy.common.dto.response.ReservationResponseDto;
 import com.ssafy.common.entity.Reservation;
 import com.ssafy.common.service.ReservationService;
 import lombok.RequiredArgsConstructor;
@@ -18,22 +19,22 @@ public class ReservationController {
     private final ReservationService reservationService;
 
     @PostMapping("/regist")
-    public ResponseEntity<Object> bookReservation(
+    public ResponseEntity<Object> createReservation(
             @RequestBody ReservationRequestDto reservationRequestDto
     ) {
-        if (reservationService.registReservation(reservationRequestDto)) return new ResponseEntity<>(true, HttpStatus.OK);
-        else return new ResponseEntity<>(false ,HttpStatus.OK);
+        if (reservationService.registReservation(reservationRequestDto)) return new ResponseEntity<>(HttpStatus.OK);
+        else return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     @GetMapping("/list")
-    public ResponseEntity<List<Reservation>> reservationList() {
-        List<Reservation> reservationList = reservationService.findReservationByDate();
+    public ResponseEntity<List<ReservationResponseDto>> reservationList() {
+        List<ReservationResponseDto> reservationList = reservationService.findReservationByDate();
 
         return new ResponseEntity<>(reservationList, HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{reservationSeq}")
-    public ResponseEntity<Object> cancelReservation(@PathVariable Long reservationSeq){
+    public ResponseEntity<Object> cancelReservation(@PathVariable Long reservationSeq) {
         reservationService.deleteReservation(reservationSeq);
         return new ResponseEntity<>(HttpStatus.OK);
     }

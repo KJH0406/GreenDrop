@@ -1,5 +1,6 @@
 package com.ssafy.common.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
@@ -19,7 +20,7 @@ public class Reservation implements Comparable<Reservation>, Serializable {
     @Column(name = "reservation_seq")
     private Long reservationSeq;
 
-    @JsonIgnore
+    @JsonBackReference(value = "board-reservation")
     @ManyToOne(targetEntity = Board.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "board_seq", referencedColumnName = "board_seq")
     private Board board;
