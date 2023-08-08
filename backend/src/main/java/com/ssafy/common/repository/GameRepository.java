@@ -12,7 +12,7 @@ public interface GameRepository extends JpaRepository<Game, Long>, GameRepositor
 
     List<Game> findByDateOrderByCreatedDateAsc(LocalDate date);
 
-    List<Game> findAll();
+    List<Game> findAllByOrderByCreatedDateDesc();
 
 
 }
