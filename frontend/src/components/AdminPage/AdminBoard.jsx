@@ -21,6 +21,10 @@ const AdminBoard = () => {
   const [selectedPosts, setSelectedPosts] = useState([]); // State for selected post ids
   const tableContainerRef = useRef(null);
 
+  const [categoryList, setCategoryList] = useState([]);
+  const [order, setOrder] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [isIncludeDeleted, setIsIncludeDeleted] = useState(false);
   //너무 길면 생략
   const truncateText = (text, maxLength) => {
     if (text.length > maxLength) {
@@ -39,6 +43,10 @@ const AdminBoard = () => {
       .catch((error) => {
         console.error("Error fetching posts:", error);
       });
+    axios.get(`${api}category/list`).then((response) => {
+      console.log(response.data);
+      setCategoryList([...response.data]);
+    });
   }, []);
 
   // Calculate the index of the first and last posts to be displayed on the current page
@@ -65,6 +73,15 @@ const AdminBoard = () => {
     }
   };
 
+  // 셀렉트 박스에서 선택된 값을 path variable로 사용하여 setposts
+  const getOrderedCategoryList = () => {
+    const pathVariable = {
+      order: order,
+      category: selectedCategory,
+      delete: isIncludeDeleted,
+    };
+  };
+
   const subTheme = () => {
     if (selectedPosts.length === 1) {
       axios.post(`${api}game/regist/${selectedPosts[0]}`).then((response) => {
@@ -79,6 +96,38 @@ const AdminBoard = () => {
     <div className={classes.admin_board_container}>
       <h1>벨런스 게임 게시판 관리 페이지 입니다.</h1>
       <div className={classes.post_button}>
+        <select
+          onChange={(e) => {
+            setOrder(e.target.value);
+          }}
+        >
+          <option>최신순</option>
+          <option>오래된 순</option>
+          <option>좋아요 순</option>
+        </select>
+        <select
+          onChange={(e) => {
+            setSelectedCategory(e.target.value);
+          }}
+        >
+          <option value="">전체</option>
+          {categoryList.map((category, idx) => {
+            return (
+              <option key={idx} value={category.item}>
+                {category.item}
+              </option>
+            );
+          })}
+        </select>
+        <select
+          onChange={(e) => {
+            setIsIncludeDeleted(e.target.value);
+          }}
+        >
+          <option value={false}>삭제 미포함</option>
+          <option value={true}>삭제 포함</option>
+        </select>
+        <button onClick={getOrderedCategoryList}>정렬</button>
         <button onClick={subTheme}>오늘의 주제 등록하기</button>
       </div>
 
@@ -129,7 +178,7 @@ const AdminBoard = () => {
               <button key={index} onClick={() => paginate(index + 1)}>
                 {index + 1}
               </button>
-            )
+            ),
           )}
         </div>
       )}
