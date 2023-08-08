@@ -123,7 +123,9 @@
   display: flex;
   align-content: center;
   align-items: center;
-  /* justify-content: spa; */
+
+  justify-content: left;
+
   width: 100%;
   border: 3px solid #0b9a47;
   border-radius: 10px;
@@ -137,9 +139,11 @@
 .input_tag {
   text-align: left;
   height: 130%;
+  font-size: 12pt;
   border: none;
   background-color: transparent;
   border-radius: 20px;
+  margin-right: 5%;
 }
 .regist_btn {
   display: flex;
@@ -242,6 +246,7 @@
   .comment_outer_box {
     padding-bottom: 10%;
   }
+
   .comment_top {
     margin-bottom: 1rem;
   }

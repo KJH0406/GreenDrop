@@ -43,25 +43,31 @@ function HomePage() {
       });
   }, []);
 
-  let leftPercentage = ((parseInt(balanceGame[3].leftCount) + parseInt(balanceGame[4].rightCount)) !== 0) ?
-    (parseInt(balanceGame[3].leftCount) /
-      (parseInt(balanceGame[3].leftCount) +
-        parseInt(balanceGame[4].rightCount))) *
-    100 : 0;
+  let leftPercentage =
+    parseInt(balanceGame[3].leftCount) + parseInt(balanceGame[4].rightCount) !==
+    0
+      ? (parseInt(balanceGame[3].leftCount) /
+          (parseInt(balanceGame[3].leftCount) +
+            parseInt(balanceGame[4].rightCount))) *
+        100
+      : 0;
 
-  let rightPercentage = ((parseInt(balanceGame[3].leftCount) + parseInt(balanceGame[4].rightCount)) !== 0) ?
-    (parseInt(balanceGame[4].rightCount) /
-      (parseInt(balanceGame[3].leftCount) +
-        parseInt(balanceGame[4].rightCount))) *
-    100 : 0;
+  let rightPercentage =
+    parseInt(balanceGame[3].leftCount) + parseInt(balanceGame[4].rightCount) !==
+    0
+      ? (parseInt(balanceGame[4].rightCount) /
+          (parseInt(balanceGame[3].leftCount) +
+            parseInt(balanceGame[4].rightCount))) *
+        100
+      : 0;
 
   return (
     <div className={classes.homepage}>
       <div className={classes.collection}>
-        <div className={classes.collection_text}>오늘의 플라스틱 컵 수거량</div>
         <div className={classes.collection_image}></div>
       </div>
       <div className={classes.collection_background}></div>
+      <div className={classes.collection_text}>오늘의 플라스틱 컵 수거량</div>
       <TodayCount />
       <div className={classes.down}>
         <div
@@ -83,11 +89,11 @@ function HomePage() {
               {parseInt(balanceGame[3].leftCount) >
               parseInt(balanceGame[4].rightCount) ? (
                 <div className={classes.result_king}></div>
-              ) : (
-                parseInt(balanceGame[3].leftCount) ===
-              parseInt(balanceGame[4].rightCount) ?
+              ) : parseInt(balanceGame[3].leftCount) ===
+                parseInt(balanceGame[4].rightCount) ? (
                 <div className={classes.result_tie}></div>
-                : <div className={classes.result_nan}></div>
+              ) : (
+                <div className={classes.result_nan}></div>
               )}
               <div className={classes.result_content}>
                 <div className={classes.content}>
@@ -105,11 +111,11 @@ function HomePage() {
               {parseInt(balanceGame[3].leftCount) <
               parseInt(balanceGame[4].rightCount) ? (
                 <div className={classes.result_king}></div>
-              ) : (
-                parseInt(balanceGame[3].leftCount) ===
-              parseInt(balanceGame[4].rightCount) ?
+              ) : parseInt(balanceGame[3].leftCount) ===
+                parseInt(balanceGame[4].rightCount) ? (
                 <div className={classes.result_tie}></div>
-                : <div className={classes.result_nan}></div>
+              ) : (
+                <div className={classes.result_nan}></div>
               )}
               <div className={classes.result_content}>
                 <div className={classes.content}>
@@ -127,9 +133,12 @@ function HomePage() {
         </div>
 
         <div className={classes.last_text}>
-          <div>모두에게 질문하고 싶은 밸런스 게임을 적어주세요!</div>
+          <div style={{ marginBottom: "5px" }}>
+            모두에게 질문하고 싶은 밸런스 게임을 적어주세요!
+          </div>
           <div>
-            인기있는 질문은 <strong>내일 수거함 키오스크에 표시</strong>됩니다🌱
+            인기있는 질문은 <strong>내일 /수거함 키오스크에 표시</strong>
+            됩니다🌱
           </div>
         </div>
 

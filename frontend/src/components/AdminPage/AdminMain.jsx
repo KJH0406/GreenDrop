@@ -124,7 +124,7 @@ function AdminMain() {
     <div className={classes.admin_main_container}>
       <div className={classes.today_section}>
         <div className={classes.today_chart}>
-          { todayStatus.rightCount + todayStatus.leftCount !== 0 ?
+          { todayStatus[4].rightCount + todayStatus[3].leftCount !== 0 ?
             <ReactApexChart options={todayOptions.options} series={todayOptions.series} type="donut" width="100%" height="100%"></ReactApexChart>
             : "아직 집계된 정보가 없습니다." }
         </div>
@@ -169,8 +169,8 @@ function AdminMain() {
               </tr>
             </thead>
             <tbody>
-              {dailyOptions.series[0].data.map(({ x, y }) => (
-                <tr>
+              {dailyOptions.series[0].data.map(({ x, y }, idx) => (
+                <tr key={idx}>
                   <td>{x}</td>
                   <td>{y}</td>
                 </tr>
