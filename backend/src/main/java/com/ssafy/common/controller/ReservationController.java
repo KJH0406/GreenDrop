@@ -18,12 +18,11 @@ public class ReservationController {
     private final ReservationService reservationService;
 
     @PostMapping("/regist")
-    public ResponseEntity<Object> registReservation(
+    public ResponseEntity<Object> bookReservation(
             @RequestBody ReservationRequestDto reservationRequestDto
     ) {
-        reservationService.registReservation(reservationRequestDto);
-
-        return new ResponseEntity<>(HttpStatus.OK);
+        if (reservationService.registReservation(reservationRequestDto)) return new ResponseEntity<>(true, HttpStatus.OK);
+        else return new ResponseEntity<>(false ,HttpStatus.OK);
     }
 
     @GetMapping("/list")
