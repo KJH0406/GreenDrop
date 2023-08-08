@@ -19,7 +19,7 @@ public class ReservationService {
     private final ReservationRepository reservationRepository;
     private final BoardRepository boardRepository;
     @Transactional
-    public void registReservation(ReservationRequestDto reservationRequestDto) {
+    public boolean registReservation(ReservationRequestDto reservationRequestDto) {
         Board board = boardRepository.findById(reservationRequestDto.getBoardSeq()).get();
         Reservation reservation = Reservation.builder()
                 .board(board)
@@ -27,7 +27,13 @@ public class ReservationService {
                 .dateTime(reservationRequestDto.getDateTime())
                 .build();
 
+        List<Reservation> reservationList = reservationRepository.findByAfterNow(LocalDateTime.now());
+        for (Reservation res : reservationList) {
+            if (reservationRequestDto.getDateTime().equals(res.getDateTime())) return false;
+        }
+
         reservationRepository.save(reservation);
+        return true;
     }
 
     @Transactional

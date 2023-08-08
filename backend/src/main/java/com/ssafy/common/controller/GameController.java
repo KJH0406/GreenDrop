@@ -23,7 +23,7 @@ public class GameController {
     }
 
     @GetMapping("/list")
-    public ResponseEntity<List> allGameList(){
+    public ResponseEntity<List<Game>> allGameList(){
         List<Game> gameList = gameService.findAllGameList();
 
         return new ResponseEntity<>(gameList, HttpStatus.OK);

@@ -46,8 +46,7 @@ public class GameService {
     }
 
     public List<Game> findAllGameList(){
-        List<Game> gameList = gameRepository.findAll();
-        Collections.sort(gameList, Collections.reverseOrder());
+        List<Game> gameList = gameRepository.findAllByOrderByCreatedDateDesc();
         return gameList;
     }
 
