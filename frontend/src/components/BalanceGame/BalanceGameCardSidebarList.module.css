@@ -11,14 +11,18 @@
   flex-direction: column;
   list-style: none;
   position: absolute;
+  right: 0;
+
   background-color: #d5d5d5;
 }
 .sidbar_item {
   display: flex;
   align-items: center;
+  justify-content: center;
   text-align: left;
-  padding: 1rem;
-  height: 2.5rem;
+  padding: 0.8rem;
+  height: 1rem;
+
   border: 1px solid #eff0f2;
   font-size: 1.3rem;
 }
@@ -37,12 +41,14 @@
 }
 @media (min-width: 500px) {
   .card_sidebar {
-    width: 14rem;
+    top: 0.3rem;
+    width: 5rem;
   }
 }
 
 @media (max-width: 500px) {
   .card_sidebar {
-    width: 10rem;
+    top: 0.5rem;
+    width: 5rem;
   }
 }

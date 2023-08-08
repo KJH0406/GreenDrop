@@ -94,6 +94,8 @@ function BalanceGameWriteFormPage() {
         .then((response) => {
           console.log(response);
           // 요청에 대한 응답을 처리하는 코드를 추가할 수 있습니다.
+          setIsRegistDisable(true);
+
           navigate("/board");
         })
         .catch((error) => {
@@ -230,7 +232,6 @@ function BalanceGameWriteFormPage() {
           className={classes.regist_btn}
           value="밸런스 게임 등록하기"
           onClick={() => {
-            setIsRegistDisable(true);
             handleCardRegistration();
           }}
           disabled={isRegistDisable ? true : false}

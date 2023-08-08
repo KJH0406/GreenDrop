@@ -50,8 +50,6 @@ input:focus {
   margin-top: 5px;
   margin-right: 5px;
   margin-bottom: 3px;
-  width: 5px;
-  height: 18px;
 }
 
 .middle {
@@ -179,6 +177,10 @@ input:focus {
   .middle_item_right {
     border: 3px solid #d5d1ff;
   }
+  .bar_image {
+    width: 30px;
+    height: 30px;
+  }
   .middle_item {
     font-size: 1rem;
   }
@@ -230,7 +232,10 @@ input:focus {
   .middle_item_right {
     border: 1.5px solid #d5d1ff;
   }
-
+  .bar_image {
+    width: 20px;
+    height: 20px;
+  }
   .middle_item {
     font-size: 0.8rem;
   }

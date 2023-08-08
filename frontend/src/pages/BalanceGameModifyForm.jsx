@@ -109,6 +109,8 @@ function BalanceGameModifyFormPage() {
         )
         .then(() => {
           console.log("수정완료");
+          setIsModifyDisable(true);
+
           navigate("/board");
         })
         .catch((error) => {
@@ -234,10 +236,9 @@ function BalanceGameModifyFormPage() {
           className={classes.regist_btn}
           value="밸런스 게임 수정하기"
           onClick={() => {
-            setIsModifyDisable(true);
             handleModifyCard();
           }}
-          disabled={isModifyDisable ? true : false}
+          // disabled={isModifyDisable ? true : false}
         ></input>
         <Link className={classes.regist_btn} to={"/board"}>
           목록으로
