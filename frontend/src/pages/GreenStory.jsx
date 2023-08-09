@@ -17,6 +17,10 @@ function GreenStoryPage() {
           <br /> 유익한 정보를 제공합니다.
         </div>
       </div>
+      <div className={classes.content_bottom}>
+        슬라이드를 옆으로 넘겨보세요! <br />
+        사진을 누르면 기사로 이동합니다
+      </div>
       <div className={classes.slider_section}>
         <Slider />
       </div>
