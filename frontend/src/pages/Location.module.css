@@ -58,7 +58,6 @@
 
 /* 제목 */
 .title {
-  
   font-weight: bolder;
   display: flex;
 }
@@ -82,7 +81,7 @@
   border-radius: 15px;
   box-shadow: 0 5px 6px rgba(0, 0, 0, 0.4);
   /* 추후 수정 예정 */
-  content: url("../assets/bin.jfif");
+  content: url("../assets/bin.jpg");
 }
 
 /* 위치 텍스트 */
