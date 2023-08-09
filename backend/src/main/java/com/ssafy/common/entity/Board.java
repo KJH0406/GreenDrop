@@ -1,5 +1,6 @@
 package com.ssafy.common.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
@@ -54,4 +55,7 @@ public class Board implements Serializable {
     @JsonManagedReference(value = "comment-board")
     @OneToMany(mappedBy = "board" , cascade = CascadeType.ALL)
     private List<Comment> commentList = new ArrayList<>();
+    @JsonManagedReference(value = "board-reservation")
+    @OneToMany(mappedBy = "board")
+    private List<Reservation> reservationList = new ArrayList<>();
 }
