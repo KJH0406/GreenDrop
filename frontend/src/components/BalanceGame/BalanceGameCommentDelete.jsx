@@ -11,6 +11,7 @@ function BalanceGameCommentDelete() {
       <div className={classes.row_password_input}>
         <input
           type="password"
+          inputMode="numeric"
           className={classes.input_tag}
           placeholder="비밀번호를 입력하세요"
         />

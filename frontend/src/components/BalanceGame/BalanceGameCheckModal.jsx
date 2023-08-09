@@ -1,7 +1,5 @@
 import classes from "./BalanceGameCheckModal.module.css";
 
-import closeImg from "../../assets/close_green.png";
-
 import BalanceGameConfirm from "./BalanceGameConfirm";
 import BalanceGamePasswordCheck from "./BalanceGamePasswordCheck";
 function BalanceGameCheckModal(props) {
@@ -21,18 +19,6 @@ function BalanceGameCheckModal(props) {
           e.stopPropagation();
         }}
       >
-        <div className={classes.row_close}>
-          <img
-            className={classes.close_img}
-            src={closeImg}
-            alt=""
-            onClick={() => {
-              props.setShowCheckModal("");
-              props.setConfirmModalData("");
-              props.setConfirm(false);
-            }}
-          />
-        </div>
         <div className={classes.component_container}>
           {!props.confirm ? (
             <BalanceGamePasswordCheck

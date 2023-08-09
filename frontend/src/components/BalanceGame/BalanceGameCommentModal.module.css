@@ -64,7 +64,6 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-
   height: auto;
   margin-bottom: 2%;
 }
@@ -72,7 +71,6 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-
   margin-bottom: 1rem;
 }
 .child_comment_area {
@@ -81,7 +79,6 @@
 }
 .child_comment {
   width: 100%;
-
   display: flex;
   flex-direction: column;
   margin-bottom: 2%;
@@ -114,6 +111,8 @@
 .comment_area_bottom {
   display: flex;
   align-items: flex-start;
+  font-size: smaller;
+  color: gray;
 }
 
 .comment_bottom {
@@ -129,7 +128,7 @@
   width: 100%;
   border: 3px solid #0b9a47;
   border-radius: 10px;
-  height: 2rem;
+  height: 4rem;
 }
 .comment_input {
   border: none;
@@ -143,7 +142,7 @@
   border: none;
   background-color: transparent;
   border-radius: 20px;
-  margin-right: 5%;
+  /* margin-right: 5%; */
 }
 .regist_btn {
   display: flex;
@@ -154,38 +153,35 @@
   color: white;
   border-radius: 10px;
   width: 13%;
-  height: 1.5rem;
+  height: 3rem;
+  margin-right: 10px;
 }
 .user_info_input_area {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-
   height: 1.5rem;
   border: 2px solid #838383;
   border-radius: 10px;
   margin-bottom: 3%;
-  width: 100%;
+  margin-right: 10px;
 }
 .password_input_area {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-
   height: 1.5rem;
   border: 2px solid #838383;
   border-radius: 10px;
   margin-bottom: 3%;
-  width: 100%;
 }
 .user_info_input {
   display: flex;
   justify-content: flex-start;
   align-items: center;
   align-content: center;
-  width: 90%;
   background-color: transparent;
   border: none;
 }
@@ -194,7 +190,6 @@
   justify-content: flex-start;
   align-items: center;
   align-content: center;
-  width: 90%;
   background-color: transparent;
   border: none;
 }
@@ -203,7 +198,6 @@
   justify-content: flex-start;
   align-items: center;
   align-content: center;
-  width: 90%;
   background-color: transparent;
   border: none;
 }
@@ -273,4 +267,12 @@
   .input_tag {
     width: 83%;
   }
+}
+
+.user_info {
+  display: flex;
+}
+
+.input_tag::placeholder {
+  color: #999;
 }

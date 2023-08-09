@@ -10,10 +10,10 @@ function GreenStoryPage() {
           <h2 className={classes.second_word}>스토리</h2>
         </div>
         <div className={classes.content}>
-          그린 스토리는 <strong>환경 문제</strong>환경 문제에 대한 인식을 높이고
+          그린 스토리는 <strong>환경 문제</strong>에 대한 인식을 높이고
           <br />
-          <strong>환경 보호</strong>환경 보호 및{" "}
-          <strong>지구 생태계를 보전</strong>하는데 도움이 되는
+          <strong>환경 보호</strong> 및 <strong>지구 생태계를 보전</strong>
+          하는데 도움이 되는
           <br /> 유익한 정보를 제공합니다.
         </div>
       </div>

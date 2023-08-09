@@ -7,6 +7,9 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import BalanceGameCheckModal from "../components/BalanceGame/BalanceGameCheckModal";
 import { useDispatch } from "react-redux";
 import { getCategoryList } from "../store";
+import backImg from "../assets/back.png";
+import deviceImg from "../assets/device (1).png";
+
 function BalanceGameModifyFormPage() {
   const dispatch = useDispatch();
   const location = useLocation();
@@ -105,7 +108,7 @@ function BalanceGameModifyFormPage() {
             headers: {
               "Content-Type": "application/json",
             },
-          },
+          }
         )
         .then(() => {
           console.log("수정완료");
@@ -150,10 +153,19 @@ function BalanceGameModifyFormPage() {
         <></>
       )}
 
-      <Link className={classes.title} to={"/board"}>
-        <h2 className={classes.first_word}>Green &nbsp;</h2>
-        <h2 className={classes.second_word}>Balance Game</h2>
-      </Link>
+      <div className={classes.top_title_box}>
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <Link to={"/board"}>
+            <img className={classes.back_img} src={backImg} alt="" />
+          </Link>
+        </div>
+        <h2 className={classes.second_word}>
+          <img className={classes.second_word_img} src={deviceImg} alt=""></img>
+          밸런스 게임 수정
+        </h2>
+
+        <div style={{ width: "20px" }}></div>
+      </div>
       <div className={classes.outer_box}>
         <div className={classes.top}>
           <div className={`${classes.top_item} `}>
@@ -222,27 +234,15 @@ function BalanceGameModifyFormPage() {
       </div>
       {/* 닉네임, 비밀번호 입력받을 부분 */}
       <div className={classes.info_input_area}>
-        <div className={classes.info_input}>
-          <input
-            className={classes.input_tag}
-            type="text"
-            value={nickname}
-            disabled
-          />
-        </div>
-
         <input
           type="button"
           className={classes.regist_btn}
-          value="밸런스 게임 수정하기"
+          value="수정하기"
           onClick={() => {
             handleModifyCard();
           }}
           // disabled={isModifyDisable ? true : false}
         ></input>
-        <Link className={classes.regist_btn} to={"/board"}>
-          목록으로
-        </Link>
       </div>
     </div>
   );

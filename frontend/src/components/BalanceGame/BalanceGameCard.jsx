@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
-import commentImg from "../../assets/commentpng.png";
-import emptyHeartImg from "../../assets/empty_heartpng.png";
+import commentImg from "../../assets/commentpng3.png";
+import emptyHeartImg from "../../assets/full_heartpng.png";
 import menuImg from "../../assets/list_menu.png";
 import { toggleIsOpenComment } from "../../store";
 import classes from "./BalanceGameCard.module.css";
@@ -48,7 +48,7 @@ function BalanceGameCard({
     <div className={classes.outer_box}>
       <div className={classes.top}>
         <div className={`${classes.top_item_left} ${classes.title}`}>
-          {card.nickname}
+          {card.question}
         </div>
 
         <img
@@ -73,9 +73,9 @@ function BalanceGameCard({
           )}
         </div>
       </div>
-      <div className={classes.top}>
+      <div style={{ marginTop: "10px" }} className={classes.top}>
         <div className={`${classes.top_item_left} ${classes.subject}`}>
-          {card.question}
+          작성자 : {card.nickname}
         </div>
         <div className={classes.top_item_right}>
           {timePassed(card.createdDate)}
@@ -120,7 +120,7 @@ function BalanceGameCard({
           {/* 댓글 수 출력 어떻게 할 지 고민 */}
           <span className={classes.bottom_comment}>{card.commentCount}</span>
         </div>
-        <div className={classes.bottom_right}>{card.item}</div>
+        <div className={classes.bottom_right}>#{card.item}</div>
       </div>
     </div>
   );

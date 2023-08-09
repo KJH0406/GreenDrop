@@ -137,7 +137,7 @@ function HomePage() {
             모두에게 질문하고 싶은 밸런스 게임을 적어주세요!
           </div>
           <div>
-            인기있는 질문은 <strong>내일 /수거함 키오스크에 표시</strong>
+            인기있는 질문은 <strong>내일 수거함 키오스크에 표시</strong>
             됩니다🌱
           </div>
         </div>

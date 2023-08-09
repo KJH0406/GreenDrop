@@ -106,11 +106,13 @@
   border-collapse: collapse;
 }
 
-.chart_table thead th, td {
+.chart_table thead th,
+td {
   padding: 20px 10px;
 }
 
-.chart_table tbody th, td {
+.chart_table tbody th,
+td {
   padding: 0px 10px;
   border-top: 1px solid #444444;
 }

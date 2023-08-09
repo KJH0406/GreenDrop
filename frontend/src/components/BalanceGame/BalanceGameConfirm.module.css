@@ -6,14 +6,13 @@
   font-weight: bolder;
 }
 .confirm_btn {
-  background-color: #0b9a47;
+  background-color: green;
   border: none;
   color: white;
   border-radius: 10px;
-  width: 15%;
-  height: 10%;
-  margin-bottom: 3%;
-  font-weight: 550;
+  width: 20%;
+  height: 20%;
+  font-weight: bold;
 }
 
 @media (max-width: 500px) {
