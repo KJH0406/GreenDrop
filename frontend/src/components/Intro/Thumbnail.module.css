@@ -1,4 +1,5 @@
 .thumbnail_box {
+  font-family: sans-serif !important;
   background-image: url("../../assets/thumbnail.jpg");
   background-size: cover;
 }

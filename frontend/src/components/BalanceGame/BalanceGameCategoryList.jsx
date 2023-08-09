@@ -18,7 +18,7 @@ function BalanceGameCategoryList(props) {
             props.likeList(!props.isLikeSelected);
           }}
         >
-          좋아요
+          좋아요 순
         </div>
         {props.categories.map((category, idx) => {
           return (

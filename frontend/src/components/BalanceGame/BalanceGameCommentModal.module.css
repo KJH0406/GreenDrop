@@ -64,7 +64,6 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-
   height: auto;
   margin-bottom: 2%;
 }
@@ -72,7 +71,6 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-
   margin-bottom: 1rem;
 }
 .child_comment_area {
@@ -81,7 +79,6 @@
 }
 .child_comment {
   width: 100%;
-
   display: flex;
   flex-direction: column;
   margin-bottom: 2%;
@@ -114,6 +111,8 @@
 .comment_area_bottom {
   display: flex;
   align-items: flex-start;
+  font-size: smaller;
+  color: gray;
 }
 
 .comment_bottom {
@@ -123,12 +122,13 @@
   display: flex;
   align-content: center;
   align-items: center;
+
   justify-content: left;
 
   width: 100%;
   border: 3px solid #0b9a47;
   border-radius: 10px;
-  height: 2rem;
+  height: 4rem;
 }
 .comment_input {
   border: none;
@@ -142,7 +142,7 @@
   border: none;
   background-color: transparent;
   border-radius: 20px;
-  margin-right: 5%;
+  /* margin-right: 5%; */
 }
 .regist_btn {
   display: flex;
@@ -152,39 +152,36 @@
   border: none;
   color: white;
   border-radius: 10px;
-  width: auto;
-  height: 1.5rem;
+  width: 13%;
+  height: 3rem;
+  margin-right: 10px;
 }
 .user_info_input_area {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-
   height: 1.5rem;
   border: 2px solid #838383;
   border-radius: 10px;
   margin-bottom: 3%;
-  width: 100%;
+  margin-right: 10px;
 }
 .password_input_area {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-
   height: 1.5rem;
   border: 2px solid #838383;
   border-radius: 10px;
   margin-bottom: 3%;
-  width: 100%;
 }
 .user_info_input {
   display: flex;
   justify-content: flex-start;
   align-items: center;
   align-content: center;
-  width: 90%;
   background-color: transparent;
   border: none;
 }
@@ -193,7 +190,6 @@
   justify-content: flex-start;
   align-items: center;
   align-content: center;
-  width: 90%;
   background-color: transparent;
   border: none;
 }
@@ -202,7 +198,6 @@
   justify-content: flex-start;
   align-items: center;
   align-content: center;
-  width: 90%;
   background-color: transparent;
   border: none;
 }
@@ -214,7 +209,7 @@
 }
 @media (min-width: 500px) {
   .input_tag {
-    width: 90%;
+    width: 85%;
   }
   .comment_top {
     margin-bottom: 1rem;
@@ -242,6 +237,9 @@
 }
 
 @media (max-width: 500px) {
+  .comment_outer_box {
+    padding-bottom: 10%;
+  }
 
   .comment_top {
     margin-bottom: 1rem;
@@ -267,6 +265,14 @@
     height: 20%;
   }
   .input_tag {
-    width: 80%;
+    width: 83%;
   }
+}
+
+.user_info {
+  display: flex;
+}
+
+.input_tag::placeholder {
+  color: #999;
 }

@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { getCategoryList } from "../store";
 import backImg from "../assets/back.png";
+import deviceImg from "../assets/device (1).png";
 
 function BalanceGameWriteFormPage() {
   const [question, setQuestion] = useState("");
@@ -61,7 +62,7 @@ function BalanceGameWriteFormPage() {
       });
       setConfirm(true);
       setConfirmModalData({
-        confirmTitle: "밸런스 게임을 작성해 주세요",
+        confirmTitle: "밸런스 게임을 작성해 주세요!",
         confirmCategory: "board",
         confirmType: "regist",
         confirmAction: "실패",
@@ -75,7 +76,7 @@ function BalanceGameWriteFormPage() {
       });
       setConfirm(true);
       setConfirmModalData({
-        confirmTitle: "비밀번호를 작성해 주세요",
+        confirmTitle: "비밀번호를 작성해 주세요!",
         confirmCategory: "board",
         confirmType: "regist",
         confirmAction: "실패",
@@ -89,11 +90,13 @@ function BalanceGameWriteFormPage() {
             headers: {
               "Content-Type": "application/json",
             },
-          },
+          }
         )
         .then((response) => {
           console.log(response);
           // 요청에 대한 응답을 처리하는 코드를 추가할 수 있습니다.
+          setIsRegistDisable(true);
+
           navigate("/board");
         })
         .catch((error) => {
@@ -128,28 +131,37 @@ function BalanceGameWriteFormPage() {
           confirmType={confirmModalData.confirmType}
           confirmAction={confirmModalData.confirmAction}
           setConfirmModalData={setConfirmModalData}
+          overlay="full"
         />
       ) : (
         <></>
       )}
+      <div className={classes.top_title_box}>
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <Link to={"/board"}>
+            <img className={classes.back_img} src={backImg} alt="" />
+          </Link>
+        </div>
+        <h2 className={classes.second_word}>
+          <img className={classes.second_word_img} src={deviceImg} alt=""></img>
+          밸런스 게임 등록
+        </h2>
 
-      {/* <Link className={classes.title} to={"/board"}>
-        <h2 className={classes.first_word}>Green &nbsp;</h2>
-        <h2 className={classes.second_word}>Balance Game</h2>
-      </Link> */}
-      <div style={{ display: "flex" }}>
-        <Link to={"/board"}>
-          <img className={classes.back_img} src={backImg} alt="" />
-        </Link>
+        <div style={{ width: "20px" }}></div>
       </div>
 
       <div className={classes.outer_box}>
         <div className={classes.top}>
           <div className={`${classes.top_item} `}>
             <input
+              style={{
+                border: "1px solid lightgrey",
+                padding: "3%",
+                marginBottom: "3%",
+              }}
               className={`${classes.input_tag} ${classes.subject}`}
               type="text"
-              placeholder="상황 설명*(필수)(최대 30자)"
+              placeholder="상황 설명 (필수) (최대 20자)"
               onChange={(e) => {
                 setQuestion(e.target.value);
                 console.log(question);
@@ -161,7 +173,7 @@ function BalanceGameWriteFormPage() {
           <div className={`${classes.middle_item} ${classes.middle_item_left}`}>
             <textarea
               className={classes.text_input}
-              placeholder="선택지1(필수)(최대50자)"
+              placeholder="선택지1(필수)&#13;&#10;(최대40자)"
               onChange={(e) => {
                 setLeftAnswer(e.target.value);
                 console.log(leftAnswer);
@@ -173,7 +185,7 @@ function BalanceGameWriteFormPage() {
           >
             <textarea
               className={classes.text_input}
-              placeholder="선택지2(필수)(최대50자)"
+              placeholder="선택지2(필수)&#13;&#10;(최대40자)"
               onChange={(e) => {
                 setRightAnswer(e.target.value);
                 console.log(rightAnswer);
@@ -219,7 +231,8 @@ function BalanceGameWriteFormPage() {
           <input
             className={classes.input_tag}
             type="password"
-            placeholder="비밀번호를 입력하세요 (최대 10자)"
+            inputMode="numeric"
+            placeholder="*비밀번호를 입력하세요 (최대 10자)"
             onChange={(e) => {
               setPassword(e.target.value);
             }}
@@ -228,9 +241,8 @@ function BalanceGameWriteFormPage() {
         <input
           type="button"
           className={classes.regist_btn}
-          value="밸런스 게임 등록하기"
+          value="등록하기"
           onClick={() => {
-            setIsRegistDisable(true);
             handleCardRegistration();
           }}
           disabled={isRegistDisable ? true : false}

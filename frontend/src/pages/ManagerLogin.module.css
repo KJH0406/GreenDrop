@@ -1,5 +1,7 @@
 /* ManagerLogin.module.css */
 .login_container {
+  font-family: sans-serif !important;
+
   height: 100vh;
   display: flex;
   align-items: center;
