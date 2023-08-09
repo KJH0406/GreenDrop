@@ -2,7 +2,7 @@
   font-family: "yg-jalnan";
   src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.2/JalnanOTF00.woff")
     format("woff");
-  font-weight: lighter;
+  font-weight: normal;
   font-style: normal;
 }
 
@@ -175,3 +175,37 @@
   border-radius: 0 2rem 2rem 0;
   background-color: #fe2f73;
 }
+
+/* .bottom_banner {
+  width: 100%;
+  height: auto;
+  background-color: rgb(255, 255, 255, 0.9);
+  color: black;
+  font-size: 2rem;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  position: absolute;
+  bottom: 0;
+}
+
+.bottom_banner_box {
+  white-space: nowrap;
+  will-change: transform;
+  animation: marquee 20s linear infinite;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(-120%);
+  }
+}
+
+@media (hover: hover) and (min-width: 700px) {
+  .animated-title .footer {
+    -webkit-transform: translateY(calc(100% - 8rem));
+    transform: translateY(calc(100% - 8rem));
+  }
+} */

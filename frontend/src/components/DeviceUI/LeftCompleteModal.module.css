@@ -1,14 +1,14 @@
 .device_modal_container {
   z-index: 1;
   position: absolute;
-  left: 5%;
-  top: 7%;
+  top: 20%;
+  left: 7.5%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 30%;
-  height: 70%;
-  padding: 5%;
+  width: 29%;
+  height: 45%;
+  padding: 3%;
   background-color: rgb(255, 255, 255, 0.95);
   border-radius: 30px;
   animation: mount 0.7s ease-in-out;
@@ -29,9 +29,9 @@
 }
 
 .device_modal_title {
-  margin-top: 4rem;
-  margin-bottom: 5rem;
-  font-size: 3.3rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  font-size: 2.8rem;
   color: black;
 }
 .device_modal_content {
