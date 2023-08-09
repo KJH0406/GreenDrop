@@ -5,6 +5,7 @@
 }
 
 .header {
+  font-family: sans-serif !important;
   position: relative;
   height: 3rem;
   display: flex;

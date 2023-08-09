@@ -5,7 +5,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 function BalanceGamePasswordCheck(props) {
   const [password, setPassword] = useState("");
-  const [message, setMessage] = useState("비밀번호를 입력해주세요");
+  const [message, setMessage] = useState("");
   const navigate = useNavigate();
 
   const handleBoardPasswordCheckModify = () => {
@@ -20,7 +20,7 @@ function BalanceGamePasswordCheck(props) {
           headers: {
             "Content-Type": `application/json`,
           },
-        },
+        }
       )
       .then((response) => {
         console.log(response);
@@ -61,7 +61,7 @@ function BalanceGamePasswordCheck(props) {
           headers: {
             "Content-Type": `application/json`,
           },
-        },
+        }
       )
       .then((response) => {
         console.log(response);
@@ -99,7 +99,7 @@ function BalanceGamePasswordCheck(props) {
           headers: {
             "Content-Type": `application/json`,
           },
-        },
+        }
       )
       .then((response) => {
         console.log(response);
@@ -134,6 +134,7 @@ function BalanceGamePasswordCheck(props) {
       <div className={classes.row_password_input}>
         <input
           type="password"
+          inputMode="numeric"
           className={classes.input_tag}
           placeholder="비밀번호를 입력하세요"
           onChange={(e) => {
@@ -154,6 +155,7 @@ function BalanceGamePasswordCheck(props) {
       {/* 테스트는 나중에.. */}
       {props.category === "board" && props.type === "delete" ? (
         <button
+          style={{ backgroundColor: "red" }}
           className={classes.confirm_btn}
           onClick={() => {
             // 게시글 삭제 함수
@@ -174,6 +176,7 @@ function BalanceGamePasswordCheck(props) {
         </button>
       ) : props.category === "comment" && props.type === "delete" ? (
         <button
+          style={{ backgroundColor: "red" }}
           className={classes.confirm_btn}
           onClick={() => {
             // 댓글 삭제 함수

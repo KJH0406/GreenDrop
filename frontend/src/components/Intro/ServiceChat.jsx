@@ -45,7 +45,7 @@ function ServiceChat() {
               className={classes.service_chat_item}
               style={{ borderBottomLeftRadius: " 0px" }}
             >
-              <span style={{ fontWeight: "bold" }}>분리수거 가이드</span>
+              <span style={{ fontWeight: "bold" }}>분리배출 가이드</span>
               <span>
                 를 제공하여 <br />
                 올바른 분리수거 배출을 돕습니다

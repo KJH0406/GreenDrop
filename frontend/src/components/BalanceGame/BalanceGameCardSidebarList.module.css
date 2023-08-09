@@ -12,8 +12,6 @@
   list-style: none;
   position: absolute;
   right: 0;
-
-  background-color: #d5d5d5;
 }
 .sidbar_item {
   display: flex;
@@ -22,9 +20,10 @@
   text-align: left;
   padding: 0.8rem;
   height: 1rem;
-
+  background-color: lightgray;
+  border-radius: 10px;
   border: 1px solid #eff0f2;
-  font-size: 1.3rem;
+  font-size: 0.8rem;
 }
 .sidbar_item:hover {
   background-color: #0b9a47;
@@ -49,6 +48,6 @@
 @media (max-width: 500px) {
   .card_sidebar {
     top: 0.5rem;
-    width: 5rem;
+    width: 4rem;
   }
 }

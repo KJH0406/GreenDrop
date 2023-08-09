@@ -119,7 +119,7 @@ function BalanceGameCommentModal({
             headers: {
               "Content-Type": `application/json`,
             },
-          },
+          }
         )
         .then(() => {
           setCommentUpdate(commentUpdate + 1);
@@ -185,7 +185,7 @@ function BalanceGameCommentModal({
             headers: {
               "Content-Type": `application/json`,
             },
-          },
+          }
         )
         .then(() => {
           setCommentUpdate(commentUpdate + 1);
@@ -335,30 +335,32 @@ function BalanceGameCommentModal({
                   e.stopPropagation();
                 }}
               >
-                <div className={classes.user_info_input_area}>
-                  <input
-                    type="text"
-                    className={classes.password_input}
-                    placeholder="닉네임을 입력하세요."
-                    value={inputNickname}
-                    onChange={(e) => {
-                      // setNickname(e.target.value);
-                      setInputNickname(e.target.value);
-                      setNickname(e.target.value);
-                    }}
-                  />
-                </div>
-                <div className={classes.password_input_area}>
-                  <input
-                    type="password"
-                    className={classes.password_input}
-                    placeholder="비밀번호를 입력하세요."
-                    value={inputPassword}
-                    onChange={(e) => {
-                      setInputPassword(e.target.value);
-                      setPassword(e.target.value);
-                    }}
-                  />
+                <div className={classes.user_info}>
+                  <div className={classes.user_info_input_area}>
+                    <input
+                      type="text"
+                      className={classes.password_input}
+                      placeholder="닉네임을 입력하세요."
+                      value={inputNickname}
+                      onChange={(e) => {
+                        setInputNickname(e.target.value);
+                        setNickname(e.target.value);
+                      }}
+                    />
+                  </div>
+                  <div className={classes.password_input_area}>
+                    <input
+                      type="password"
+                      inputMode="numeric"
+                      className={classes.password_input}
+                      placeholder="비밀번호를 입력하세요."
+                      value={inputPassword}
+                      onChange={(e) => {
+                        setInputPassword(e.target.value);
+                        setPassword(e.target.value);
+                      }}
+                    />
+                  </div>
                 </div>
                 <div className={classes.comment_input_area}>
                   <input
@@ -387,30 +389,34 @@ function BalanceGameCommentModal({
               </div>
             ) : (
               <div className={classes.comment_bottom}>
-                <div className={classes.user_info_input_area}>
-                  <input
-                    type="text"
-                    className={classes.password_input}
-                    placeholder="닉네임을 입력하세요."
-                    value={inputNickname}
-                    onChange={(e) => {
-                      setInputNickname(e.target.value);
-                      setNickname(e.target.value);
-                    }}
-                  />
+                <div className={classes.user_info}>
+                  <div className={classes.user_info_input_area}>
+                    <input
+                      type="text"
+                      className={classes.password_input}
+                      placeholder="닉네임을 입력하세요."
+                      value={inputNickname}
+                      onChange={(e) => {
+                        setInputNickname(e.target.value);
+                        setNickname(e.target.value);
+                      }}
+                    />
+                  </div>
+                  <div className={classes.password_input_area}>
+                    <input
+                      type="password"
+                      inputMode="numeric"
+                      className={classes.password_input}
+                      placeholder="비밀번호를 입력하세요."
+                      value={inputPassword}
+                      onChange={(e) => {
+                        setInputPassword(e.target.value);
+                        setPassword(e.target.value);
+                      }}
+                    />
+                  </div>
                 </div>
-                <div className={classes.password_input_area}>
-                  <input
-                    type="password"
-                    className={classes.password_input}
-                    placeholder="비밀번호를 입력하세요."
-                    value={inputPassword}
-                    onChange={(e) => {
-                      setInputPassword(e.target.value);
-                      setPassword(e.target.value);
-                    }}
-                  />
-                </div>
+
                 <div className={classes.comment_input_area}>
                   <input
                     type="text"
