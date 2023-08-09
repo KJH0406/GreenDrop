@@ -57,8 +57,9 @@ input:focus {
 .input_tag {
   width: 90%;
   text-align: center;
-
-  border: none;
+  border: 1px solid lightgrey;
+  padding: 1%;
+  margin-bottom: 3%;
   background-color: #f8f8f8;
   border-radius: 20px;
 }

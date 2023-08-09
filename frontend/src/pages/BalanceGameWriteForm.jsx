@@ -161,6 +161,7 @@ function BalanceGameWriteFormPage() {
               }}
               className={`${classes.input_tag} ${classes.subject}`}
               type="text"
+              maxlength="20"
               placeholder="상황 설명 (필수) (최대 20자)"
               onChange={(e) => {
                 setQuestion(e.target.value);
@@ -173,6 +174,7 @@ function BalanceGameWriteFormPage() {
           <div className={`${classes.middle_item} ${classes.middle_item_left}`}>
             <textarea
               className={classes.text_input}
+              maxlength="40"
               placeholder="선택지1(필수)&#13;&#10;(최대40자)"
               onChange={(e) => {
                 setLeftAnswer(e.target.value);
@@ -185,6 +187,7 @@ function BalanceGameWriteFormPage() {
           >
             <textarea
               className={classes.text_input}
+              maxlength="40"
               placeholder="선택지2(필수)&#13;&#10;(최대40자)"
               onChange={(e) => {
                 setRightAnswer(e.target.value);
@@ -221,6 +224,7 @@ function BalanceGameWriteFormPage() {
           <input
             className={classes.input_tag}
             type="text"
+            maxlength="10"
             placeholder="닉네임을 입력하세요 (최대 10자)"
             onChange={(e) => {
               setNickname(e.target.value);
@@ -231,6 +235,7 @@ function BalanceGameWriteFormPage() {
           <input
             className={classes.input_tag}
             type="password"
+            maxlength="10"
             inputMode="numeric"
             placeholder="*비밀번호를 입력하세요 (최대 10자)"
             onChange={(e) => {

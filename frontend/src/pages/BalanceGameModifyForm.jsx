@@ -172,7 +172,8 @@ function BalanceGameModifyFormPage() {
             <input
               className={`${classes.input_tag} ${classes.subject}`}
               type="text"
-              placeholer="상황 설명*(필수)(최대 30자)"
+              maxLength="20"
+              placeholder="상황 설명 (필수) (최대 20자)"
               value={question || ""}
               onChange={(e) => {
                 setQuestion(e.target.value);
@@ -185,7 +186,8 @@ function BalanceGameModifyFormPage() {
           <div className={`${classes.middle_item} ${classes.middle_item_left}`}>
             <textarea
               className={classes.text_input}
-              placeholder="선택지1(필수)(최대50자)"
+              maxLength="40"
+              placeholder="선택지1 (필수) (최대40자)"
               value={leftAnswer || ""}
               onChange={(e) => {
                 setLeftAnswer(e.target.value);
@@ -199,7 +201,8 @@ function BalanceGameModifyFormPage() {
           >
             <textarea
               className={classes.text_input}
-              placeholder="선택지2(필수)(최대50자)"
+              maxLength="40"
+              placeholder="선택지2 (필수) (최대40자)"
               value={rightAnswer || ""}
               onChange={(e) => {
                 setRightAnswer(e.target.value);
