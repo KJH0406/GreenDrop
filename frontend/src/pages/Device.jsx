@@ -252,20 +252,16 @@ function DevicePage() {
     <div className={classes.device_container}>
       {/* 오디오 관련 버튼 향후 재구성 */}
       {/* <input type="button" onClick={() => audio.play()} value="PLAY"></input> */}
-
       {LeftConfirm && <LeftConfirmModal />}
       {LeftComplete && <LeftCompleteModal />}
       {LeftOver && <LeftOverWeightModal />}
       {LeftLight && <LeftLightWeightModal />}
-
       {RightConfirm && <RightConfirmModal />}
       {RightComplete && <RightCompleteModal />}
       {RightOver && <RightOverWeightModal />}
       {RightLight && <RightLightWeightModal />}
-
       {/* CSS 작업용 */}
       {/* {<LeftConfirmModal />} */}
-      {/* {<LeftCompleteModal />} */}
       {/* {<LeftOverWeightModal />} */}
       {/* <LeftLightWeightModal /> */}
       {/* {<RightConfirmModal />} */}
@@ -273,7 +269,6 @@ function DevicePage() {
       {/* {<RightOverWeightModal />} */}
       {/* <RightLightWeightModal /> */}
       {/* */}
-
       <img className={classes.decorate_left_img} src={decorateImg_1} alt="" />
       <img className={classes.decorate_right_img} src={decorateImg_2} alt="" />
       <img className={classes.verse_img} src={verseImg} alt="" />
@@ -316,6 +311,15 @@ function DevicePage() {
           <span className={classes.result_num}>{rightCount}개</span>
         </div>
       </div>
+      {/* <div className={classes.bottom_banner}>
+        <div className={classes.bottom_banner_box}>
+          <div className={classes.bottom_banner_content}>
+            오늘의 밸런스 게임 주제가 흥미로우셨나요? 아래 QR코드를 통해서 직접
+            주제를 등록해보세요! 인기있는 주제는 내일 수거함 키오스크 화면에
+            표시됩니다!
+          </div>
+        </div>
+      </div> */}
     </div>
   );
 }

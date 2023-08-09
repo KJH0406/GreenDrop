@@ -1,15 +1,15 @@
 .device_modal_container {
-  border-left: 50px solid greenyellow;
+  /* border-left: 50px solid greenyellow; */
   z-index: 1;
   position: absolute;
-  top: 7%;
-  left: 3%;
+  top: 20%;
+  left: 7.5%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 30%;
-  height: 70%;
-  padding: 5%;
+  width: 29%;
+  height: 45%;
+  padding: 3%;
   background-color: rgb(255, 255, 255, 0.95);
   border-radius: 30px;
   animation: mount 0.7s ease-in-out;
@@ -38,12 +38,12 @@
 }
 
 .device_modal_title {
-  margin-top: 4rem;
-  margin-bottom: 6rem;
-  font-size: 3rem;
+  margin-top: 2rem;
+  margin-bottom: 4rem;
+  font-size: 2.8rem;
   color: black;
 }
 .device_modal_content {
-  font-size: 2.5rem;
+  font-size: 2rem;
   color: red;
 }
