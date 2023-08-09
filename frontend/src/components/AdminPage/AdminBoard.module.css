@@ -10,11 +10,22 @@
   overflow-x: auto; /* Enable horizontal scrolling */
 }
 
-.post_button {
+.reservation_button {
   display: flex;
   justify-content: flex-end;
   margin-bottom: 10px;
 }
+
+.post_button {
+  margin-bottom: 10px;
+}
+
+.post_button_element {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+}
+
 
 /* Table styles */
 .admin_board_table {
