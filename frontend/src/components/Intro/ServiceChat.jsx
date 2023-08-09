@@ -8,7 +8,7 @@ function ServiceChat() {
       </div>
       <div className={classes.service_chat_container}>
         <div className={classes.service_chat_title}>
-          <div>우리의 서비스는</div>
+          <div>우리 서비스는</div>
           <div>
             <span style={{ color: "green" }}>분리수거 동참 캠페인</span>
             <span>을 통해</span>
