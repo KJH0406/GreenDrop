@@ -26,10 +26,11 @@
 
 .first_word {
   margin-right: 5px;
+  color: green;
 }
 
 .second_word {
-  color: green;
+  /* color: green; */
 }
 
 .hamburger_img {
