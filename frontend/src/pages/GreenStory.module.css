@@ -1,5 +1,6 @@
 .regist_box {
   display: flex;
+  height: 100vh;
   flex-direction: column;
   padding-left: 1.5rem;
   padding-right: 1.5rem;
@@ -54,4 +55,9 @@
   background-color: white;
   border-radius: 30px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.content_bottom {
+  margin-bottom: 10px;
+  line-height: 1.3rem;
 }
