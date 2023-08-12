@@ -13,4 +13,10 @@ public interface BoardRepositoryCustom {
     List<Long> searchCategory(Long categorySeq);
     List<BoardResponseDto> newBoardList();
     List<BoardResponseDto> orderByLikeList();
+    List<BoardResponseDto> newBoardDeleteViewList();
+
+    List<BoardResponseDto> oldBoardList(boolean deleteView);
+
+    List<BoardResponseDto> orderByLikeDeleteViewList();
+
 }
