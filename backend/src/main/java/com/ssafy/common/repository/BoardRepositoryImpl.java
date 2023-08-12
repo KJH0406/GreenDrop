@@ -5,6 +5,7 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ssafy.common.dto.response.BoardResponseDto;
 import com.ssafy.common.entity.Board;
+import com.ssafy.common.entity.BoardCategory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.stereotype.Repository;
@@ -114,4 +115,65 @@ public class BoardRepositoryImpl extends QuerydslRepositorySupport implements Bo
     private BooleanExpression containKeyword(String keyword) {
         return board.question.containsIgnoreCase(keyword);
     }
+
+    //(관리자용)삭제된 글도 확인
+    @Override
+    public List<BoardResponseDto> newBoardDeleteViewList() {
+        List<BoardResponseDto> query = queryFactory
+                .select(Projections.fields(BoardResponseDto.class,
+                        board.boardSeq,
+                        board.question,board.leftAnswer,board.rightAnswer, board.ip,board.likeCount
+                        ,board.nickname,board.createdDate,category.item))
+                .from(board)
+                .leftJoin(board.boardCategories,boardCategory)
+                .leftJoin(boardCategory.category,category)
+                .orderBy(board.boardSeq.desc()).fetch();
+
+        return query;
+    }
+
+    @Override
+    public List<BoardResponseDto> oldBoardList(boolean deleteView) {
+        List<BoardResponseDto> query;
+        if(!deleteView) {
+            query = queryFactory
+                    .select(Projections.fields(BoardResponseDto.class,
+                            board.boardSeq,
+                            board.question, board.leftAnswer, board.rightAnswer, board.ip, board.likeCount
+                            , board.nickname, board.createdDate, category.item))
+                    .from(board)
+                    .leftJoin(board.boardCategories, boardCategory)
+                    .leftJoin(boardCategory.category, category)
+                    .where(board.isDeleted.eq(0))
+                    .orderBy(board.boardSeq.asc()).fetch();
+        }
+        else{
+            query = queryFactory
+                    .select(Projections.fields(BoardResponseDto.class,
+                            board.boardSeq,
+                            board.question, board.leftAnswer, board.rightAnswer, board.ip, board.likeCount
+                            , board.nickname, board.createdDate, category.item))
+                    .from(board)
+                    .leftJoin(board.boardCategories, boardCategory)
+                    .leftJoin(boardCategory.category, category)
+                    .orderBy(board.boardSeq.asc()).fetch();
+        }
+        return query;
+    }
+
+    @Override
+    public List<BoardResponseDto> orderByLikeDeleteViewList() {
+        List<BoardResponseDto> query = queryFactory
+                .select(Projections.fields(BoardResponseDto.class,
+                        board.boardSeq,
+                        board.question,board.leftAnswer,board.rightAnswer, board.ip,board.likeCount
+                        ,board.nickname,board.createdDate,category.item))
+                .from(board)
+                .leftJoin(board.boardCategories,boardCategory)
+                .leftJoin(boardCategory.category,category)
+                .orderBy(board.likeCount.desc()).fetch();
+
+        return query;
+    }
+
 }
