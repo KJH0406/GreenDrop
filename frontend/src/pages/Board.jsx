@@ -314,13 +314,26 @@ function BoardPage() {
                       style={{ backgroundColor: "#02b2a7" }}
                       className={classes.past_results_box_item}
                     >
-                      <div className={classes.winner_mark}>winner표시</div>
+                      {parseInt(result.leftCount) >
+                      parseInt(result.rightCount) ? (
+                        <div className={classes.result_king}></div>
+                      ) : parseInt(result.leftCount) ===
+                        parseInt(result.rightCount) ? (
+                        <div className={classes.result_tie}></div>
+                      ) : (
+                        <div className={classes.result_nan}></div>
+                      )}
                       <div className={classes.past_results_box_answer}>
-                        {result.leftAnswer}표
+                        {result.leftAnswer}
                       </div>
                       <div className={classes.past_results_box_bottom}>
                         <div className={classes.past_results_box_percent}>
-                          결과 퍼센트
+                        {parseInt(result.leftCount) + parseInt(result.rightCount) !== 0
+                            ? ((parseInt(result.leftCount) /
+                                (parseInt(result.leftCount) +
+                                  parseInt(result.rightCount))) *
+                              100).toFixed(1)
+                            : 0}%
                         </div>
                         <div className={classes.past_results_box_count}>
                           {result.leftCount}표
@@ -331,16 +344,30 @@ function BoardPage() {
                       style={{ backgroundColor: "#fe2f73" }}
                       className={classes.past_results_box_item}
                     >
-                      <div className={classes.winner_mark}>winner표시</div>
+                      {parseInt(result.leftCount) <
+                      parseInt(result.rightCount) ? (
+                        <div className={classes.result_king}></div>
+                      ) : parseInt(result.leftCount) ===
+                        parseInt(result.rightCount) ? (
+                        <div className={classes.result_tie}></div>
+                      ) : (
+                        <div className={classes.result_nan}></div>
+                      )}
                       <div className={classes.past_results_box_answer}>
                         {result.rightAnswer}
                       </div>
                       <div className={classes.past_results_box_bottom}>
                         <div className={classes.past_results_box_percent}>
-                          결과 퍼센트
+                          {parseInt(result.leftCount) + parseInt(result.rightCount) !==
+                          0
+                            ? ((parseInt(result.rightCount) /
+                                (parseInt(result.leftCount) +
+                                  parseInt(result.rightCount))) *
+                              100).toFixed(1)
+                            : 0}%
                         </div>
                         <div className={classes.past_results_box_count}>
-                          {result.rightCount}
+                          {result.rightCount}표
                         </div>
                       </div>
                     </div>
