@@ -174,3 +174,54 @@
     height: 2.5rem;
   }
 }
+
+/* 지난 결과*/
+
+.slider {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.past_results {
+  padding: 0.7rem;
+}
+.past_results_slide {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  border: 1px solid lightgrey;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+  border-radius: 10px;
+}
+
+.past_results_title {
+  margin: 0;
+}
+
+.past_results_question {
+  margin: 0;
+  margin-top: 1rem;
+}
+
+.past_results_box {
+  width: 90%;
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+}
+
+.past_results_box_item {
+  padding: 1rem;
+  width: 35%;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 20px;
+  color: white;
+  word-break: keep-all;
+}

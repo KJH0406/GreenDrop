@@ -2,7 +2,7 @@ import BalanceGameCategory from "./BalanceGameCategory";
 import classes from "./BalanceGameCategoryList.module.css";
 
 function BalanceGameCategoryList(props) {
-  console.log(props.categories);
+  // console.log(props.categories);
 
   return (
     <>
