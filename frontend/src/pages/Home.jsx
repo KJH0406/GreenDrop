@@ -21,7 +21,7 @@ function HomePage() {
     let today = new Date();
     let yesterday = new Date(today);
 
-    yesterday.setDate(today.getDate() - 1);
+    yesterday.setDate(today.getDate());
 
     let now = yesterday.toISOString().slice(0, 10);
 
@@ -79,7 +79,7 @@ function HomePage() {
       </div>
 
       <div className={classes.result} ref={resultRef}>
-        <div className={classes.result_title}>지난 밸런스 게임 결과!</div>
+        <div className={classes.result_title}>현재 진행중인 밸런스 게임!</div>
         <div className={classes.result_balance_game}>
           <div className={classes.result_balance_game_title}>
             {balanceGame[0].question}

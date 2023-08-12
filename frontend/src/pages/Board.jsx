@@ -13,7 +13,39 @@ import classes from "./Board.module.css";
 
 import deviceImg from "../assets/device (1).png";
 
+// 지난 결과
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import Slider from "react-slick";
+
 function BoardPage() {
+  // 지난 밸런스 게임 결과
+  const [pastResult, setPastResult] = useState([]);
+
+  // 슬라이드
+  const settings = {
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    touchThreshold: 1000,
+    arrows: false,
+  };
+
+  useEffect(() => {
+    axios
+      .get("https://i9b103.p.ssafy.io/api/game/list")
+      .then((response) => {
+        // console.log(response.data);
+        setPastResult(response.data);
+        // console.log(pastResult);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+  console.log(pastResult);
+
   const dispatch = useDispatch();
   const page = [{ path: "write", name: "밸런스 게임 게시판 글 작성" }];
 
@@ -27,7 +59,7 @@ function BoardPage() {
     axios
       .get("https://i9b103.p.ssafy.io/api/board/list")
       .then((response) => {
-        console.log("응답", response);
+        // console.log("응답", response);
         const fetchedCardList = [...response.data];
         // console.log("패치 된 카드 리스트", fetchedCardList);
         dispatch(getBoardList(fetchedCardList));
@@ -128,7 +160,7 @@ function BoardPage() {
     axios
       .patch("https://i9b103.p.ssafy.io/api/board/like/" + boardNo)
       .then(() => {
-        console.log("좋아요");
+        // console.log("좋아요");
         getOrderedBoardList();
       })
       .catch((error) => {
@@ -141,7 +173,7 @@ function BoardPage() {
       axios
         .get(
           "https://i9b103.p.ssafy.io/api/board/select?category=" +
-            selectedCategoryItem,
+            selectedCategoryItem
         )
         .then((response) => {
           const fetchedCardList = [...response.data];
@@ -157,7 +189,7 @@ function BoardPage() {
         .then((response) => {
           const fetchedData = [...response.data];
           dispatch(searchBoard(fetchedData));
-          console.log(fetchedData);
+          // console.log(fetchedData);
         });
     } else {
       setUpdate(update + 1);
@@ -177,7 +209,7 @@ function BoardPage() {
           const fetchedCardList = [...response.data];
           // console.log("패치 된 카드 리스트", fetchedCardList);
           dispatch(getBoardList(fetchedCardList));
-          console.log(fetchedCardList);
+          // console.log(fetchedCardList);
         })
         .catch((error) => {
           console.error(error);
@@ -196,7 +228,7 @@ function BoardPage() {
         .then((response) => {
           const fetchedCardList = [...response.data];
           dispatch(searchBoard(fetchedCardList));
-          console.log(fetchedCardList);
+          // console.log(fetchedCardList);
         });
     } else {
       setUpdate(update + 1);
@@ -262,6 +294,62 @@ function BoardPage() {
             밸런스 게임
           </h2>
         </Link>
+        <h3 className={classes.past_results_title}>
+          지난 밸런스 게임 결과!
+          <br />{" "}
+          <span style={{ fontSize: "0.8rem", color: "salmon" }}>
+            옆으로 넘겨보세요! 👉
+          </span>
+        </h3>
+        <Slider {...settings} className={classes.slider}>
+          {pastResult.map((result, idx) => (
+            <div key={idx}>
+              <div key={idx} className={classes.past_results}>
+                <div className={classes.past_results_slide}>
+                  <h4 className={classes.past_results_question}>
+                    {result.question}
+                  </h4>
+                  <div className={classes.past_results_box}>
+                    <div
+                      style={{ backgroundColor: "#02b2a7" }}
+                      className={classes.past_results_box_item}
+                    >
+                      <div className={classes.winner_mark}>winner표시</div>
+                      <div className={classes.past_results_box_answer}>
+                        {result.leftAnswer}표
+                      </div>
+                      <div className={classes.past_results_box_bottom}>
+                        <div className={classes.past_results_box_percent}>
+                          결과 퍼센트
+                        </div>
+                        <div className={classes.past_results_box_count}>
+                          {result.leftCount}표
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      style={{ backgroundColor: "#fe2f73" }}
+                      className={classes.past_results_box_item}
+                    >
+                      <div className={classes.winner_mark}>winner표시</div>
+                      <div className={classes.past_results_box_answer}>
+                        {result.rightAnswer}
+                      </div>
+                      <div className={classes.past_results_box_bottom}>
+                        <div className={classes.past_results_box_percent}>
+                          결과 퍼센트
+                        </div>
+                        <div className={classes.past_results_box_count}>
+                          {result.rightCount}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </Slider>
 
         <div className={classes.row}>
           <Link className={classes.regist_btn} to={page[0].path}>
