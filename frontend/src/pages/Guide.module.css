@@ -23,6 +23,7 @@
 
   .content {
     font-size: 0.8rem;
+    line-height: 1.2rem;
   }
 
   .slider_item_img {
@@ -42,6 +43,7 @@
 
   .content {
     font-size: 1.4rem;
+    line-height: 2rem;
   }
 
   .slider_section {
@@ -84,10 +86,13 @@
 .second_word {
   color: green;
 }
-
+.source_box {
+  margin-left: 1rem;
+  display: flex;
+  align-items: flex-end;
+}
 .content {
   text-align: left;
-  line-height: 1.2rem;
 }
 
 .slider_section {
@@ -129,9 +134,16 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  text-align: start;
 }
 
 .detail_item_content {
   word-break: keep-all;
   line-height: 1.5rem;
+}
+
+.highlight {
+  display: inline;
+  box-shadow: inset 0 -8px 0 yellow;
+  /*-8px은 highlight의 두께*/
 }

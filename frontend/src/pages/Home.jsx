@@ -79,7 +79,10 @@ function HomePage() {
       </div>
 
       <div className={classes.result} ref={resultRef}>
-        <div className={classes.result_title}>현재 진행중인 밸런스 게임!</div>
+        <div className={classes.result_title}>
+          <span className={classes.highlight}>현재 진행중</span>인 밸런스 게임!
+        </div>
+
         <div className={classes.result_balance_game}>
           <div className={classes.result_balance_game_title}>
             {balanceGame[0].question}
@@ -131,17 +134,18 @@ function HomePage() {
             </div>
           </div>
         </div>
-
         <div className={classes.last_text}>
           <div style={{ marginBottom: "5px" }}>
             모두에게 질문하고 싶은 밸런스 게임을 적어주세요!
           </div>
           <div>
-            인기있는 질문은 <strong>내일 수거함 키오스크에 표시</strong>
+            인기있는 질문은{" "}
+            <strong className={classes.highlight}>
+              내일 수거함 키오스크에 표시
+            </strong>
             됩니다🌱
           </div>
         </div>
-
         <div className={classes.balance_game_button}>
           <button
             onClick={() => {

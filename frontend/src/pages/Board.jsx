@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 // import search from "../assets/search.png";
@@ -17,6 +17,7 @@ import deviceImg from "../assets/device (1).png";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
+import Arrow from "../assets/arrow.gif";
 
 function BoardPage() {
   // 지난 밸런스 게임 결과
@@ -31,6 +32,9 @@ function BoardPage() {
     touchThreshold: 1000,
     arrows: false,
   };
+
+  // downImg
+  const resultRef = useRef();
 
   useEffect(() => {
     axios
@@ -295,7 +299,8 @@ function BoardPage() {
           </h2>
         </Link>
         <h3 className={classes.past_results_title}>
-          지난 밸런스 게임 결과!
+          <img src={star} alt="star"></img> 지난 밸런스 게임 결과!{" "}
+          <img src={star} alt="star"></img>
           <br />{" "}
           <span style={{ fontSize: "0.8rem", color: "salmon" }}>
             옆으로 넘겨보세요! 👉
@@ -328,12 +333,17 @@ function BoardPage() {
                       </div>
                       <div className={classes.past_results_box_bottom}>
                         <div className={classes.past_results_box_percent}>
-                        {parseInt(result.leftCount) + parseInt(result.rightCount) !== 0
-                            ? ((parseInt(result.leftCount) /
-                                (parseInt(result.leftCount) +
-                                  parseInt(result.rightCount))) *
-                              100).toFixed(1)
-                            : 0}%
+                          {parseInt(result.leftCount) +
+                            parseInt(result.rightCount) !==
+                          0
+                            ? (
+                                (parseInt(result.leftCount) /
+                                  (parseInt(result.leftCount) +
+                                    parseInt(result.rightCount))) *
+                                100
+                              ).toFixed(1)
+                            : 0}
+                          %
                         </div>
                         <div className={classes.past_results_box_count}>
                           {result.leftCount}표
@@ -358,13 +368,17 @@ function BoardPage() {
                       </div>
                       <div className={classes.past_results_box_bottom}>
                         <div className={classes.past_results_box_percent}>
-                          {parseInt(result.leftCount) + parseInt(result.rightCount) !==
+                          {parseInt(result.leftCount) +
+                            parseInt(result.rightCount) !==
                           0
-                            ? ((parseInt(result.rightCount) /
-                                (parseInt(result.leftCount) +
-                                  parseInt(result.rightCount))) *
-                              100).toFixed(1)
-                            : 0}%
+                            ? (
+                                (parseInt(result.rightCount) /
+                                  (parseInt(result.leftCount) +
+                                    parseInt(result.rightCount))) *
+                                100
+                              ).toFixed(1)
+                            : 0}
+                          %
                         </div>
                         <div className={classes.past_results_box_count}>
                           {result.rightCount}표
@@ -377,14 +391,17 @@ function BoardPage() {
             </div>
           ))}
         </Slider>
+        <img
+          onClick={() => {
+            resultRef.current.scrollIntoView({ behavior: "smooth" });
+          }}
+          className={classes.down_img}
+          src={Arrow}
+          alt=""
+        />
 
-        <div className={classes.row}>
-          <Link className={classes.regist_btn} to={page[0].path}>
-            밸런스 게임 등록하기
-          </Link>
-        </div>
         <div className={classes.category_row}>
-          <div className={classes.left_align}>
+          <div className={classes.left_align} ref={resultRef}>
             추천 카테고리 <img src={star} alt="star"></img>
           </div>
 
@@ -398,6 +415,11 @@ function BoardPage() {
             isLikeSelected={isLikeSelected}
             likeList={likeList}
           />
+        </div>
+        <div className={classes.row}>
+          <Link className={classes.regist_btn} to={page[0].path}>
+            밸런스 게임 등록하기
+          </Link>
         </div>
         {/* 글 리스트만 컴포넌트로  */}
         {/* 검색시 게임 리스트 state만 바꿔주면 아랑서 화면 출력될 듯(다시 전체 글로는 어떻게 돌아가지?) */}
