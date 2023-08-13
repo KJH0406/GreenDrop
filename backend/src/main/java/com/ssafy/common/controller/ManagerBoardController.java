@@ -1,5 +1,6 @@
 package com.ssafy.common.controller;
 
+import com.ssafy.common.dto.CommentDto;
 import com.ssafy.common.dto.response.BoardResponseDto;
 import com.ssafy.common.entity.Board;
 import com.ssafy.common.service.BoardService;
@@ -43,6 +44,16 @@ public class ManagerBoardController {
 
         List<BoardResponseDto> boardList = managerBoardService.getBoardList(order, categorySeq, deleteView);
         return new ResponseEntity<>(boardList, HttpStatus.OK);
+    }
+
+    @GetMapping("/comments/{boardNo}")
+    ResponseEntity<List<CommentDto.managerCommentList>> boardCommentList(@PathVariable Long boardNo){
+        return new ResponseEntity<>(managerBoardService.getCommentList(boardNo),HttpStatus.OK);
+    }
+
+    @GetMapping("/boardDetail/{boardNo}")
+    ResponseEntity<Board> getBoardDetail(@PathVariable Long boardNo){
+        return new ResponseEntity<>(managerBoardService.getBoardDetail(boardNo), HttpStatus.OK);
     }
 
 }
