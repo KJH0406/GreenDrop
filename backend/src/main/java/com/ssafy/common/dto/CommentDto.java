@@ -55,4 +55,14 @@ public class CommentDto {
         }
     }
 
+    @Data
+    public static class managerCommentList{
+        private Comment comment;
+        private List<Comment> comments;
+
+        public managerCommentList(Comment comment , List<Comment> comments){
+            this.comment = comment;
+            this.comments = comments;
+        }
+    }
 }
