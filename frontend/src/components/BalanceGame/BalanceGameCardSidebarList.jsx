@@ -1,7 +1,6 @@
 import classes from "./BalanceGameCardSidebarList.module.css";
+
 function BalanceGameCardSidebarList(props) {
-  // const page = [{ path: "modify", name: "밸런스 게임 게시판 글 작성" }];
-  console.log(props.boardSeq);
   return (
     <div className={classes.card_sidebar}>
       <div

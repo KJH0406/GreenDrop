@@ -2,88 +2,75 @@ import axios from "axios";
 import classes from "./BalanceGameModifyForm.module.css";
 
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import BalanceGameCheckModal from "../components/BalanceGame/BalanceGameCheckModal";
-import { useDispatch } from "react-redux";
-import { getCategoryList } from "../store";
 import backImg from "../assets/back.png";
 import deviceImg from "../assets/device (1).png";
+import BalanceGameCheckModal from "../components/BalanceGame/BalanceGameCheckModal";
+import { getCategoryList } from "../store";
 
 function BalanceGameModifyFormPage() {
-  const dispatch = useDispatch();
+  const api = "https://i9b103.p.ssafy.io/api";
+
   const location = useLocation();
-  // const boardSeq = StateParams.get("boardSeq") || "Default Value";
   const boardSeq = location.state.boardSeq || "Default Value";
+
+  // 카테고리 리스트 불러오기
+  const dispatch = useDispatch();
   const categories = useSelector((state) => {
     return state.categories;
   });
 
-  const [tempCategorie, setTempCategorie] = useState();
-
-  // 로직
   useEffect(() => {
-    axios
-
-      .get("https://i9b103.p.ssafy.io/api/category/list")
-      .then((response) => {
-        // console.log(...response.data);
-        const fetchedCategories = [...response.data];
-        dispatch(getCategoryList(fetchedCategories));
-        setCategory(fetchedCategories[0].item);
-      });
+    axios.get(`${api}/category/list`).then((response) => {
+      const fetchedCategories = [...response.data];
+      dispatch(getCategoryList(fetchedCategories));
+    });
   }, [dispatch]);
-  const [newCard, setNewCard] = useState("");
 
-  const navigate = useNavigate();
+  //작성자 확인 모달
   const [showCheckModal, setShowCheckModal] = useState("");
   const [confirm, setConfirm] = useState(false);
   const [confirmModalData, setConfirmModalData] = useState("");
 
+  //수정 할 글 불러오기
+  const [question, setQuestion] = useState("");
+  const [leftAnswer, setLeftAnswer] = useState("");
+  const [rightAnswer, setRightAnswer] = useState("");
+  const [category, setCategory] = useState();
+
   useEffect(() => {
     axios
-
-      .get("https://i9b103.p.ssafy.io/api/board/detail/" + boardSeq)
+      .get(`${api}/board/detail/${boardSeq}`)
       .then((response) => {
         setQuestion(response.data.question);
         setLeftAnswer(response.data.leftAnswer);
         setRightAnswer(response.data.rightAnswer);
         setCategory(response.data.item);
-        setNickname(response.data.nickname);
-
-        setTempCategorie(response.data.item);
       })
-
       .catch((error) => {
         console.log(error);
       });
   }, [boardSeq]);
 
-  const [question, setQuestion] = useState("");
-  const [leftAnswer, setLeftAnswer] = useState("");
-  const [rightAnswer, setRightAnswer] = useState("");
-  const [category, setCategory] = useState("");
-  const [nickname, setNickname] = useState("");
+  //업데이트 한 카드
+  const [newCard, setNewCard] = useState("");
+
   useEffect(() => {
     const updatedCard = {
       question: question,
       leftAnswer: leftAnswer,
       rightAnswer: rightAnswer,
-      category: tempCategorie,
+      category: category,
     };
 
     setNewCard(updatedCard);
-  }, [question, leftAnswer, rightAnswer, tempCategorie]);
+  }, [question, leftAnswer, rightAnswer, category]);
+
+  //글 수정
+  const navigate = useNavigate();
 
   const handleModifyCard = () => {
-    // const updatedCard = {
-    //     question: question,
-    //     leftAnswer: leftAnswer,
-    //     rightAnswer: rightAnswer,
-    //     category: category,
-    //   };
-
-    //   setNewCard(updatedCard);
     if (leftAnswer.length === 0 || rightAnswer.length === 0) {
       setShowCheckModal({
         title: "글 수정 실패",
@@ -101,19 +88,12 @@ function BalanceGameModifyFormPage() {
     } else {
       console.log("수정할 카드", newCard);
       axios
-        .patch(
-          "https://i9b103.p.ssafy.io/api/board/modify/" + boardSeq,
-          JSON.stringify(newCard),
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        )
+        .patch(`${api}/board/modify/${boardSeq}`, JSON.stringify(newCard), {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
         .then(() => {
-          console.log("수정완료");
-          setIsModifyDisable(true);
-
           navigate("/board");
         })
         .catch((error) => {
@@ -134,7 +114,6 @@ function BalanceGameModifyFormPage() {
         });
     }
   };
-  const [isModifyDisable, setIsModifyDisable] = useState(false);
 
   return (
     <div className={classes.regist_box}>
@@ -219,9 +198,9 @@ function BalanceGameModifyFormPage() {
             <select
               name="category"
               className={classes.category}
-              value={tempCategorie}
+              value={category}
               onChange={(e) => {
-                setTempCategorie(e.target.value);
+                setCategory(e.target.value);
               }}
             >
               {categories.map((item, idx) => {
@@ -244,7 +223,6 @@ function BalanceGameModifyFormPage() {
           onClick={() => {
             handleModifyCard();
           }}
-          // disabled={isModifyDisable ? true : false}
         ></input>
       </div>
     </div>

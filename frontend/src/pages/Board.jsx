@@ -1,11 +1,10 @@
+import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-// import search from "../assets/search.png";
 import star from "../assets/star.png";
 import BalanceGameCategoryList from "../components/BalanceGame/BalanceGameCategoryList";
 import BalanceGameCheckModal from "../components/BalanceGame/BalanceGameCheckModal";
-import axios from "axios";
 import BalanceGameCommentModal from "../components/BalanceGame/BalanceGameCommentModal";
 import BalanceGameList from "../components/BalanceGame/BalanceGameList";
 import { getBoardList, getCategoryList, searchBoard } from "../store";
@@ -14,12 +13,63 @@ import classes from "./Board.module.css";
 import deviceImg from "../assets/device (1).png";
 
 // 지난 결과
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
+import "slick-carousel/slick/slick-theme.css";
+import "slick-carousel/slick/slick.css";
 import Arrow from "../assets/arrow.gif";
 
 function BoardPage() {
+  const api = "https://i9b103.p.ssafy.io/api";
+  const page = [{ path: "write", name: "밸런스 게임 게시판 글 작성" }];
+
+  //게시글 리스트
+  const cardList = useSelector((state) => state.balanceGameList);
+  const dispatch = useDispatch();
+  const [update, setUpdate] = useState(true);
+
+  useEffect(() => {
+    axios
+      .get(`${api}/board/list`)
+      .then((response) => {
+        const fetchedCardList = [...response.data];
+        dispatch(getBoardList(fetchedCardList));
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, [dispatch, update]);
+
+  //카테고리 리스트
+  const categories = useSelector((state) => {
+    return state.categories;
+  });
+  const categoryArr = new Array(categories.length);
+  categoryArr.fill(false);
+  const [isCategorySelected, setIsCategorySelected] = useState(categoryArr);
+
+  useEffect(() => {
+    axios.get(`${api}/category/list`).then((response) => {
+      const fetchedCategories = [...response.data];
+      dispatch(getCategoryList(fetchedCategories));
+    });
+  }, [dispatch]);
+
+  //작성자 확인 모달
+  const [showCheckModal, setShowCheckModal] = useState("");
+  const [confirmModalData, setConfirmModalData] = useState("");
+  const [confirm, setConfirm] = useState(false);
+
+  //댓글 모달
+  const [selectedBoardSeq, setSelectedBoardSeq] = useState("");
+  const isOpenComment = useSelector((state) => {
+    return state.isOpenComment;
+  });
+
+  //사이드바 모달
+  const sidebarArr = new Array(cardList.length);
+  sidebarArr.fill(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(sidebarArr);
+
   // 지난 밸런스 게임 결과
   const [pastResult, setPastResult] = useState([]);
 
@@ -38,80 +88,26 @@ function BoardPage() {
 
   useEffect(() => {
     axios
-      .get("https://i9b103.p.ssafy.io/api/game/list")
+      .get(`${api}/game/list`)
       .then((response) => {
-        // console.log(response.data);
         setPastResult(response.data);
-        // console.log(pastResult);
       })
       .catch((error) => {
         console.log(error);
       });
   }, []);
-  console.log(pastResult);
 
-  const dispatch = useDispatch();
-  const page = [{ path: "write", name: "밸런스 게임 게시판 글 작성" }];
-
-  const [showCheckModal, setShowCheckModal] = useState("");
-  const [confirmModalData, setConfirmModalData] = useState("");
-  const isOpenComment = useSelector((state) => {
-    return state.isOpenComment;
-  });
-  const [update, setUpdate] = useState(0);
-  useEffect(() => {
-    axios
-      .get("https://i9b103.p.ssafy.io/api/board/list")
-      .then((response) => {
-        // console.log("응답", response);
-        const fetchedCardList = [...response.data];
-        // console.log("패치 된 카드 리스트", fetchedCardList);
-        dispatch(getBoardList(fetchedCardList));
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-  }, [dispatch, update]); // Call the API only once when the component mounts
-
-  useEffect(() => {
-    axios
-
-      .get("https://i9b103.p.ssafy.io/api/category/list")
-      .then((response) => {
-        // console.log(...response.data);
-        const fetchedCategories = [...response.data];
-        dispatch(getCategoryList(fetchedCategories));
-      });
-  }, [dispatch]);
-
-  const cardList = useSelector((state) => state.balanceGameList); // Get cardList from the Redux store
-  // const [searchWord, setSearchWord] = useState("");
-  // console.log("스토어에서 받아온 데이터", cardList);
-  const [confirm, setConfirm] = useState(false);
-  const sidebarArr = new Array(cardList.length);
-
-  sidebarArr.fill(false);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(sidebarArr);
-  const [selectedBoardSeq, setSelectedBoardSeq] = useState("");
-
-  const [selectedCategoryItem, setSelectedCategoryItem] = useState("");
-
-  const categories = useSelector((state) => {
-    return state.categories;
-  });
-
+  //글 삭제
   function handleBoardDelete(boardNo) {
     axios
-      .patch("https://i9b103.p.ssafy.io/api/board/delete/" + boardNo)
+      .patch(`${api}/board/delete/${boardNo}`)
       .then(() => {
         getOrderedBoardList();
       })
       .catch((error) => {
         console.error("글 삭제 실패");
         setConfirm(true);
-        // setShowCheckModal이거를 null이 아니게 바꿔줘야함
         setShowCheckModal(true);
-
         setConfirmModalData({
           confirmTitle: "글 삭제 실패",
           confirmCategory: "board",
@@ -120,19 +116,19 @@ function BoardPage() {
         });
       });
   }
-  const [commentUpdate, setCommentUpdate] = useState(0);
+
+  //댓글 삭제
+  const [commentUpdate, setCommentUpdate] = useState(true);
 
   function handleCommentDelete(commentNum) {
     axios
-      .patch("https://i9b103.p.ssafy.io/api/comment/delete/" + commentNum)
+      .patch(`${api}/comment/delete/${commentNum}`)
       .then(() => {
-        setCommentUpdate(commentUpdate + 1);
+        setCommentUpdate(!commentUpdate);
         getOrderedBoardList();
       })
       .catch((error) => {
         console.error("댓글 삭제 실패");
-        // setConfirm(true);
-
         setShowCheckModal({
           title: "댓글 삭제 실패",
           category: "comment",
@@ -141,30 +137,12 @@ function BoardPage() {
         });
       });
   }
-  // 검색 함수
-  // function handleBoardSearch() {
-  //   axios
 
-  //     .get("https://i9b103.p.ssafy.io/api/board/search?question=" + searchWord)
-  //     .then((response) => {
-  //       // console.log(response);
-  //       const fetchedData = [...response.data];
-  //       dispatch(searchBoard(fetchedData));
-  //     });
-  // }
-
-  // 검색시 엔터로 검색 가능하게 하던 함수
-  // const handleOnKey = (e) => {
-  //   if (e.key === "Enter") {
-  //     handleBoardSearch(); // Enter 입력이 되면 클릭 이벤트 실행
-  //   }
-  // };
-
+  //좋아요 누를 시 기존 글 정렬 방식대로 정렬
   function handleLikeCount(boardNo) {
     axios
-      .patch("https://i9b103.p.ssafy.io/api/board/like/" + boardNo)
+      .patch(`${api}/board/like/${boardNo}`)
       .then(() => {
-        // console.log("좋아요");
         getOrderedBoardList();
       })
       .catch((error) => {
@@ -172,70 +150,60 @@ function BoardPage() {
       });
   }
 
+  //기존 정렬 방식 유지
+  const [selectedCategoryItem, setSelectedCategoryItem] = useState("");
+
   function getOrderedBoardList() {
     if (selectedCategoryItem) {
       axios
-        .get(
-          "https://i9b103.p.ssafy.io/api/board/select?category=" +
-            selectedCategoryItem
-        )
+        .get(`${api}/board/select?category=${selectedCategoryItem}`)
         .then((response) => {
           const fetchedCardList = [...response.data];
-          // console.log("패치 된 카드 리스트", fetchedCardList);
           dispatch(getBoardList(fetchedCardList));
         })
         .catch((error) => {
           console.error(error);
         });
     } else if (isLikeSelected) {
-      axios
-        .get("https://i9b103.p.ssafy.io/api/board/like/list")
-        .then((response) => {
-          const fetchedData = [...response.data];
-          dispatch(searchBoard(fetchedData));
-          // console.log(fetchedData);
-        });
+      axios.get(`${api}/board/like/list`).then((response) => {
+        const fetchedData = [...response.data];
+        dispatch(searchBoard(fetchedData));
+      });
     } else {
-      setUpdate(update + 1);
+      setUpdate(!update);
     }
   }
 
-  const categoryArr = new Array(categories.length);
-  categoryArr.fill(false);
-  const [isCategorySelected, setIsCategorySelected] = useState(categoryArr);
-
+  //카테고리 글 정렬
   function selectedCategory(category, isSelected) {
     if (!isSelected) {
       setSelectedCategoryItem(category);
       axios
-        .get("https://i9b103.p.ssafy.io/api/board/select?category=" + category)
+        .get(`${api}/board/select?category=${category}`)
         .then((response) => {
           const fetchedCardList = [...response.data];
-          // console.log("패치 된 카드 리스트", fetchedCardList);
           dispatch(getBoardList(fetchedCardList));
-          // console.log(fetchedCardList);
         })
         .catch((error) => {
           console.error(error);
         });
     } else {
-      setUpdate(update + 1);
+      setUpdate(!update);
       setSelectedCategoryItem(null);
     }
   }
 
+  //좋아요 순 글 정렬
   const [isLikeSelected, setIsLikeSelected] = useState(false);
+
   function likeList(isLikeList) {
     if (isLikeList) {
-      axios
-        .get("https://i9b103.p.ssafy.io/api/board/like/list")
-        .then((response) => {
-          const fetchedCardList = [...response.data];
-          dispatch(searchBoard(fetchedCardList));
-          // console.log(fetchedCardList);
-        });
+      axios.get(`${api}/board/like/list`).then((response) => {
+        const fetchedCardList = [...response.data];
+        dispatch(searchBoard(fetchedCardList));
+      });
     } else {
-      setUpdate(update + 1);
+      setUpdate(!update);
     }
   }
 
@@ -278,8 +246,6 @@ function BoardPage() {
           setConfirm={setConfirm}
           setConfirmModalData={setConfirmModalData}
           getOrderedBoardList={getOrderedBoardList}
-          selectedCategoryItem={selectedCategoryItem}
-          isLikeSelected={isLikeSelected}
           commentUpdate={commentUpdate}
           setCommentUpdate={setCommentUpdate}
         />
@@ -287,7 +253,6 @@ function BoardPage() {
         <></>
       )}
       <div className={classes.outer_box}>
-        {/* <h1>Green Balance Game</h1> */}
         <Link className={classes.title} to={"/board"}>
           <h2 className={classes.second_word}>
             <img
