@@ -7,7 +7,6 @@ function BalanceGameCommentDelete() {
         <div className={classes.row_title}>작성자 확인</div>
         본인이 작성한 댓글만 삭제할 수 있습니다.
       </div>
-
       <div className={classes.row_password_input}>
         <input
           type="password"
