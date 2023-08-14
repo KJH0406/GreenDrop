@@ -27,6 +27,5 @@ public class BoardDetailResponseDto {
     private LocalDateTime lastModifiedDate;
     private LocalDateTime createdDate;
     private List<Reservation> reservationList;
-    private List<Comment> comment;
     private Category category;
 }
