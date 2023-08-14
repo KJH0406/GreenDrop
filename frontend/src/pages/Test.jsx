@@ -8,6 +8,7 @@ const Test = () => {
 
     eventSource.onopen = () => {
       // 연결 시 할 일
+      console.log("너 지금 되긴 하는거니?")
     };
 
     eventSource.onmessage = async (e) => {
@@ -16,10 +17,6 @@ const Test = () => {
 
       try {
         const parsedData = res;
-        console.log("e " + e)
-        console.log("e.data " + e.data)
-        console.log("res " + res);
-        console.log("parsedData " + parsedData);
         // 받아오는 data로 할 일
         setData(parsedData);
       } catch (error) {
@@ -50,7 +47,11 @@ const Test = () => {
   return (
     <div>
       {/* data를 사용하여 화면에 표시 */}
-      <ul>{data}</ul>
+      <ul>
+        {data.map((item, index) => (
+          <li key={index}>{item}</li>
+        ))}
+      </ul>
     </div>
   );
 };
