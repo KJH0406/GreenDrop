@@ -20,6 +20,7 @@ import AccountManagement from "./components/AdminPage/AccountManagement";
 import AdminBoard from "./components/AdminPage/AdminBoard";
 import AdminCategories from "./components/AdminPage/AdminCategories";
 import AdminBoardDetail from "./components/AdminPage/AdminBoardDetail";
+import Test from "./pages/Test";
 
 const router = createBrowserRouter([
   {
@@ -51,6 +52,10 @@ const router = createBrowserRouter([
   {
     path: "login",
     element: <ManagerLogin />,
+  },
+  {
+    path: "test",
+    element: <Test />,
   },
   {
     path: "admin",
