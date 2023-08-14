@@ -1,5 +1,6 @@
 import { Outlet, Navigate } from "react-router-dom";
 import AdminHeader from "../components/AdminPage/AdminHeader";
+import classes from "./Admin.module.css";
 
 const PrivateRoute = () => {
   const isLoggedIn = localStorage.getItem("loggedInUser") !== null;
@@ -9,7 +10,7 @@ const PrivateRoute = () => {
   }
 
   return isLoggedIn ? (
-    <div>
+    <div className={classes.admin_container}>
       <AdminHeader />
       <main>
         <Outlet />
