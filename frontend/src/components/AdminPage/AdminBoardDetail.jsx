@@ -28,6 +28,7 @@ function AdminBoardDetail() {
             console.log(response.data.reservationList[i]);
           }
         }
+        console.log(response.data);
       });
     axios
       .get(api + "/managerboard/comments/" + boardSeqParam)
@@ -98,19 +99,19 @@ function AdminBoardDetail() {
           <tr>
             <th>오른쪽 선택지</th>
             <td>{post.rightAnswer}</td>
-            <th>작성일</th>
+            <th>작성 날짜</th>
             <td>{post.createdDate}</td>
           </tr>
           <tr>
             <th>카테고리</th>
             <td>{category}</td>
-            <th>수정일</th>
+            <th>수정 날짜</th>
             <td>{post.lastModifiedDate ? post.lastModifiedDate : "none"}</td>
           </tr>
           <tr>
             <th>삭제 여부</th>
             <td>{post.isDeleted === 0 ? "N" : "Y"}</td>
-            <th>삭제 일시</th>
+            <th>삭제 날짜</th>
             <td>{post.deletedDateTime ? post.deletedDateTime : "none"}</td>
           </tr>
         </tbody>
@@ -152,9 +153,9 @@ function AdminBoardDetail() {
             <th>댓글 번호</th>
             <th>닉네임</th>
             <th>내용</th>
-            <th>작성 일시</th>
+            <th>작성 날짜</th>
             <th>삭제 여부</th>
-            <th>삭제 일시</th>
+            <th>삭제 날짜</th>
             <th>선택</th>
           </tr>
         </thead>
