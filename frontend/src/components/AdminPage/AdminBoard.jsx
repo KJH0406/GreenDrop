@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
+import React, { useEffect, useRef, useState } from "react";
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
+import { Link } from "react-router-dom";
 import classes from "./AdminBoard.module.css";
-import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css';
-
 const api = "https://i9b103.p.ssafy.io/api/";
 const postsPerPage = 15;
 const formatDate = (dateStr) => {
@@ -32,13 +32,14 @@ const AdminBoard = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedPosts, setSelectedPosts] = useState([]); // State for selected post ids
   const tableContainerRef = useRef(null);
+  const [boardListUpdate, setBoardListUpdate] = useState(true);
 
   const [categoryList, setCategoryList] = useState([]);
-  const [order, setOrder] = useState(null);
-  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [order, setOrder] = useState("dateNew");
+  const [selectedCategory, setSelectedCategory] = useState("0");
   const [isIncludeDeleted, setIsIncludeDeleted] = useState(false);
 
-    // 추가
+  // 추가
   const [reservations, setReservations] = useState([]);
   const [selectedReservations, setSelectedReservations] = useState([]);
   const [value, onChange] = useState(new Date());
@@ -63,12 +64,13 @@ const AdminBoard = () => {
     axios
       .get(`${api}reservation/list`)
       .then((response) => {
+        console.log(response.data);
         setReservations(response.data);
       })
       .catch((error) => {
         console.error("Error fetching posts:", error);
       });
-  }, [trigger]);
+  }, [trigger, boardListUpdate]);
 
   useEffect(() => {
     axios
@@ -82,7 +84,7 @@ const AdminBoard = () => {
     axios.get(`${api}category/list`).then((response) => {
       setCategoryList([...response.data]);
     });
-  }, []);
+  }, [boardListUpdate]);
 
   // Calculate the index of the first and last posts to be displayed on the current page
   const indexOfLastPost = currentPage * postsPerPage;
@@ -128,8 +130,8 @@ const AdminBoard = () => {
     const data = {
       managerId: managerId,
       boardSeq: parseInt(boardSeq),
-      dateTime: datetime
-    }
+      dateTime: datetime,
+    };
 
     if (window.confirm("등록하시겠습니까?")) {
       if (selectedPosts.length === 1) {
@@ -137,14 +139,13 @@ const AdminBoard = () => {
           .post(`${api}reservation/regist`, data)
           .then(() => {
             setTrigger(!trigger);
-            alert("등록 완료!")
+            alert("등록 완료!");
           })
           .catch(() => {
-            alert("예약 등록에 실패했습니다.")
-          })
-          ;
+            alert("예약 등록에 실패했습니다.");
+          });
       } else {
-        alert("예약할 것에 체크해주세요.")
+        alert("예약할 것에 체크해주세요.");
       }
     } else {
       alert("예약 등록을 취소하셨습니다.");
@@ -155,28 +156,57 @@ const AdminBoard = () => {
   const deleteReservation = () => {
     const reservationSeq = selectedReservations[0];
 
-    if (window.confirm("삭제하시겠습니까?")) {
+    if (window.confirm("예약을 삭제하시겠습니까?")) {
       axios
         .delete(`${api}reservation/delete/${reservationSeq}`)
         .then(() => {
           setTrigger(!trigger);
-          alert("삭제 완료!")
+          alert("삭제 완료!");
         })
         .catch(() => {
           alert("예약 삭제에 실패했습니다.");
         });
     } else {
-      alert("삭제 요청을 취소하셨습니다.")
+      alert("삭제 요청을 취소하셨습니다.");
     }
   };
 
-  // 셀렉트 박스에서 선택된 값을 path variable로 사용하여 setposts
+  //글 삭제
+  const deletePost = () => {
+    if (selectedPosts) {
+      if (window.confirm("삭제하시겠습니까?")) {
+        const boardInfo = {
+          boardSeq: selectedPosts[0],
+        };
+        axios
+          .patch(`${api}managerboard/deleteBoard`, JSON.stringify(boardInfo), {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          })
+          .then(() => {
+            alert("글 삭제에 성공했습니다.");
+            setBoardListUpdate(!boardListUpdate);
+          })
+          .catch(() => {
+            alert("글 삭제에 실패했습니다.");
+          });
+      }
+    }
+  };
+
+  // 정렬
   const getOrderedCategoryList = () => {
-    const pathVariable = {
-      order: order,
-      category: selectedCategory,
-      delete: isIncludeDeleted,
-    };
+    axios
+      .get(
+        `${api}managerboard/list?order=${order}&categorySeq=${selectedCategory}&deleteView=${isIncludeDeleted}`,
+      )
+      .then((response) => {
+        setPosts(response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   const subTheme = () => {
@@ -184,10 +214,8 @@ const AdminBoard = () => {
 
     if (window.confirm("오늘의 주제로 등록하시겠습니까?")) {
       if (selectedReservations.length === 2) {
-        axios
-          .post(`${api}game/regist/${boardSeq}`)
-          .then(() => {
-            alert("등록 완료!")
+        axios.post(`${api}game/regist/${boardSeq}`).then(() => {
+          alert("등록 완료!");
         });
       } else {
         console.log("등록할 것에 체크해주세요.");
@@ -201,7 +229,12 @@ const AdminBoard = () => {
     <div className={classes.admin_board_container}>
       <div className={classes.reservation_button}>
         <button onClick={subTheme}>오늘의 주제 등록하기</button>
-        <button style={{ color: "red" }} onClick={deleteReservation}>삭제</button>
+        <button style={{ color: "red" }} onClick={deleteReservation}>
+          예약 삭제
+        </button>
+        <button style={{ color: "red" }} onClick={deletePost}>
+          글 삭제
+        </button>
       </div>
 
       <div className={classes.reservation}>
@@ -225,7 +258,14 @@ const AdminBoard = () => {
               <tbody>
                 {reservations.map((reservation) => (
                   <tr key={reservation.reservationSeq}>
-                    <td>{reservation.reservationSeq}</td>
+                    <td>
+                      <Link
+                        to={`/admin/adminBoardDetail/${reservation.board.boardSeq}/${reservation.reservationSeq}/${reservation.board.item}`}
+                      >
+                        {reservation.reservationSeq}
+                      </Link>
+                    </td>
+
                     <td>{truncateText(reservation.board.question, 10)}</td>
                     <td>{truncateText(reservation.board.leftAnswer, 10)}</td>
                     <td>{truncateText(reservation.board.rightAnswer, 10)}</td>
@@ -237,8 +277,16 @@ const AdminBoard = () => {
                     <td>
                       <input
                         type="checkbox"
-                        checked={selectedReservations.includes(reservation.reservationSeq)}
-                        onChange={(e) => handleReservationCheckboxChange(e, reservation.reservationSeq, reservation.board.boardSeq)}
+                        checked={selectedReservations.includes(
+                          reservation.reservationSeq,
+                        )}
+                        onChange={(e) =>
+                          handleReservationCheckboxChange(
+                            e,
+                            reservation.reservationSeq,
+                            reservation.board.boardSeq,
+                          )
+                        }
                       />
                     </td>
                   </tr>
@@ -265,19 +313,21 @@ const AdminBoard = () => {
               setOrder(e.target.value);
             }}
           >
-            <option>최신순</option>
-            <option>오래된 순</option>
-            <option>좋아요 순</option>
+            <option value="dateNew">최신순</option>
+            <option value="dateOld">오래된 순</option>
+            <option value="like">좋아요 순</option>
+            <option value="category">카테고리 순</option>
           </select>
           <select
             onChange={(e) => {
               setSelectedCategory(e.target.value);
             }}
+            disabled={order === "category" ? false : true}
           >
-            <option value="">전체</option>
+            <option value="0">전체</option>
             {categoryList.map((category, idx) => {
               return (
-                <option key={idx} value={category.item}>
+                <option key={idx} value={category.categorySeq}>
                   {category.item}
                 </option>
               );
@@ -313,7 +363,15 @@ const AdminBoard = () => {
             <tbody>
               {currentPosts.map((post) => (
                 <tr key={post.boardSeq}>
-                  <td>{post.boardSeq}</td>
+                  <td>
+                    <Link
+                      to={`/admin/adminBoardDetail/${post.boardSeq}/${null}/${
+                        post.item
+                      }`}
+                    >
+                      {post.boardSeq}
+                    </Link>
+                  </td>
                   <td>{truncateText(post.question, 20)}</td>
                   <td>{truncateText(post.leftAnswer, 20)}</td>
                   <td>{truncateText(post.rightAnswer, 20)}</td>
@@ -324,7 +382,9 @@ const AdminBoard = () => {
                     <input
                       type="checkbox"
                       checked={selectedPosts.includes(post.boardSeq)}
-                      onChange={(e) => handleCheckboxChange(e, post.boardSeq)}
+                      onChange={(e) => {
+                        handleCheckboxChange(e, post.boardSeq);
+                      }}
                     />
                   </td>
                 </tr>

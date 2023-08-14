@@ -19,6 +19,8 @@ import ManagerLogin from "./pages/ManagerLogin";
 import AccountManagement from "./components/AdminPage/AccountManagement";
 import AdminBoard from "./components/AdminPage/AdminBoard";
 import AdminCategories from "./components/AdminPage/AdminCategories";
+import AdminBoardDetail from "./components/AdminPage/AdminBoardDetail";
+import Test from "./pages/Test";
 
 const router = createBrowserRouter([
   {
@@ -52,6 +54,10 @@ const router = createBrowserRouter([
     element: <ManagerLogin />,
   },
   {
+    path: "test",
+    element: <Test />,
+  },
+  {
     path: "admin",
     element: <AdminPage />,
     children: [
@@ -59,6 +65,10 @@ const router = createBrowserRouter([
       { path: "accountManagement", element: <AccountManagement /> },
       { path: "adminBoard", element: <AdminBoard /> },
       { path: "adminCategories", element: <AdminCategories /> },
+      {
+        path: "adminBoardDetail/:boardSeqParam/:reservationSeq?/:category?",
+        element: <AdminBoardDetail />,
+      },
     ],
   },
 ]);

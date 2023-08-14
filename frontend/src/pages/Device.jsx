@@ -15,6 +15,9 @@ import RightOverWeightModal from "../components/DeviceUI/RightOverWeightModal";
 import LeftLightWeightModal from "../components/DeviceUI/LeftLightWeightModal";
 import RightLightWeightModal from "../components/DeviceUI/RightLightWeightModal";
 
+// 메뉴얼 모달
+import ManualModal from "../components/DeviceUI/ManualModal";
+
 // API
 const api = "https://i9b103.p.ssafy.io/api/";
 
@@ -269,6 +272,9 @@ function DevicePage() {
       {/* {<RightOverWeightModal />} */}
       {/* <RightLightWeightModal /> */}
       {/* */}
+
+      <ManualModal />
+
       <img className={classes.decorate_left_img} src={decorateImg_1} alt="" />
       <img className={classes.decorate_right_img} src={decorateImg_2} alt="" />
       <img className={classes.verse_img} src={verseImg} alt="" />

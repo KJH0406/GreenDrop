@@ -14,16 +14,18 @@ function BalanceGameCard({
   setShowCheckModal,
   handleLikeCount,
 }) {
+  const dispatch = useDispatch();
+
+  //댓글 모달
   const isOpenComment = useSelector((state) => {
     return state.isOpenComment;
   });
-  const dispatch = useDispatch();
+
+  //시간 출력 형식 변환
   function timePassed(date) {
     let timeValue = new Date(date);
     let today = new Date();
-    // console.log("오늘:", today);
-    // console.log("작성시", timeValue);
-    // 분을 나타냄
+
     let time = (today - timeValue) / 1000 / 60;
 
     if (time < 1) {

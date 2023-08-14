@@ -1,0 +1,41 @@
+.admin_board_detail_container {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f8f8f8;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  overflow-x: auto; /* Enable horizontal scrolling */
+  padding-top: 5%;
+}
+
+/* Table styles */
+.admin_board_detail_table {
+  /* display: flex; */
+  width: 100%;
+  border-collapse: collapse;
+  overflow-y: auto; /* Enable vertical scrolling within the fixed height */
+  margin-bottom: 5%;
+}
+
+.admin_board_detail_table th,
+.admin_board_detail_table td {
+  padding: 10px;
+  border: 1px solid #ccc;
+  white-space: nowrap; /* Prevent text wrapping */
+  text-overflow: ellipsis; /* Display ... for long text */
+  overflow: hidden; /* Hide overflowing content */
+}
+
+.admin_btn_area {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.admin_comment_delete_btn {
+  width: 20%;
+}

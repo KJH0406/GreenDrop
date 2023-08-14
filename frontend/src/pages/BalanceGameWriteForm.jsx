@@ -1,44 +1,47 @@
 import axios from "axios";
 import classes from "./BalanceGameWriteForm.module.css";
-
-import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import BalanceGameCheckModal from "../components/BalanceGame/BalanceGameCheckModal";
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { getCategoryList } from "../store";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import backImg from "../assets/back.png";
 import deviceImg from "../assets/device (1).png";
+import BalanceGameCheckModal from "../components/BalanceGame/BalanceGameCheckModal";
+import { getCategoryList } from "../store";
 
 function BalanceGameWriteFormPage() {
+  const api = "https://i9b103.p.ssafy.io/api";
+
+  //입력값 저장
   const [question, setQuestion] = useState("");
   const [leftAnswer, setLeftAnswer] = useState("");
   const [rightAnswer, setRightAnswer] = useState("");
   const [nickname, setNickname] = useState(null);
   const [category, setCategory] = useState("");
   const [password, setPassword] = useState(null);
-  // const [card, setCard] = useState("");
+
   const dispatch = useDispatch();
-  useEffect(() => {
-    axios
 
-      .get("https://i9b103.p.ssafy.io/api/category/list")
-      .then((response) => {
-        console.log("useState", ...response.data);
-        const fetchedCategories = [...response.data];
-        dispatch(getCategoryList(fetchedCategories));
-        setCategory(fetchedCategories[0].item);
-      });
-  }, [dispatch]);
-
+  //전체 카테고리 불러오기
   const categories = useSelector((state) => {
     return state.categories;
   });
-  const navigate = useNavigate();
+
+  useEffect(() => {
+    axios.get(`${api}/category/list`).then((response) => {
+      const fetchedCategories = [...response.data];
+      dispatch(getCategoryList(fetchedCategories));
+      setCategory(fetchedCategories[0].item);
+    });
+  }, [dispatch]);
+
+  //작성자 확인 모달
   const [showCheckModal, setShowCheckModal] = useState("");
   const [confirm, setConfirm] = useState(false);
   const [confirmModalData, setConfirmModalData] = useState("");
+
+  //글 등록
+  const navigate = useNavigate();
+  const [isRegistDisable, setIsRegistDisable] = useState(false);
 
   const handleCardRegistration = () => {
     const cardData = {
@@ -50,9 +53,6 @@ function BalanceGameWriteFormPage() {
       category: category,
     };
 
-    console.log(JSON.stringify(cardData));
-
-    // axios 요청 보내기
     if (leftAnswer.length === 0 || rightAnswer.length === 0) {
       setShowCheckModal({
         title: "글 등록 실패",
@@ -83,20 +83,13 @@ function BalanceGameWriteFormPage() {
       });
     } else {
       axios
-        .post(
-          "https://i9b103.p.ssafy.io/api/board/regist",
-          JSON.stringify(cardData),
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        )
-        .then((response) => {
-          console.log(response);
-          // 요청에 대한 응답을 처리하는 코드를 추가할 수 있습니다.
+        .post(`${api}/board/regist`, JSON.stringify(cardData), {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+        .then(() => {
           setIsRegistDisable(true);
-
           navigate("/board");
         })
         .catch((error) => {
@@ -118,7 +111,7 @@ function BalanceGameWriteFormPage() {
         });
     }
   };
-  const [isRegistDisable, setIsRegistDisable] = useState(false);
+
   return (
     <div className={classes.regist_box}>
       {showCheckModal ? (
@@ -165,7 +158,6 @@ function BalanceGameWriteFormPage() {
               placeholder="상황 설명 (필수) (최대 20자)"
               onChange={(e) => {
                 setQuestion(e.target.value);
-                console.log(question);
               }}
             />
           </div>
@@ -178,7 +170,6 @@ function BalanceGameWriteFormPage() {
               placeholder="선택지1(필수)&#13;&#10;(최대40자)"
               onChange={(e) => {
                 setLeftAnswer(e.target.value);
-                console.log(leftAnswer);
               }}
             ></textarea>
           </div>
@@ -191,7 +182,6 @@ function BalanceGameWriteFormPage() {
               placeholder="선택지2(필수)&#13;&#10;(최대40자)"
               onChange={(e) => {
                 setRightAnswer(e.target.value);
-                console.log(rightAnswer);
               }}
             ></textarea>
             <div className={classes.cover_bar}></div>
@@ -199,7 +189,6 @@ function BalanceGameWriteFormPage() {
         </div>
         <div className={classes.bottom}>
           <div className={classes.bottom_left}>
-            {/* 카테고리 선택하는 부분 */}
             <select
               name="category"
               className={classes.category}
@@ -218,7 +207,6 @@ function BalanceGameWriteFormPage() {
           </div>
         </div>
       </div>
-      {/* 닉네임, 비밀번호 입력받을 부분 */}
       <div className={classes.info_input_area}>
         <div className={classes.info_input}>
           <input

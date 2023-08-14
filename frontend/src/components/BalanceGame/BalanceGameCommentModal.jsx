@@ -13,58 +13,38 @@ function BalanceGameCommentModal({
   commentUpdate,
   setCommentUpdate,
   getOrderedBoardList,
-  selectedCategoryItem,
-  isLikeSelected,
 }) {
+  const api = "https://i9b103.p.ssafy.io/api";
   const dispatch = useDispatch();
-  console.log("카테고리 정렬 선택", selectedCategoryItem);
-  console.log("좋아요 정렬 선택", isLikeSelected);
-  useEffect(() => {
-    axios
-      .get("https://i9b103.p.ssafy.io/api/comment/" + boardSeq)
-      .then((response) => {
-        console.log("응답", response.data);
 
-        const fetchedCommentList = [...response.data];
+  //댓글, 대댓글 변수
+  const [isWriteChildComment, setIsWriteChildComment] = useState(false);
 
-        // console.log("패치 된 카드 리스트", fetchedCardList);
-        dispatch(getCommentList(fetchedCommentList));
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-  }, [dispatch, commentUpdate, boardSeq]);
+  //댓글 모달
+  const isOpenComment = useSelector((state) => {
+    return state.isOpenComment;
+  });
+
+  //댓글 불러오기
   const commentObj = useSelector((state) => {
     return state.commentObj;
   });
 
-  const [isWriteChildComment, setIsWriteChildComment] = useState(false);
+  useEffect(() => {
+    axios
+      .get(`${api}/comment/${boardSeq}`)
+      .then((response) => {
+        const fetchedCommentList = [...response.data];
+        dispatch(getCommentList(fetchedCommentList));
+      })
+      .catch((error) => {});
+  }, [dispatch, commentUpdate, boardSeq]);
 
-  const [parentCommentNumber, setParentCommentNumber] = useState("");
-  // const [parentUser, setParentUser] = useState("")
-
-  const isOpenComment = useSelector((state) => {
-    return state.isOpenComment;
-  });
-  const [nickname, setNickname] = useState(null);
-  const [password, setPassword] = useState("");
-  const [comment, setComment] = useState("");
-
-  const [inputNickname, setInputNickname] = useState("");
-  const [inputPassword, setInputPassword] = useState("");
-  const [inputComment, setInputComment] = useState("");
-
-  const [parentNum, setParentNum] = useState(null);
-  // const [commentNum, setCommentNum] = useState("");
-  // console.log(new Date().toISOString().slice(0, -5))
+  //시간 출력 형식 변환
   function timePassed(date) {
     let timeValue = new Date(date);
     let today = new Date();
-    // console.log("오늘:", today);
-    // console.log("작성시", timeValue);
-    // 분을 나타냄
     let time = (today - timeValue) / 1000 / 60;
-
     if (time < 1) {
       return "방금 전";
     }
@@ -83,15 +63,21 @@ function BalanceGameCommentModal({
       today.getMonth() + 1
     }월 ${today.getDate()}일`;
   }
-  // console.log(boardSeq);
+
   //부모 댓글 등록
+  const [nickname, setNickname] = useState(null);
+  const [password, setPassword] = useState("");
+  const [comment, setComment] = useState("");
+  const [inputNickname, setInputNickname] = useState("");
+  const [inputPassword, setInputPassword] = useState("");
+  const [inputComment, setInputComment] = useState("");
+
   function handleCommentRegist() {
     const newComment = {
       nickName: nickname || null,
       password: password,
       content: comment,
     };
-    console.log(newComment);
     if (newComment.content.length === 0) {
       setConfirm(true);
       setShowCheckModal(true);
@@ -113,16 +99,16 @@ function BalanceGameCommentModal({
     } else {
       axios
         .post(
-          "https://i9b103.p.ssafy.io/api/comment/regist/parent/" + boardSeq,
+          `${api}/comment/regist/parent/${boardSeq}`,
           JSON.stringify(newComment),
           {
             headers: {
               "Content-Type": `application/json`,
             },
-          }
+          },
         )
         .then(() => {
-          setCommentUpdate(commentUpdate + 1);
+          setCommentUpdate(!commentUpdate);
           getOrderedBoardList();
           setNickname(null);
           setPassword("");
@@ -132,10 +118,6 @@ function BalanceGameCommentModal({
           setInputComment("");
         })
         .catch((error) => {
-          console.error(newComment);
-          console.error(error);
-          //댓글 등록 실패
-          // setShowCheckModal이거를 null이 아니게 바꿔줘야함
           setConfirm(true);
           setShowCheckModal(true);
           setConfirmModalData({
@@ -149,15 +131,14 @@ function BalanceGameCommentModal({
   }
 
   // 대댓글 등록
-  function handleChildCommentRegist() {
-    // console.log(parentNum);
+  const [parentNum, setParentNum] = useState(null);
 
+  function handleChildCommentRegist() {
     const newComment = {
       nickName: nickname || null,
       password: password,
       content: comment,
     };
-    console.log(newComment);
     if (newComment.content.length === 0) {
       setConfirm(true);
       setShowCheckModal(true);
@@ -179,16 +160,16 @@ function BalanceGameCommentModal({
     } else {
       axios
         .post(
-          "https://i9b103.p.ssafy.io/api/comment/regist/child/" + parentNum,
+          `${api}/comment/regist/child/${parentNum}`,
           JSON.stringify(newComment),
           {
             headers: {
               "Content-Type": `application/json`,
             },
-          }
+          },
         )
         .then(() => {
-          setCommentUpdate(commentUpdate + 1);
+          setCommentUpdate(!commentUpdate);
           getOrderedBoardList();
           setNickname(null);
           setPassword("");
@@ -198,9 +179,7 @@ function BalanceGameCommentModal({
           setInputComment("");
         })
         .catch((error) => {
-          //대댓글 등록 실패
           setConfirm(true);
-          // setShowCheckModal이거를 null이 아니게 바꿔줘야함
           setShowCheckModal(true);
           setConfirmModalData({
             confirmTitle: "답글 등록 실패",
@@ -225,7 +204,6 @@ function BalanceGameCommentModal({
           className={classes.comment_outer_box}
           onClick={(e) => {
             setIsWriteChildComment(false);
-            // setParentUser("")
             e.stopPropagation();
           }}
         >
@@ -252,7 +230,6 @@ function BalanceGameCommentModal({
                           alt=""
                           className={classes.trashcan_img}
                           onClick={() => {
-                            console.log("삭제");
                             setShowCheckModal({
                               commentSeq: comment.commentSeq,
                               title: "본인이 작성한 댓글만 삭제할 수 있습니다.",
@@ -260,7 +237,6 @@ function BalanceGameCommentModal({
                               type: "delete",
                               action: "삭제하기",
                             });
-                            // setCommentNum(comment.commentSeq);
                           }}
                         />
                       </div>
@@ -271,13 +247,8 @@ function BalanceGameCommentModal({
                         className={classes.comment_area_bottom}
                         onClick={(e) => {
                           e.stopPropagation();
-
-                          console.log("답글달기");
                           setIsWriteChildComment(true);
-                          // setParentUser(comment.nickName)
-                          setParentCommentNumber(comment.commentSeq);
                           setParentNum(comment.commentSeq);
-                          console.log(parentNum);
                         }}
                       >
                         답글달기
@@ -302,7 +273,6 @@ function BalanceGameCommentModal({
                                 alt=""
                                 className={classes.trashcan_img}
                                 onClick={() => {
-                                  console.log("삭제");
                                   setShowCheckModal({
                                     commentSeq: childComment.commentSeq,
                                     title:
@@ -311,10 +281,8 @@ function BalanceGameCommentModal({
                                     type: "delete",
                                     action: "삭제하기",
                                   });
-                                  // setCommentNum(childComment.commentSeq);
                                 }}
                               />
-                              {/* </div> */}
                             </div>
                             <div className={classes.comment_area_middle}>
                               {childComment.content}
@@ -366,7 +334,6 @@ function BalanceGameCommentModal({
                   <input
                     type="text"
                     className={classes.input_tag}
-                    // value={parentUser || ` `}
                     placeholder="답글을 등록하세요"
                     value={inputComment}
                     onChange={(e) => {
@@ -378,8 +345,6 @@ function BalanceGameCommentModal({
                   <button
                     className={classes.regist_btn}
                     onClick={() => {
-                      // console.log(parentCommentNumber);
-                      //대댓글 등록
                       handleChildCommentRegist();
                     }}
                   >
@@ -432,8 +397,6 @@ function BalanceGameCommentModal({
                   <button
                     className={classes.regist_btn}
                     onClick={() => {
-                      console.log(parentCommentNumber);
-                      //댓글 등록
                       handleCommentRegist();
                     }}
                   >

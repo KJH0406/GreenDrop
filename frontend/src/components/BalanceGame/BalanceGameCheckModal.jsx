@@ -1,13 +1,12 @@
 import classes from "./BalanceGameCheckModal.module.css";
-
 import BalanceGameConfirm from "./BalanceGameConfirm";
 import BalanceGamePasswordCheck from "./BalanceGamePasswordCheck";
+
 function BalanceGameCheckModal(props) {
   return (
     <div
       className={classes.backdrop}
       onClick={() => {
-        //모달 close
         props.setShowCheckModal("");
         props.setConfirmModalData("");
         props.setConfirm(false);
