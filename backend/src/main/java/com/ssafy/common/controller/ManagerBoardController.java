@@ -1,6 +1,7 @@
 package com.ssafy.common.controller;
 
 import com.ssafy.common.dto.CommentDto;
+import com.ssafy.common.dto.response.BoardDetailResponseDto;
 import com.ssafy.common.dto.response.BoardResponseDto;
 import com.ssafy.common.entity.Board;
 import com.ssafy.common.service.BoardService;
@@ -52,7 +53,7 @@ public class ManagerBoardController {
     }
 
     @GetMapping("/boardDetail/{boardNo}")
-    ResponseEntity<Board> getBoardDetail(@PathVariable Long boardNo){
+    ResponseEntity<BoardDetailResponseDto> getBoardDetail(@PathVariable Long boardNo){
         return new ResponseEntity<>(managerBoardService.getBoardDetail(boardNo), HttpStatus.OK);
     }
 
