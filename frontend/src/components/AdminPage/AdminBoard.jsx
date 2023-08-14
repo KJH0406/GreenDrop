@@ -260,7 +260,7 @@ const AdminBoard = () => {
                   <tr key={reservation.reservationSeq}>
                     <td>
                       <Link
-                        to={`/admin/adminBoardDetail/${reservation.board.boardSeq}/${reservation.reservationSeq}`}
+                        to={`/admin/adminBoardDetail/${reservation.board.boardSeq}/${reservation.reservationSeq}/${reservation.board.item}`}
                       >
                         {reservation.reservationSeq}
                       </Link>
@@ -364,7 +364,11 @@ const AdminBoard = () => {
               {currentPosts.map((post) => (
                 <tr key={post.boardSeq}>
                   <td>
-                    <Link to={`/admin/adminBoardDetail/${post.boardSeq}/`}>
+                    <Link
+                      to={`/admin/adminBoardDetail/${post.boardSeq}/${null}/${
+                        post.item
+                      }`}
+                    >
                       {post.boardSeq}
                     </Link>
                   </td>
