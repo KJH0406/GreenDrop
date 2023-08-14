@@ -16,6 +16,10 @@ const Test = () => {
 
       try {
         const parsedData = res;
+        console.log("e " + e)
+        console.log("e.data " + e.data)
+        console.log("res " + res);
+        console.log("parsedData " + parsedData);
         // 받아오는 data로 할 일
         setData(parsedData);
       } catch (error) {
