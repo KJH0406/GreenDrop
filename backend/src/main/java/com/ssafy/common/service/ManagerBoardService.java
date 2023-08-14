@@ -83,10 +83,6 @@ public class ManagerBoardService {
                 () -> new IllegalArgumentException("보드 카테고리 없음")
         );
 
-        Category category = categoryRepository.findByCategorySeq(boardCategory.getCategory().getCategorySeq()).orElseThrow(
-                () -> new IllegalArgumentException("카테고리 없음")
-        );
-
         return BoardDetailResponseDto.builder()
                 .boardSeq(board.getBoardSeq())
                 .question(board.getQuestion())
@@ -100,7 +96,7 @@ public class ManagerBoardService {
                 .createdDate(board.getCreatedDate())
                 .reservationList(board.getReservationList())
                 .comment(comment)
-                .category(category)
+                .category(boardCategory.getCategory())
                 .build();
     }
 
