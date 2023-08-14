@@ -3,10 +3,8 @@ package com.ssafy.common.repository;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.ssafy.common.dto.response.BoardDetailResponseDto;
 import com.ssafy.common.dto.response.BoardResponseDto;
 import com.ssafy.common.entity.Board;
-import com.ssafy.common.entity.BoardCategory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.stereotype.Repository;
@@ -42,22 +40,6 @@ public class BoardRepositoryImpl extends QuerydslRepositorySupport implements Bo
                         board.boardSeq,
                         board.question,board.leftAnswer,board.rightAnswer, board.ip,board.likeCount
                         ,board.createdDate, board.lastModifiedDate
-                        ,board.nickname,board.lastModifiedDate,category.item))
-                .from(board)
-                .leftJoin(board.boardCategories,boardCategory)
-                .leftJoin(boardCategory.category,category)
-                .where(board.boardSeq.eq(boardNo)).fetch();
-
-        return query.get(0);
-    }
-
-    @Override
-    public BoardDetailResponseDto oneBoardWithCategory(Long boardNo) {
-        List<BoardDetailResponseDto> query = queryFactory
-                .select(Projections.fields(BoardDetailResponseDto.class,
-                        board.boardSeq,
-                        board.question,board.leftAnswer,board.rightAnswer, board.likeCount
-                        ,board.createdDate, board.isDeleted, board.deletedDate
                         ,board.nickname,board.lastModifiedDate,category.item))
                 .from(board)
                 .leftJoin(board.boardCategories,boardCategory)

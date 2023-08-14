@@ -1,13 +1,11 @@
 package com.ssafy.common.controller;
 
 import com.ssafy.common.dto.CommentDto;
-import com.ssafy.common.dto.response.BoardDetailResponseDto;
 import com.ssafy.common.dto.response.BoardResponseDto;
 import com.ssafy.common.entity.Board;
 import com.ssafy.common.service.BoardService;
 import com.ssafy.common.service.CommentService;
 import com.ssafy.common.service.ManagerBoardService;
-import com.ssafy.common.service.ManagerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -53,7 +51,7 @@ public class ManagerBoardController {
     }
 
     @GetMapping("/boardDetail/{boardNo}")
-    ResponseEntity<BoardDetailResponseDto> getBoardDetail(@PathVariable Long boardNo){
+    ResponseEntity<Board> getBoardDetail(@PathVariable Long boardNo){
         return new ResponseEntity<>(managerBoardService.getBoardDetail(boardNo), HttpStatus.OK);
     }
 
