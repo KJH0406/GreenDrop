@@ -1,11 +1,14 @@
 package com.ssafy.common.service;
 
 import com.ssafy.common.dto.CommentDto;
+import com.ssafy.common.dto.response.BoardDetailResponseDto;
 import com.ssafy.common.dto.response.BoardResponseDto;
 import com.ssafy.common.dto.response.CommentResponseDto;
 import com.ssafy.common.entity.Board;
+import com.ssafy.common.entity.BoardCategory;
 import com.ssafy.common.entity.Category;
 import com.ssafy.common.entity.Comment;
+import com.ssafy.common.repository.BoardCategoryRepository;
 import com.ssafy.common.repository.BoardRepository;
 import com.ssafy.common.repository.CategoryRepository;
 import com.ssafy.common.repository.CommentRepository;
@@ -25,6 +28,7 @@ public class ManagerBoardService {
     private final BoardRepository boardRepository;
     private final CommentRepository commentRepository;
     private final CategoryRepository categoryRepository;
+    private final BoardCategoryRepository boardCategoryRepository;
     private final BoardService boardService;
     private final ModelMapper modelMapper;
 
@@ -68,8 +72,35 @@ public class ManagerBoardService {
         return boardList;
     }
 
-    public Board getBoardDetail(Long boardNo){
-        return boardRepository.findBoardByBoardSeq(boardNo).get();
+    public BoardDetailResponseDto getBoardDetail(Long boardNo){
+        Board board = boardRepository.findBoardByBoardSeq(boardNo).orElseThrow(
+                () -> new IllegalArgumentException("보드 없음")
+        );
+
+        List<Comment> comment = commentRepository.findByComment(board.getBoardSeq());
+
+        BoardCategory boardCategory = boardCategoryRepository.findBoardCategoryByBoard_BoardSeq(board.getBoardSeq()).orElseThrow(
+                () -> new IllegalArgumentException("보드 카테고리 없음")
+        );
+
+        Category category = categoryRepository.findByCategorySeq(boardCategory.getCategory().getCategorySeq()).orElseThrow(
+                () -> new IllegalArgumentException("카테고리 없음")
+        );
+
+        return BoardDetailResponseDto.builder()
+                .boardSeq(board.getBoardSeq())
+                .question(board.getQuestion())
+                .leftAnswer(board.getLeftAnswer())
+                .rightAnswer(board.getRightAnswer())
+                .nickname(board.getNickname())
+                .likeCount(board.getLikeCount())
+                .isDeleted(board.getIsDeleted())
+                .deletedDate(board.getDeletedDate())
+                .lastModifiedDate(board.getLastModifiedDate())
+                .createdDate(board.getCreatedDate())
+                .comment(comment)
+                .category(category)
+                .build();
     }
 
     //관리자는 삭제된 댓글도 모두 확인가능
