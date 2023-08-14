@@ -66,7 +66,7 @@ const router = createBrowserRouter([
       { path: "adminBoard", element: <AdminBoard /> },
       { path: "adminCategories", element: <AdminCategories /> },
       {
-        path: "adminBoardDetail/:boardSeqParam",
+        path: "adminBoardDetail/:boardSeqParam/:reservationSeq?",
         element: <AdminBoardDetail />,
       },
     ],

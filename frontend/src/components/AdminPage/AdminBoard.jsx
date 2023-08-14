@@ -64,6 +64,7 @@ const AdminBoard = () => {
     axios
       .get(`${api}reservation/list`)
       .then((response) => {
+        console.log(response.data);
         setReservations(response.data);
       })
       .catch((error) => {
@@ -257,7 +258,14 @@ const AdminBoard = () => {
               <tbody>
                 {reservations.map((reservation) => (
                   <tr key={reservation.reservationSeq}>
-                    <td>{reservation.reservationSeq}</td>
+                    <td>
+                      <Link
+                        to={`/admin/adminBoardDetail/${reservation.board.boardSeq}/${reservation.reservationSeq}`}
+                      >
+                        {reservation.reservationSeq}
+                      </Link>
+                    </td>
+
                     <td>{truncateText(reservation.board.question, 10)}</td>
                     <td>{truncateText(reservation.board.leftAnswer, 10)}</td>
                     <td>{truncateText(reservation.board.rightAnswer, 10)}</td>
@@ -356,7 +364,7 @@ const AdminBoard = () => {
               {currentPosts.map((post) => (
                 <tr key={post.boardSeq}>
                   <td>
-                    <Link to={`/admin/adminBoardDetail/${post.boardSeq}`}>
+                    <Link to={`/admin/adminBoardDetail/${post.boardSeq}/`}>
                       {post.boardSeq}
                     </Link>
                   </td>
