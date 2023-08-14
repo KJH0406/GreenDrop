@@ -79,9 +79,9 @@ public class ManagerBoardService {
 
         List<Comment> comment = commentRepository.findByComment(board.getBoardSeq());
 
-        BoardCategory boardCategory = boardCategoryRepository.findBoardCategoryByBoard_BoardSeq(board.getBoardSeq()).orElseThrow(
-                () -> new IllegalArgumentException("보드 카테고리 없음")
-        );
+//        BoardCategory boardCategory = boardCategoryRepository.findBoardCategoryByBoard_BoardSeq(board.getBoardSeq()).orElseThrow(
+//                () -> new IllegalArgumentException("보드 카테고리 없음")
+//        );
 
         return BoardDetailResponseDto.builder()
                 .boardSeq(board.getBoardSeq())
@@ -96,7 +96,7 @@ public class ManagerBoardService {
                 .createdDate(board.getCreatedDate())
                 .reservationList(board.getReservationList())
                 .comment(comment)
-                .category(boardCategory.getCategory())
+//                .category(boardCategory.getCategory())
                 .build();
     }
 
