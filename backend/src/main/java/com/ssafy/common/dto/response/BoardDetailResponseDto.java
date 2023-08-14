@@ -2,6 +2,7 @@ package com.ssafy.common.dto.response;
 
 import com.ssafy.common.entity.Category;
 import com.ssafy.common.entity.Comment;
+import com.ssafy.common.entity.Reservation;
 import jakarta.persistence.Column;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -25,6 +26,7 @@ public class BoardDetailResponseDto {
     private LocalDateTime deletedDate;
     private LocalDateTime lastModifiedDate;
     private LocalDateTime createdDate;
+    private List<Reservation> reservationList;
     private List<Comment> comment;
     private Category category;
 }

@@ -98,6 +98,7 @@ public class ManagerBoardService {
                 .deletedDate(board.getDeletedDate())
                 .lastModifiedDate(board.getLastModifiedDate())
                 .createdDate(board.getCreatedDate())
+                .reservationList(board.getReservationList())
                 .comment(comment)
                 .category(category)
                 .build();
