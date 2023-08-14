@@ -4,14 +4,8 @@ import com.ssafy.common.dto.CommentDto;
 import com.ssafy.common.dto.response.BoardDetailResponseDto;
 import com.ssafy.common.dto.response.BoardResponseDto;
 import com.ssafy.common.dto.response.CommentResponseDto;
-import com.ssafy.common.entity.Board;
-import com.ssafy.common.entity.BoardCategory;
-import com.ssafy.common.entity.Category;
-import com.ssafy.common.entity.Comment;
-import com.ssafy.common.repository.BoardCategoryRepository;
-import com.ssafy.common.repository.BoardRepository;
-import com.ssafy.common.repository.CategoryRepository;
-import com.ssafy.common.repository.CommentRepository;
+import com.ssafy.common.entity.*;
+import com.ssafy.common.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -28,7 +22,7 @@ public class ManagerBoardService {
     private final BoardRepository boardRepository;
     private final CommentRepository commentRepository;
     private final CategoryRepository categoryRepository;
-    private final BoardCategoryRepository boardCategoryRepository;
+    private final ReservationRepository reservationRepository;
     private final BoardService boardService;
     private final ModelMapper modelMapper;
 
@@ -73,31 +67,11 @@ public class ManagerBoardService {
     }
 
     public BoardDetailResponseDto getBoardDetail(Long boardNo){
-        Board board = boardRepository.findBoardByBoardSeq(boardNo).orElseThrow(
-                () -> new IllegalArgumentException("보드 없음")
-        );
-
-        List<Comment> comment = commentRepository.findByComment(board.getBoardSeq());
-
-//        BoardCategory boardCategory = boardCategoryRepository.findBoardCategoryByBoard_BoardSeq(board.getBoardSeq()).orElseThrow(
-//                () -> new IllegalArgumentException("보드 카테고리 없음")
-//        );
-
-        return BoardDetailResponseDto.builder()
-                .boardSeq(board.getBoardSeq())
-                .question(board.getQuestion())
-                .leftAnswer(board.getLeftAnswer())
-                .rightAnswer(board.getRightAnswer())
-                .nickname(board.getNickname())
-                .likeCount(board.getLikeCount())
-                .isDeleted(board.getIsDeleted())
-                .deletedDate(board.getDeletedDate())
-                .lastModifiedDate(board.getLastModifiedDate())
-                .createdDate(board.getCreatedDate())
-                .reservationList(board.getReservationList())
-                .comment(comment)
-//                .category(boardCategory.getCategory())
-                .build();
+        BoardDetailResponseDto responseDto = boardRepository.oneBoardWithCategory(boardNo);
+        LocalDateTime now = LocalDateTime.now();
+        List<Reservation> reservationList = reservationRepository.findByAfterNow(now);
+        responseDto.setReservationList(reservationList);
+        return responseDto;
     }
 
     //관리자는 삭제된 댓글도 모두 확인가능
