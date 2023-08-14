@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import React from "react";
 function AdminBoardDetail() {
-  const { boardSeqParam, reservationSeq } = useParams();
+  const { boardSeqParam, reservationSeq, category } = useParams();
   const [reservationInfo, setReservationInfo] = useState({});
 
   // console.log(reservationSeq);
@@ -103,7 +103,7 @@ function AdminBoardDetail() {
           </tr>
           <tr>
             <th>카테고리</th>
-            <td>{post.item}</td>
+            <td>{category}</td>
             <th>수정일</th>
             <td>{post.lastModifiedDate ? post.lastModifiedDate : "none"}</td>
           </tr>
