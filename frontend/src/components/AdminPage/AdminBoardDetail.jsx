@@ -2,71 +2,41 @@ import axios from "axios";
 import classes from "./AdminBoardDetail.module.css";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import React from "react";
 function AdminBoardDetail() {
-  const { boardSeqParam } = useParams();
+  const { boardSeqParam, reservationSeq } = useParams();
+  const [reservationInfo, setReservationInfo] = useState({});
 
+  // console.log(reservationSeq);
   const api = "https://i9b103.p.ssafy.io/api";
 
   const [post, setPost] = useState({});
+  const [commentObj, setCommentObj] = useState([]);
 
   //해당 게시글의 댓글 전부 가져오는 비동기 통신 부분
   useEffect(() => {
-    axios.get(api + "/board/detail/" + boardSeqParam).then((response) => {
-      console.log("글 정보: ", response.data);
-      setPost(response.data);
-    });
-    axios.get(api + "/comment/" + boardSeqParam).then((response) => {
-      console.log("댓글정보: ", response.data);
-    });
+    axios
+      .get(api + "/managerboard/boardDetail/" + boardSeqParam)
+      .then((response) => {
+        setPost(response.data);
+        for (let i = 0; i < response.data.reservationList.length; i++) {
+          if (
+            response.data.reservationList[i].reservationSeq ===
+            parseInt(reservationSeq)
+          ) {
+            setReservationInfo(response.data.reservationList[i]);
+            console.log(response.data.reservationList[i]);
+          }
+        }
+      });
+    axios
+      .get(api + "/managerboard/comments/" + boardSeqParam)
+      .then((response) => {
+        const fetchedComment = [...response.data];
+        setCommentObj(fetchedComment);
+        console.log(commentObj);
+      });
   }, []);
-
-  const [commentObj, setCommentObj] = useState([
-    {
-      content: "???",
-      commentSeq: 159,
-      nickName: "키180차은우",
-      ip: "172.226.95.47",
-      createdDate: "2023-08-09T15:43:35",
-      deletedDate: "2023-08-12 17:55:39",
-      isDeleted: 1,
-    },
-    {
-      content: "걍 얼굴 잘생기면 끝임 ㅋㅋ",
-      commentSeq: 161,
-      nickName: "ㅇㅇ",
-      ip: "211.36.148.234",
-      createdDate: "2023-08-09T15:44:23",
-      deletedDate: "2023-08-12 17:53:48",
-      isDeleted: 1,
-    },
-    {
-      content: "용범님 존잘?",
-      commentSeq: 165,
-      nickName: "ssafy",
-      ip: "117.111.28.34",
-      createdDate: "2023-08-09T16:29:56",
-      deletedDate: null,
-      isDeleted: 0,
-    },
-    {
-      content: "ㅇㅇ 존잘",
-      commentSeq: 166,
-      nickName: "ssafy",
-      ip: "117.111.28.34",
-      createdDate: "2023-08-09T16:34:04",
-      deletedDate: null,
-      isDeleted: 0,
-    },
-    {
-      content: "나예요 ㅋ",
-      commentSeq: 167,
-      nickName: "3반 김용범",
-      ip: "117.111.28.34",
-      createdDate: "2023-08-09T16:34:26",
-      deletedDate: null,
-      isDeleted: 0,
-    },
-  ]);
 
   const [selectedComments, setSelectedComments] = useState([]);
 
@@ -111,9 +81,7 @@ function AdminBoardDetail() {
         <tbody>
           <tr>
             <th>등록번호</th>
-            <td>{post.boardSeq}</td>
-            <th>등록 예정 날짜</th>
-            <td>none</td>
+            <td colSpan={3}>{post.boardSeq}</td>
           </tr>
           <tr>
             <th>주제</th>
@@ -139,8 +107,35 @@ function AdminBoardDetail() {
             <th>수정일</th>
             <td>{post.lastModifiedDate ? post.lastModifiedDate : "none"}</td>
           </tr>
+          <tr>
+            <th>삭제 여부</th>
+            <td>{post.isDeleted === 0 ? "N" : "Y"}</td>
+            <th>삭제 일시</th>
+            <td>{post.deletedDateTime ? post.deletedDateTime : "none"}</td>
+          </tr>
         </tbody>
       </table>
+      {reservationInfo ? (
+        <table className={classes.admin_board_detail_table}>
+          <thead>
+            <tr>
+              <th>예약번호</th>
+              <th>등록 예정 날짜</th>
+              <th>등록 매니저</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{reservationInfo.reservationSeq}</td>
+              <td>{reservationInfo.dateTime}</td>
+              <td>{reservationInfo.managerId}</td>
+            </tr>
+          </tbody>
+        </table>
+      ) : (
+        <></>
+      )}
+
       <div className={classes.admin_btn_area}>
         <button
           className={classes.admin_comment_delete_btn}
@@ -164,25 +159,58 @@ function AdminBoardDetail() {
           </tr>
         </thead>
         <tbody>
-          {commentObj.map((comment, idx) => {
+          {commentObj.map(({ comment, comments }, idx) => {
             return (
-              <tr key={idx}>
-                <td>{comment.commentSeq}</td>
-                <td>{comment.nickName}</td>
-                <td>{comment.content}</td>
-                <td>{comment.createdDate}</td>
-                <td>{comment.isDeleted === 0 ? "N" : "Y"}</td>
-                <td>{comment.isDeleted ? comment.deletedDate : "none"}</td>
-                <td>
-                  <input
-                    type="checkbox"
-                    checked={selectedComments.includes(comment.commentSeq)}
-                    onChange={(e) => {
-                      handleCheckboxChange(e, comment.commentSeq);
-                    }}
-                  />
-                </td>
-              </tr>
+              <React.Fragment key={idx}>
+                <tr>
+                  <td>{comment.commentSeq}</td>
+                  <td>{comment.nickName}</td>
+                  <td>{comment.content}</td>
+                  <td>{comment.createdDate}</td>
+                  <td>{comment.isDeleted === 0 ? "N" : "Y"}</td>
+                  <td>
+                    {comment.isDeleted === 1 ? comment.deletedDateTime : "none"}
+                  </td>
+                  <td>
+                    <input
+                      type="checkbox"
+                      checked={selectedComments.includes(comment.commentSeq)}
+                      onChange={(e) => {
+                        handleCheckboxChange(e, comment.commentSeq);
+                      }}
+                      disabled={comment.isDeleted === 1 ? true : false}
+                    />
+                  </td>
+                </tr>
+                {comments.map((childComment, idx2) => {
+                  return (
+                    <tr key={idx2}>
+                      <td>{childComment.commentSeq}</td>
+                      <td>{childComment.nickName}</td>
+                      <td>{childComment.content}</td>
+                      <td>{childComment.createdDate}</td>
+                      <td>{childComment.isDeleted === 0 ? "N" : "Y"}</td>
+                      <td>
+                        {childComment.isDeleted === 1
+                          ? childComment.deletedDateTime
+                          : "none"}
+                      </td>
+                      <td>
+                        <input
+                          type="checkbox"
+                          checked={selectedComments.includes(
+                            childComment.commentSeq,
+                          )}
+                          onChange={(e) => {
+                            handleCheckboxChange(e, childComment.commentSeq);
+                          }}
+                          disabled={childComment.isDeleted === 1 ? true : false}
+                        />
+                      </td>
+                    </tr>
+                  );
+                })}
+              </React.Fragment>
             );
           })}
         </tbody>
