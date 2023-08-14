@@ -59,7 +59,7 @@ const AdminBoard = () => {
     return text;
   };
 
-  // 추가 - 현재 상황을 보기 위해 임시로 board/list로 list를 받는 중 추후 아래 axios로 변경 요망
+  // 추가
   useEffect(() => {
     axios
       .get(`${api}reservation/list`)
@@ -77,6 +77,7 @@ const AdminBoard = () => {
       .get(`${api}board/list`)
       .then((response) => {
         setPosts(response.data);
+        console.log(response.data);
       })
       .catch((error) => {
         console.error("Error fetching posts:", error);
@@ -351,6 +352,7 @@ const AdminBoard = () => {
             <thead>
               <tr className={classes.admin_board_heading}>
                 <th>등록번호</th>
+                <th>카테고리</th>
                 <th>주제</th>
                 <th>왼쪽 선택지</th>
                 <th>오른쪽 선택지</th>
@@ -372,6 +374,7 @@ const AdminBoard = () => {
                       {post.boardSeq}
                     </Link>
                   </td>
+                  <td>{truncateText(post.item, 20)}</td>
                   <td>{truncateText(post.question, 20)}</td>
                   <td>{truncateText(post.leftAnswer, 20)}</td>
                   <td>{truncateText(post.rightAnswer, 20)}</td>
