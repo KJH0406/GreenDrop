@@ -3,9 +3,7 @@ package com.ssafy.common.dto.response;
 import com.ssafy.common.entity.Category;
 import com.ssafy.common.entity.Comment;
 import jakarta.persistence.Column;
-import lombok.Builder;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -14,10 +12,10 @@ import java.util.List;
 
 @Data
 @Builder
-@RequiredArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 public class BoardDetailResponseDto {
     private Long boardSeq;
-
     private String question;
     private String leftAnswer;
     private String rightAnswer;
@@ -29,5 +27,4 @@ public class BoardDetailResponseDto {
     private LocalDateTime createdDate;
     private List<Comment> comment;
     private Category category;
-
 }
