@@ -4,11 +4,11 @@ const Test = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    const eventSource = new EventSource("https://127.0.0.1/events");
+    const eventSource = new EventSource("http://127.0.0.1:8888/events");
 
     eventSource.onopen = () => {
       // 연결 시 할 일
-      console.log("너 지금 되긴 하는거니?")
+      console.log("너 지금 되긴 하는거니?");
     };
 
     eventSource.onmessage = async (e) => {
@@ -48,9 +48,7 @@ const Test = () => {
     <div>
       {/* data를 사용하여 화면에 표시 */}
       <ul>
-        {data.map((item, index) => (
-          <li key={index}>{item}</li>
-        ))}
+        <ul>{data}</ul>
       </ul>
     </div>
   );
