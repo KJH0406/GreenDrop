@@ -4,7 +4,7 @@ const Test = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    const eventSource = new EventSource("http://127.0.0.1:8888/events");
+    const eventSource = new EventSource("https://127.0.0.1/events");
 
     eventSource.onopen = () => {
       // 연결 시 할 일
