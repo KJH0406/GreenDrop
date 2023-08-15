@@ -228,86 +228,84 @@ const AdminBoard = () => {
 
   return (
     <div className={classes.admin_board_container}>
-      <div className={classes.reservation_button}>
-        <button onClick={subTheme}>오늘의 주제 등록하기</button>
-        <button style={{ color: "red" }} onClick={deleteReservation}>
-          예약 삭제
-        </button>
-        <button style={{ color: "red" }} onClick={deletePost}>
-          글 삭제
-        </button>
-      </div>
-
-      <div className={classes.reservation}>
-        <div ref={tableContainerRef}>
-          {reservations.length > 0 && (
-            <table className={classes.admin_board_table}>
-              <thead>
-                <tr className={classes.admin_board_heading}>
-                  <th>등록번호</th>
-                  <th>주제</th>
-                  <th>왼쪽 선택지</th>
-                  <th>오른쪽 선택지</th>
-                  <th>좋아요 수</th>
-                  <th>닉네임</th>
-                  <th>수정 날짜</th>
-                  <th>등록 매니저</th>
-                  <th>등록 예정 날짜</th>
-                  <th>선택</th>
-                </tr>
-              </thead>
-              <tbody>
-                {reservations.map((reservation) => (
-                  <tr key={reservation.reservationSeq}>
-                    <td>
-                      <Link
-                        to={`/admin/adminBoardDetail/${reservation.board.boardSeq}/${reservation.reservationSeq}/${reservation.board.item}`}
-                      >
-                        {reservation.reservationSeq}
-                      </Link>
-                    </td>
-
-                    <td>{truncateText(reservation.board.question, 10)}</td>
-                    <td>{truncateText(reservation.board.leftAnswer, 10)}</td>
-                    <td>{truncateText(reservation.board.rightAnswer, 10)}</td>
-                    <td>{reservation.board.likeCount}</td>
-                    <td>{truncateText(reservation.board.nickname, 5)}</td>
-                    <td>{formatDate(reservation.board.lastModifiedDate)}</td>
-                    <td>{reservation.managerId}</td>
-                    <td>{reservation.dateTime}</td>
-                    <td>
-                      <input
-                        type="checkbox"
-                        checked={selectedReservations.includes(
-                          reservation.reservationSeq,
-                        )}
-                        onChange={(e) =>
-                          handleReservationCheckboxChange(
-                            e,
-                            reservation.reservationSeq,
-                            reservation.board.boardSeq,
-                          )
-                        }
-                      />
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          )}
-        </div>
-      </div>
-
       <h1>벨런스 게임 게시판 관리 페이지 입니다.</h1>
-      <div className={classes.post_button}>
-        <div className={classes.post_button_element}>
-          <Calendar onChange={onChange} value={value}></Calendar>
-          <select className="w150" onChange={handleSelect}>
-            <option value="1">오전</option>
-            <option value="2">오후</option>
-          </select>
-          <button onClick={addReservation}>주제 예약하기</button>
+      <div className={classes.admin_reservation}>
+        <div>
+          <div className={classes.reservation}>
+            <div ref={tableContainerRef}>
+              {reservations.length > 0 && (
+                <table className={classes.admin_board_table}>
+                  <thead>
+                    <tr className={classes.admin_board_heading}>
+                      <th>등록번호</th>
+                      <th>주제</th>
+                      <th>왼쪽 선택지</th>
+                      <th>오른쪽 선택지</th>
+                      <th>좋아요 수</th>
+                      <th>닉네임</th>
+                      <th>등록 매니저</th>
+                      <th>등록 예정 날짜</th>
+                      <th>선택</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {reservations.map((reservation) => (
+                      <tr key={reservation.reservationSeq}>
+                        <td>{reservation.reservationSeq}</td>
+                        <td>
+                          <Link
+                            to={`/admin/adminBoardDetail/${reservation.board.boardSeq}/${reservation.reservationSeq}/${reservation.board.item}`}
+                          >
+                            {truncateText(reservation.board.question, 10)}
+                          </Link>
+                        </td>
+                        <td>{truncateText(reservation.board.leftAnswer, 10)}</td>
+                        <td>{truncateText(reservation.board.rightAnswer, 10)}</td>
+                        <td>{reservation.board.likeCount}</td>
+                        <td>{truncateText(reservation.board.nickname, 5)}</td>
+                        <td>{reservation.managerId}</td>
+                        <td>{reservation.dateTime}</td>
+                        <td>
+                          <input
+                            type="checkbox"
+                            checked={selectedReservations.includes(
+                              reservation.reservationSeq,
+                            )}
+                            onChange={(e) =>
+                              handleReservationCheckboxChange(
+                                e,
+                                reservation.reservationSeq,
+                                reservation.board.boardSeq,
+                              )
+                            }
+                          />
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              )}
+            </div>
+          </div>
+          <div className={classes.reservation_button}>
+            <button onClick={subTheme}>오늘의 주제 등록하기</button>
+            <button style={{ color: "red" }} onClick={deleteReservation}>
+              예약 삭제
+            </button>
+          </div>
         </div>
+        <div className={classes.reservation_button_element}>
+          <Calendar onChange={onChange} value={value}></Calendar>
+          <div className={classes.reservation_time}>
+            <select className="w150" onChange={handleSelect}>
+              <option value="1">오전</option>
+              <option value="2">오후</option>
+            </select>
+            <button onClick={addReservation}>주제 예약하기</button>
+          </div>
+        </div>
+      </div>
+      <div className={classes.post_button}>
         <div className={classes.post_button_element}>
           <select
             onChange={(e) => {
@@ -344,6 +342,11 @@ const AdminBoard = () => {
           </select>
           <button onClick={getOrderedCategoryList}>정렬</button>
         </div>
+        <div className={classes.post_button_element}>
+          <button style={{ color: "red" }} onClick={deletePost}>
+            글 삭제
+          </button>
+        </div>
       </div>
 
       <div ref={tableContainerRef}>
@@ -358,29 +361,27 @@ const AdminBoard = () => {
                 <th>오른쪽 선택지</th>
                 <th>좋아요 수</th>
                 <th>닉네임</th>
-                <th>수정날짜</th>
                 <th>선택</th>
               </tr>
             </thead>
             <tbody>
               {currentPosts.map((post) => (
                 <tr key={post.boardSeq}>
+                  <td>{post.boardSeq}</td>
+                  <td>{truncateText(post.item, 20)}</td>
                   <td>
                     <Link
                       to={`/admin/adminBoardDetail/${post.boardSeq}/${null}/${
                         post.item
                       }`}
                     >
-                      {post.boardSeq}
+                      {truncateText(post.question, 20)}
                     </Link>
                   </td>
-                  <td>{truncateText(post.item, 20)}</td>
-                  <td>{truncateText(post.question, 20)}</td>
                   <td>{truncateText(post.leftAnswer, 20)}</td>
                   <td>{truncateText(post.rightAnswer, 20)}</td>
                   <td>{post.likeCount}</td>
                   <td>{post.nickname}</td>
-                  <td>{formatDate(post.lastModifiedDate)}</td>
                   <td>
                     <input
                       type="checkbox"
