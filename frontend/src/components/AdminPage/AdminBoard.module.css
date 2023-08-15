@@ -10,6 +10,19 @@
   overflow-x: auto; /* Enable horizontal scrolling */
 }
 
+.admin_reservation {
+  display: flex;
+  justify-content: space-between;
+}
+
+.reservation {
+  height: 260px;
+  margin-bottom: 5px;
+  padding: 5px;
+  overflow: auto;
+  border: 1px solid gray;
+}
+
 .reservation_button {
   display: flex;
   justify-content: flex-end;
@@ -17,7 +30,9 @@
 }
 
 .post_button {
-  margin-bottom: 10px;
+  margin: 20px 0 10px 0;
+  display: flex;
+  justify-content: space-between;
 }
 
 .post_button_element {
@@ -26,6 +41,13 @@
   margin-bottom: 10px;
 }
 
+.reservation_button_element {
+  margin: 0 0 10px 10px;
+}
+
+.reservation_time {
+  text-align: right;
+}
 
 /* Table styles */
 .admin_board_table {
@@ -41,4 +63,12 @@
   white-space: nowrap; /* Prevent text wrapping */
   text-overflow: ellipsis; /* Display ... for long text */
   overflow: hidden; /* Hide overflowing content */
+}
+
+.admin_board_table td a:link {
+  color: blue;
+}
+
+.admin_board_table td a:visited {
+  color: purple;
 }
