@@ -75,10 +75,8 @@ public class PlasticLogController {
 
     //1주일 간 일자별 수거량
     @GetMapping("/list/week")
-    public ResponseEntity<Object> plasticPerWeek(){
+    public ResponseEntity<List<Map>> plasticPerWeek(){
         //1주일간 집계량 일 단위로 반환
-        List<Map> result = plasticLogService.getPlasticCountPerWeek(LocalDate.now());
-
-        return new ResponseEntity<>(result, HttpStatus.OK);
+        return new ResponseEntity<>(plasticLogService.getPlasticCountPerWeek(LocalDate.now()), HttpStatus.OK);
     }
 }

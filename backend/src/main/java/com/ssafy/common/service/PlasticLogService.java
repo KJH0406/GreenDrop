@@ -105,16 +105,14 @@ public class PlasticLogService {
     public List<Map> getPlasticCountPerWeek(LocalDate endDate){
         LocalDate startDate = endDate.minusDays(6);
         List<Map> result = new LinkedList<>();
+
         for(LocalDate curDate = startDate; curDate.compareTo(endDate) <= 0; curDate = curDate.plusDays(1)){
-            int month = curDate.getMonthValue();
-            int day = curDate.getDayOfMonth();
-            String dateStr = Integer.toString(month)+"/"+Integer.toString(day);
             LocalDateTime startTime = curDate.atStartOfDay();
             LocalDateTime endTime = curDate.atTime(LocalTime.MAX);
-            int curTotalPlastic = plasticLogRepository.countByTime(startTime, endTime);
+            Integer curTotalPlastic = plasticLogRepository.countByTime(startTime, endTime);
 
             Map<String, Object> resultMap = new HashMap<>();
-            resultMap.put("x", dateStr);
+            resultMap.put("x", curDate);
             resultMap.put("y", curTotalPlastic);
             result.add(resultMap);
         }
