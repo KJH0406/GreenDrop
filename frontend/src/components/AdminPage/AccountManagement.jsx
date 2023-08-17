@@ -7,6 +7,17 @@ const api = "https://i9b103.p.ssafy.io/api/";
 const managerPerPage = 10; // 한 페이지에 보여줄 관리자 계정 수
 
 function AccountManagement() {
+  const formatDate = (dateStr) => {
+    const date = new Date(dateStr);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    const hours = String(date.getHours()).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+    const seconds = String(date.getSeconds()).padStart(2, "0");
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+  };
+
   // 로그인한 사용자의 토큰 가져오기
   const userInfo = localStorage.getItem("loggedInUser");
   const isSuper = JSON.parse(userInfo).role === "SUPER";
@@ -20,6 +31,12 @@ function AccountManagement() {
 
   // 모달의 보이기/감추기 상태 변수 선언
   const [showModal, setShowModal] = useState(false);
+
+  const [showModifyModal, setShowModifyModal] = useState(false);
+
+  //하위 관리자 비밀번호 수정을 위한 상태 변수 선언
+  const [userId, setUserId] = useState("");
+  const [modifyPassword, setModifyPassword] = useState(null);
 
   // 새로운 계정 정보를 담을 상태 변수 선언
   const [newAccountId, setNewAccountId] = useState("");
@@ -52,7 +69,7 @@ function AccountManagement() {
       .then((response) => {
         const modifiedManagerList = response.data.map((account) => ({
           ...account,
-          createdDate: new Date(account.createdDate).toLocaleDateString(),
+          createdDate: formatDate(new Date(account.createdDate)),
         }));
         setManagerList(modifiedManagerList);
       })
@@ -62,19 +79,24 @@ function AccountManagement() {
   }, [isSuper, token]);
 
   const handleDelete = (managerSeq) => {
-    axios
-      .delete(`${api}manager/delete`, {
-        data: { managerSeq },
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then(() => {
-        setManagerList((prevList) =>
-          prevList.filter((account) => account.managerSeq !== managerSeq),
-        );
-      })
-      .catch((error) => {
-        console.error("계정 삭제 중 오류가 발생했습니다.", error);
-      });
+    if (window.confirm("삭제하시겠습니까?")) {
+      axios
+        .delete(`${api}manager/delete`, {
+          data: { managerSeq },
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .then(() => {
+          setManagerList((prevList) =>
+            prevList.filter((account) => account.managerSeq !== managerSeq),
+          );
+          alert("삭제되었습니다.");
+        })
+        .catch((error) => {
+          alert("삭제에 실패했습니다.");
+        });
+    } else {
+      alert("삭제를 취소했습니다.");
+    }
   };
 
   const handleCreateAccount = () => {
@@ -97,7 +119,7 @@ function AccountManagement() {
           .then((response) => {
             const modifiedManagerList = response.data.map((account) => ({
               ...account,
-              createdDate: new Date(account.createdDate).toLocaleDateString(),
+              createdDate: formatDate(new Date(account.createdDate)),
             }));
             setManagerList(modifiedManagerList);
           })
@@ -116,6 +138,37 @@ function AccountManagement() {
   };
 
   const totalPages = Math.ceil(managerList.length / managerPerPage);
+
+  const handlePasswordChange = () => {
+    // Create the data object to send in the PATCH request
+    const data = {
+      id: userId,
+      password: modifyPassword,
+    };
+    if (window.confirm) {
+      // Send the PATCH request to the API
+      axios
+        .patch(`${api}manager/change/super`, data)
+        .then((response) => {
+          // Handle the response here (if needed)
+          alert("수정이 완료됐습니다.");
+        })
+        .catch((error) => {
+          // Handle error if the password change fails
+          alert("수정에 실패했습니다.");
+        });
+    } else {
+      alert("수정을 취소했습니다.");
+    }
+    // 비밀번호 변경 후 모달 닫기
+    setShowModifyModal(false);
+    setModifyPassword(null);
+  };
+
+  const handleCloseModal = () => {
+    setShowModifyModal(false);
+    setModifyPassword(null);
+  };
 
   return (
     <div
@@ -155,7 +208,17 @@ function AccountManagement() {
           >
             <p className={classes.account_id}>{account.id}</p>
             <p className={classes.account_date}>{account.createdDate}</p>
+
             <p className={classes.etc}>
+              <button
+                className={classes.modify_button}
+                onClick={() => {
+                  setUserId(account.id);
+                  setShowModifyModal(true);
+                }}
+              >
+                수정
+              </button>
               <button
                 className={classes.delete_button}
                 onClick={() => handleDelete(account.managerSeq)}
@@ -206,6 +269,30 @@ function AccountManagement() {
             </label>
             <button onClick={handleCreateAccount}>생성하기</button>
             <button onClick={() => setShowModal(false)}>닫기</button>
+          </div>
+        </div>
+      )}
+      {showModifyModal && (
+        <div className={classes.modal}>
+          <div className={classes.modal_content}>
+            <h2>비밀번호 변경하기</h2>
+            <label>
+              아이디:
+              {/* <input type="text" value={userId} disabled /> */}
+              <p>{userId}</p>
+            </label>
+            <label>
+              새로운 비밀번호:
+              <input
+                type="password"
+                value={modifyPassword || ""}
+                onChange={(e) => setModifyPassword(e.target.value)}
+              />
+            </label>
+            <div className={classes.modal_buttons}>
+              <button onClick={handlePasswordChange}>변경</button>
+              <button onClick={handleCloseModal}>취소</button>
+            </div>
           </div>
         </div>
       )}

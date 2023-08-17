@@ -98,6 +98,19 @@ function StatusPage() {
       .get(`https://i9b103.p.ssafy.io/api/plastic/list/data/${now}`)
       .then((result) => {
         setDailyOptions((dailySeries) => {
+          // const data = [
+          //   { x: "9시", y: "0" },
+          //   { x: "10시", y: "3" },
+          //   { x: "11시", y: "4" },
+          //   { x: "12시", y: "15" },
+          //   { x: "13시", y: "9" },
+          //   { x: "14시", y: "6" },
+          //   { x: "15시", y: "6" },
+          //   { x: "16시", y: "4" },
+          //   { x: "17시", y: "0" },
+          //   { x: "18시", y: "0" },
+          //   { x: "19시", y: "0" },
+          // ];
           return {
             ...dailySeries,
             series: [
@@ -117,6 +130,15 @@ function StatusPage() {
       .get("https://i9b103.p.ssafy.io/api/plastic/list/week")
       .then((result) => {
         setWeeklyOptions((weeklySeries) => {
+          // const data = [
+          //   { x: "8/5", y: "0" },
+          //   { x: "8/6", y: "0" },
+          //   { x: "8/7", y: "0" },
+          //   { x: "8/8", y: "0" },
+          //   { x: "8/9", y: "24" },
+          //   { x: "8/10", y: "32" },
+          //   { x: "8/11", y: "41" },
+          // ];
           return {
             ...weeklySeries,
             series: [

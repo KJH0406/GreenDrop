@@ -75,6 +75,21 @@
   text-overflow: ellipsis;
 }
 
+.modify_button {
+  margin-right: 2%;
+  font-size: large;
+  width: 60px;
+  height: 35px;
+  border-radius: 5px;
+  border: 1px solid #4caf50;
+  background-color: #4caf50;
+  color: white;
+}
+
+.modify_button:hover {
+  background-color: #37a150;
+}
+
 .delete_button {
   font-size: large;
   width: 60px;

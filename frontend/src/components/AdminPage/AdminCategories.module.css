@@ -97,6 +97,22 @@
   background-color: green;
 }
 
+.modify_button {
+  font-size: medium;
+  font-weight: normal;
+  width: auto;
+  height: 35px;
+  border-radius: 5px;
+  border: 1px solid #37a150;
+  background-color: #37a150;
+  color: white;
+  margin-right: 2%;
+}
+
+.modify_button:hover {
+  background-color: green;
+}
+
 .delete_btn {
   font-size: large;
   width: auto;

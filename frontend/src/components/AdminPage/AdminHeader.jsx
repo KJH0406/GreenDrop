@@ -53,6 +53,7 @@ function AdminHeader() {
   const pageList = [
     { path: "", name: "홈" },
     { path: "adminBoard", name: "밸런스 게임 관리" },
+    { path: "adminGameHistory", name: "지난 밸런스 게임" },
     { path: "adminCategories", name: "카테고리 관리" },
   ];
 
