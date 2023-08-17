@@ -180,7 +180,12 @@ function AccountManagement() {
         </div>
       </div>
       {showModal && (
-        <div className={classes.modal}>
+        <div
+          className={classes.modal}
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
+        >
           <div className={classes.modal_content}>
             <h2>관리자 계정 생성</h2>
             <label>
