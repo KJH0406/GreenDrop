@@ -194,6 +194,14 @@
   margin-top: 13px;
 }
 
+.right_pos {
+  text-align: end;
+}
+
+.left_pos {
+  text-align: start;
+}
+
 .admin_board_table {
   width: 100%;
   border-collapse: collapse;

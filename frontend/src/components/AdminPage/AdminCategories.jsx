@@ -8,8 +8,13 @@ const api = "https://i9b103.p.ssafy.io/api/";
 function AdminCategories() {
   const [categories, setCategories] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [showModifyModal, setShowModifyModal] = useState(false);
+  const [createdDate, setCreatedDate] = useState(null);
+  const [categorySeq, setCategorySeq] = useState(0);
+  const [modifyCategoryItem, setModifyCategoryItem] = useState(null);
   const [newCategoryItem, setNewCategoryItem] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [categoryUpdate, setCategoryUpdate] = useState(false);
   const itemsPerPage = 10;
 
   const handleCloseModal = () => {
@@ -27,12 +32,13 @@ function AdminCategories() {
         },
       })
       .then((response) => {
+        console.log(response);
         setCategories(response.data);
       })
       .catch((error) => {
         console.error("카테고리 리스트를 불러오는데 실패했습니다.", error);
       });
-  }, [currentPage]);
+  }, [currentPage, categoryUpdate]);
 
   const handleDelete = (categorySeq) => {
     if (window.confirm("해당 카테고리를 삭제 하시겠습니까?")) {
@@ -97,6 +103,34 @@ function AdminCategories() {
     pageNumbers.push(i);
   }
 
+  const handleModifyCategory = () => {
+    const data = {
+      item: modifyCategoryItem,
+      createdDate: createdDate,
+    };
+
+    if (window.confirm("수정하시겠습니까?")) {
+      axios
+        .patch(`${api}category/${categorySeq}`, data)
+        .then((response) => {
+          setCategoryUpdate(!categoryUpdate);
+          setShowModifyModal(false);
+
+          alert("수정이 완료됐습니다.");
+        })
+        .catch((error) => {
+          alert("수정에 실패했습니다.");
+        });
+    } else {
+      alert("수정을 취소했습니다.");
+    }
+  };
+  const handleCloseModifyModal = () => {
+    setCategorySeq(0);
+    setModifyCategoryItem(null);
+    setCreatedDate(null);
+    setShowModifyModal(false);
+  };
   return (
     <div className={classes.admin_categories_container}>
       <h1>카테고리 목록</h1>
@@ -125,6 +159,17 @@ function AdminCategories() {
               <td>{category.categorySeq}</td>
               <td>{category.item}</td>
               <td>
+                <button
+                  className={classes.modify_button}
+                  onClick={() => {
+                    setCategorySeq(category.categorySeq);
+                    setModifyCategoryItem(category.item);
+                    setCreatedDate(category.createdDate);
+                    setShowModifyModal(true);
+                  }}
+                >
+                  수정
+                </button>
                 <button
                   onClick={() => handleDelete(category.categorySeq)}
                   className={classes.delete_btn}
@@ -170,6 +215,29 @@ function AdminCategories() {
             <div className={classes.modal_buttons}>
               <button onClick={handleCreateCategory}>생성</button>
               <button onClick={handleCloseModal}>닫기</button>
+            </div>
+          </div>
+        </div>
+      )}
+      {showModifyModal && (
+        <div className={classes.modal} onClick={handleCloseModal}>
+          <div
+            className={classes.modal_content}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h2>기존 카테고리 수정</h2>
+            <label>
+              카테고리 이름:
+              <input
+                type="text"
+                value={modifyCategoryItem}
+                onChange={(e) => setModifyCategoryItem(e.target.value)}
+                placeholder="카테고리 이름을 입력하세요"
+              />
+            </label>
+            <div className={classes.modal_buttons}>
+              <button onClick={handleModifyCategory}>수정</button>
+              <button onClick={handleCloseModifyModal}>닫기</button>
             </div>
           </div>
         </div>

@@ -12,10 +12,36 @@
   padding-top: 5%;
 }
 
+.right_pos {
+  text-align: end;
+}
+
+.left_pos {
+  text-align: start;
+}
+
+.prev_container {
+  display: flex;
+  align-items: flex-start;
+  width: 57%;
+  margin-bottom: 1%;
+}
+
+.perv_btn {
+  font-size: large;
+  width: auto;
+  height: 35px;
+  border-radius: 5px;
+  border: #37a150;
+  background-color: #37a150;
+  color: white;
+  margin-right: 5px;
+}
+
 /* Table styles */
 .admin_board_detail_table {
   /* display: flex; */
-  width: 80%;
+  width: 40%;
   border-collapse: collapse;
   overflow-y: auto; /* Enable vertical scrolling within the fixed height */
   margin-bottom: 5%;
@@ -37,10 +63,22 @@
 
 .admin_btn_area {
   display: flex;
-  width: 80%;
-  flex-direction: row;
-  justify-content: flex-end;
+  flex-direction: column;
+  width: 100%;
+  justify-content: flex-start;
+  align-items: center;
   margin-bottom: 1%;
+}
+
+.flex_btn {
+  display: flex;
+  justify-content: flex-end;
+  width: 55%;
+  margin-bottom: 1%;
+}
+
+.flex_table {
+  display: flex;
 }
 
 .admin_comment_delete_btn {

@@ -21,6 +21,7 @@ import AdminBoard from "./components/AdminPage/AdminBoard";
 import AdminCategories from "./components/AdminPage/AdminCategories";
 import AdminBoardDetail from "./components/AdminPage/AdminBoardDetail";
 import Test from "./pages/Test";
+import AdminGameHistory from "./components/AdminPage/AdminGameHistory";
 
 const router = createBrowserRouter([
   {
@@ -64,6 +65,7 @@ const router = createBrowserRouter([
       { index: true, element: <AdminMain /> },
       { path: "accountManagement", element: <AccountManagement /> },
       { path: "adminBoard", element: <AdminBoard /> },
+      { path: "adminGameHistory", element: <AdminGameHistory /> },
       { path: "adminCategories", element: <AdminCategories /> },
       {
         path: "adminBoardDetail/:boardSeqParam/:reservationSeq?/:category?",

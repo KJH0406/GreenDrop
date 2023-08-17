@@ -1,9 +1,11 @@
 import axios from "axios";
 import classes from "./AdminBoardDetail.module.css";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import React from "react";
 function AdminBoardDetail() {
+  const navigate = useNavigate();
+
   const formatDate = (dateStr) => {
     const date = new Date(dateStr);
     const year = date.getFullYear();
@@ -93,46 +95,70 @@ function AdminBoardDetail() {
 
   return (
     <div className={classes.admin_board_detail_container}>
+      <div className={classes.prev_container}>
+        <button
+          onClick={() => {
+            navigate("/admin/adminBoard");
+          }}
+          className={classes.perv_btn}
+        >
+          목록으로
+        </button>
+      </div>
       <table className={classes.admin_board_detail_table}>
         <tbody>
           <tr>
-            <th>등록번호</th>
-            <td colSpan={3}>{post.boardSeq}</td>
-          </tr>
-          <tr>
-            <th>주제</th>
-            <td>{post.question}</td>
-            <th>작성자</th>
-            <td>{post.nickname}</td>
-          </tr>
-          <tr>
-            <th>왼쪽 선택지</th>
-            <td>{post.leftAnswer}</td>
-            <th>좋아요 수</th>
-            <td>{post.likeCount}</td>
-          </tr>
-          <tr>
-            <th>오른쪽 선택지</th>
-            <td>{post.rightAnswer}</td>
-            <th>작성 날짜</th>
-            <td>{formatDate(post.createdDate)}</td>
-          </tr>
-          <tr>
-            <th>카테고리</th>
-            <td>{category}</td>
-            <th>수정 날짜</th>
-            <td>
-              {post.lastModifiedDate
-                ? formatDate(post.lastModifiedDate)
-                : "none"}
+            <th className={classes.left_pos}>등록번호</th>
+            <td colSpan={3} className={classes.right_pos}>
+              {post.boardSeq?.toLocaleString("ko-KR")}
             </td>
           </tr>
           <tr>
-            <th>삭제 여부</th>
-            <td>{post.isDeleted === 0 ? "N" : "Y"}</td>
-            <th>삭제 날짜</th>
-            <td>
-              {post.deletedDateTime ? formatDate(post.deletedDateTime) : "none"}
+            <th className={classes.left_pos}>주제</th>
+            <td className={classes.left_pos}>{post.question}</td>
+            <th className={classes.left_pos}>작성자</th>
+            <td className={classes.left_pos}>{post.nickname}</td>
+          </tr>
+          <tr>
+            <th className={classes.left_pos}>왼쪽 선택지</th>
+            <td className={classes.left_pos}>{post.leftAnswer}</td>
+            <th className={classes.left_pos}>좋아요 수</th>
+            <td className={classes.right_pos}>
+              {post.likeCount >= 0 ? (
+                post.likeCount?.toLocaleString("ko-KR")
+              ) : (
+                <></>
+              )}
+            </td>
+          </tr>
+          <tr>
+            <th className={classes.left_pos}>오른쪽 선택지</th>
+            <td className={classes.left_pos}>{post.rightAnswer}</td>
+            <th className={classes.left_pos}>작성 날짜</th>
+            <td className={classes.right_pos}>
+              {formatDate(post.createdDate)}
+            </td>
+          </tr>
+          <tr>
+            <th className={classes.left_pos}>카테고리</th>
+            <td className={classes.left_pos}>{category}</td>
+            <th className={classes.left_pos}>수정 날짜</th>
+            <td className={classes.right_pos}>
+              {post.lastModifiedDate ? (
+                formatDate(post.lastModifiedDate)
+              ) : (
+                <></>
+              )}
+            </td>
+          </tr>
+          <tr>
+            <th className={classes.left_pos}>삭제 여부</th>
+            <td className={classes.left_pos}>
+              {post.isDeleted === 0 ? "N" : "Y"}
+            </td>
+            <th className={classes.left_pos}>삭제 날짜</th>
+            <td className={classes.right_pos}>
+              {post.deletedDateTime ? formatDate(post.deletedDateTime) : <></>}
             </td>
           </tr>
         </tbody>
@@ -141,22 +167,24 @@ function AdminBoardDetail() {
         <table className={classes.admin_board_detail_table}>
           <thead>
             <tr>
-              <th>예약번호</th>
-              <th>등록 예정 날짜</th>
-              <th>등록 매니저</th>
+              <th className={classes.left_pos}>예약번호</th>
+              <th className={classes.left_pos}>등록 예정 날짜</th>
+              <th className={classes.left_pos}>등록 매니저</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>{reservationInfo.reservationSeq}</td>
-              <td>
+              <td className={classes.right_pos}>
+                {reservationInfo.reservationSeq?.toLocaleString("ko-KR")}
+              </td>
+              <td className={classes.right_pos}>
                 {reservationInfo.dateTime ? (
                   formatDate(reservationInfo.dateTime)
                 ) : (
                   <></>
                 )}
               </td>
-              <td>{reservationInfo.managerId}</td>
+              <td className={classes.left_pos}>{reservationInfo.managerId}</td>
             </tr>
           </tbody>
         </table>
@@ -165,86 +193,117 @@ function AdminBoardDetail() {
       )}
 
       <div className={classes.admin_btn_area}>
-        <button
-          className={classes.admin_comment_delete_btn}
-          onClick={() => {
-            deleteComment();
-          }}
-        >
-          댓글 삭제
-        </button>
-      </div>
-      <table className={classes.admin_board_detail_table}>
-        <thead>
-          <tr>
-            <th>댓글 번호</th>
-            <th>닉네임</th>
-            <th>내용</th>
-            <th>작성 날짜</th>
-            <th>삭제 여부</th>
-            <th>삭제 날짜</th>
-            <th>선택</th>
-          </tr>
-        </thead>
-        <tbody>
-          {commentObj.map(({ comment, comments }, idx) => {
-            return (
-              <React.Fragment key={idx}>
-                <tr>
-                  <td>{comment.commentSeq}</td>
-                  <td>{comment.nickName}</td>
-                  <td>{comment.content}</td>
-                  <td>{formatDate(comment.createdDate)}</td>
-                  <td>{comment.isDeleted === 0 ? "N" : "Y"}</td>
-                  <td>
-                    {comment.isDeleted === 1
-                      ? formatDate(comment.deletedDateTime)
-                      : "none"}
-                  </td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      checked={selectedComments.includes(comment.commentSeq)}
-                      onChange={(e) => {
-                        handleCheckboxChange(e, comment.commentSeq);
-                      }}
-                      disabled={comment.isDeleted === 1 ? true : false}
-                    />
-                  </td>
-                </tr>
-                {comments.map((childComment, idx2) => {
-                  return (
-                    <tr key={idx2}>
-                      <td>{childComment.commentSeq}</td>
-                      <td>{childComment.nickName}</td>
-                      <td>{childComment.content}</td>
-                      <td>{formatDate(childComment.createdDate)}</td>
-                      <td>{childComment.isDeleted === 0 ? "N" : "Y"}</td>
-                      <td>
-                        {childComment.isDeleted === 1
-                          ? formatDate(childComment.deletedDateTime)
-                          : "none"}
+        <div className={classes.flex_btn}>
+          <button
+            className={classes.admin_comment_delete_btn}
+            onClick={() => {
+              deleteComment();
+            }}
+          >
+            댓글 삭제
+          </button>
+        </div>
+        <div className={classes.flex_table}>
+          <table className={classes.admin_board_detail_table}>
+            <thead>
+              <tr>
+                <th className={classes.left_pos}>댓글 번호</th>
+                <th className={classes.left_pos}>닉네임</th>
+                <th className={classes.left_pos}>내용</th>
+                <th className={classes.left_pos}>작성 날짜</th>
+                <th className={classes.left_pos}>삭제 여부</th>
+                <th className={classes.left_pos}>삭제 날짜</th>
+                <th className={classes.left_pos}>선택</th>
+              </tr>
+            </thead>
+            <tbody>
+              {commentObj.map(({ comment, comments }, idx) => {
+                return (
+                  <React.Fragment key={idx}>
+                    <tr>
+                      <td className={classes.right_pos}>
+                        {comment.commentSeq?.toLocaleString("ko-KR")}
+                      </td>
+                      <td className={classes.left_pos}>{comment.nickName}</td>
+                      <td className={classes.left_pos}>{comment.content}</td>
+                      <td className={classes.right_pos}>
+                        {formatDate(comment.createdDate)}
+                      </td>
+                      <td className={classes.left_pos}>
+                        {comment.isDeleted === 0 ? "N" : "Y"}
+                      </td>
+                      <td className={classes.right_pos}>
+                        {comment.isDeleted === 1 ? (
+                          formatDate(comment.deletedDateTime)
+                        ) : (
+                          <></>
+                        )}
                       </td>
                       <td>
                         <input
                           type="checkbox"
                           checked={selectedComments.includes(
-                            childComment.commentSeq,
+                            comment.commentSeq,
                           )}
                           onChange={(e) => {
-                            handleCheckboxChange(e, childComment.commentSeq);
+                            handleCheckboxChange(e, comment.commentSeq);
                           }}
-                          disabled={childComment.isDeleted === 1 ? true : false}
+                          disabled={comment.isDeleted === 1 ? true : false}
                         />
                       </td>
                     </tr>
-                  );
-                })}
-              </React.Fragment>
-            );
-          })}
-        </tbody>
-      </table>
+                    {comments.map((childComment, idx2) => {
+                      return (
+                        <tr key={idx2}>
+                          <td className={classes.right_pos}>
+                            {childComment.commentSeq}
+                          </td>
+                          <td className={classes.left_pos}>
+                            {childComment.nickName}
+                          </td>
+                          <td className={classes.left_pos}>
+                            {childComment.content}
+                          </td>
+                          <td className={classes.right_pos}>
+                            {formatDate(childComment.createdDate)}
+                          </td>
+                          <td className={classes.left_pos}>
+                            {childComment.isDeleted === 0 ? "N" : "Y"}
+                          </td>
+                          <td className={classes.right_pos}>
+                            {childComment.isDeleted === 1 ? (
+                              formatDate(childComment.deletedDateTime)
+                            ) : (
+                              <></>
+                            )}
+                          </td>
+                          <td>
+                            <input
+                              type="checkbox"
+                              checked={selectedComments.includes(
+                                childComment.commentSeq,
+                              )}
+                              onChange={(e) => {
+                                handleCheckboxChange(
+                                  e,
+                                  childComment.commentSeq,
+                                );
+                              }}
+                              disabled={
+                                childComment.isDeleted === 1 ? true : false
+                              }
+                            />
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </React.Fragment>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   );
 }
