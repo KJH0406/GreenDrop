@@ -40,8 +40,8 @@ function AdminCategories() {
       .then(() => {
         setCategories((prevCategories) =>
           prevCategories.filter(
-            (category) => category.categorySeq !== categorySeq
-          )
+            (category) => category.categorySeq !== categorySeq,
+          ),
         );
       })
       .catch((error) => {
@@ -96,13 +96,18 @@ function AdminCategories() {
       <h1>카테고리 목록</h1>
       {/* 카테고리 추가 버튼 */}
       <div className={classes.plus_category}>
-        <button onClick={() => setShowModal(true)}>카테고리 추가</button>
+        <button
+          onClick={() => setShowModal(true)}
+          className={classes.category_add_btn}
+        >
+          카테고리 추가
+        </button>
       </div>
 
       {/* 카테고리 목록 표시 */}
       <table className={classes.categories_table}>
         <thead>
-          <tr>
+          <tr className={classes.table_title}>
             <th>등록 번호</th>
             <th>카테고리 이름</th>
             <th>비고</th>
@@ -115,8 +120,8 @@ function AdminCategories() {
               <td>{category.item}</td>
               <td>
                 <button
-                  style={{ color: "red" }}
                   onClick={() => handleDelete(category.categorySeq)}
+                  className={classes.delete_btn}
                 >
                   삭제
                 </button>
