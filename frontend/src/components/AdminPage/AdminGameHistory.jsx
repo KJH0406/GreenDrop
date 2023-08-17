@@ -66,7 +66,7 @@ function AdminGameHistory() {
                   {truncateText(game.leftAnswer)}
                 </td>
                 <td className={classes.left_pos}>
-                  {truncateText(game.right_pos)}
+                  {truncateText(game.rightAnswer)}
                 </td>
                 <td className={classes.right_pos}>
                   {game.leftCount?.toLocaleString("ko-KR")}
