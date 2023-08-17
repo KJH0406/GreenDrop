@@ -1,9 +1,11 @@
 package com.ssafy.common.service;
 
+import com.ssafy.common.dto.ManagerDto;
 import com.ssafy.common.dto.ManagerListDto;
 import com.ssafy.common.dto.request.ManagerRequestDto;
 import com.ssafy.common.dto.response.ManagerResponseDto;
 import com.ssafy.common.entity.Manager;
+
 import com.ssafy.common.repository.ManagerRepository;
 import com.ssafy.common.security.Encoder;
 import com.ssafy.common.security.TokenProvider;
@@ -84,5 +86,23 @@ public class ManagerService {
         long result = managerRepository.countById(id);
         if(result == 0) return false;
         else return true;
+    }
+
+    @Transactional
+    public void superChangePasswordOk(ManagerDto managerDto){
+        Manager manager = managerRepository.searchManagerFromId(managerDto.getId());
+
+        Encoder encoder = new Encoder();
+
+        Manager changePasswordManager = Manager.builder()
+                .managerSeq(manager.getManagerSeq())
+                .id(manager.getId())
+                .password(encoder.encode(managerDto.getPassword()))
+                .createdDate(manager.getCreatedDate())
+                .role(manager.getRole())
+                .build();
+
+        managerRepository.save(changePasswordManager);
+
     }
 }

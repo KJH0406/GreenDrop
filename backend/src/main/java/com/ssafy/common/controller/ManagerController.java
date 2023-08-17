@@ -1,11 +1,14 @@
 package com.ssafy.common.controller;
 
+import com.ssafy.common.dto.ManagerDto;
 import com.ssafy.common.dto.ManagerListDto;
 import com.ssafy.common.dto.request.ManagerRequestDto;
 import com.ssafy.common.dto.response.ManagerResponseDto;
 import com.ssafy.common.security.SuperAuthorize;
 import com.ssafy.common.service.ManagerService;
+import com.ssafy.common.repository.ManagerRepositoryCustom;
 import lombok.RequiredArgsConstructor;
+import org.json.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -69,4 +72,9 @@ public class ManagerController {
 
     }
 
+    @PatchMapping("/change/super")
+    public ResponseEntity<?> superChangePassword(@RequestBody ManagerDto managerDto){
+        managerService.superChangePasswordOk(managerDto);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
