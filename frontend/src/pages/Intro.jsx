@@ -1,6 +1,7 @@
 import classes from "./Intro.module.css";
 import Thumbnail from "../components/Intro/Thumbnail";
 import ServiceChat from "../components/Intro/ServiceChat";
+import BalanceGameReason from "../components/Intro/BalanceGameReason";
 import Slider from "../components/Intro/Slider";
 import HomeDescription from "../components/Intro/HomeDescription";
 import Closing from "../components/Intro/Closing";
@@ -12,6 +13,7 @@ function IntroPage() {
     <div className={classes.introContainer}>
       <Thumbnail />
       <ServiceChat />
+      <BalanceGameReason />
       <HomeDescription />
       <Slider />
       <Closing />

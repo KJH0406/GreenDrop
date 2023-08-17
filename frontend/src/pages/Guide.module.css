@@ -61,6 +61,10 @@
   }
 }
 
+.detail_item {
+  width: 100%;
+}
+
 .detail_title {
   border-bottom: 3px solid green;
   margin-bottom: 6%;

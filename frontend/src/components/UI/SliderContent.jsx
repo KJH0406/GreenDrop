@@ -23,8 +23,7 @@ function SliderContent() {
         <div
           className={classes.slider_item}
           onClick={() => {
-            window.location.href =
-              "https://www.hdec.kr/kr/newsroom/news_view.aspx?NewsSeq=240&NewsType=FUTURE&NewsListType=news_clist";
+            window.open("https://www.hdec.kr/kr/newsroom/news_view.aspx?NewsSeq=240&NewsType=FUTURE&NewsListType=news_clist");
           }}
         >
           <div className={cn(`slider_item_img1`, `slider_item_img`)}></div>
@@ -37,8 +36,7 @@ function SliderContent() {
         <div
           className={classes.slider_item}
           onClick={() => {
-            window.location.href =
-              "http://www.hkbs.co.kr/news/articleView.html?idxno=709455";
+            window.open("http://www.hkbs.co.kr/news/articleView.html?idxno=709455");
           }}
         >
           <div className={cn(`slider_item_img2`, `slider_item_img`)}></div>
@@ -52,8 +50,7 @@ function SliderContent() {
         <div
           className={classes.slider_item}
           onClick={() => {
-            window.location.href =
-              "http://www.saegeoje.com/news/articleView.html?idxno=223332";
+            window.open("http://www.saegeoje.com/news/articleView.html?idxno=223332");
           }}
         >
           <div className={cn(`slider_item_img3`, `slider_item_img`)}></div>
@@ -66,8 +63,7 @@ function SliderContent() {
         <div
           className={classes.slider_item}
           onClick={() => {
-            window.location.href =
-              "https://www.hkbs.co.kr/news/articleView.html?idxno=723833";
+            window.open("https://www.hkbs.co.kr/news/articleView.html?idxno=723833");
           }}
         >
           <div className={cn(`slider_item_img3`, `slider_item_img`)}></div>
@@ -80,8 +76,7 @@ function SliderContent() {
         <div
           className={classes.slider_item}
           onClick={() => {
-            window.location.href =
-              "http://m.dongascience.com/news.php?idx=58895";
+            window.open("http://m.dongascience.com/news.php?idx=58895");
           }}
         >
           <div className={cn(`slider_item_img4`, `slider_item_img`)}></div>
@@ -96,8 +91,7 @@ function SliderContent() {
         <div
           className={classes.slider_item}
           onClick={() => {
-            window.location.href =
-              "http://www.jbnews.com/news/articleView.html?idxno=1397269";
+            window.open("http://www.jbnews.com/news/articleView.html?idxno=1397269");
           }}
         >
           <div className={cn(`slider_item_img3`, `slider_item_img`)}></div>
@@ -111,8 +105,7 @@ function SliderContent() {
         <div
           className={classes.slider_item}
           onClick={() => {
-            window.location.href =
-              "http://www.lifein.news/news/articleView.html?idxno=4890";
+            window.open("http://www.lifein.news/news/articleView.html?idxno=4890");
           }}
         >
           <div className={cn(`slider_item_img5`, `slider_item_img`)}></div>
