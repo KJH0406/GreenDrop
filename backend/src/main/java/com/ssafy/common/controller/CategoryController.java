@@ -3,6 +3,7 @@ package com.ssafy.common.controller;
 import com.ssafy.common.dto.request.CategoryRequestDto;
 import com.ssafy.common.entity.Category;
 import com.ssafy.common.service.CategoryService;
+import com.ssafy.common.dto.CategoryDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,8 +33,11 @@ public class CategoryController {
     }
 
     @PatchMapping("/{categoryNo}")
-    public ResponseEntity<Object> categoryUpdate(@PathVariable Long categoryNo, @RequestBody CategoryRequestDto request){
-        categoryService.categoryUpdate(categoryNo, request);
+    public ResponseEntity<Object> categoryUpdate(
+            @PathVariable Long categoryNo,
+            @RequestBody CategoryDto categoryDto
+    ){
+        categoryService.categoryUpdate(categoryNo,categoryDto);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
