@@ -100,7 +100,7 @@ function DevicePage() {
         // 왼쪽 아무것도 없음
         if (data.includes("s")) {
           setLeftConfirm(false);
-          setLeftComplete(false);
+          // setLeftComplete(false);
           setLeftOver(false);
           setLeftLight(false);
         }
@@ -155,7 +155,7 @@ function DevicePage() {
         // 오른쪽 아무것도 없음
         if (data.includes("S")) {
           setRightConfirm(false);
-          setRightComplete(false);
+          // setRightComplete(false);
           setRightOver(false);
           setRightLight(false);
         }
