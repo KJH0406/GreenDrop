@@ -50,7 +50,7 @@ function DevicePage() {
   const [RightComplete, setRightComplete] = useState(false);
   const [RightOver, setRightOver] = useState(false);
   const [RightLight, setRightLight] = useState(false);
-  const [manualModal, setManualModal] = useState(true);
+  // const [manualModal, setManualModal] = useState(true);
   const [GameInfo, setGameInfo] = useState(null); // 데이터를 담을 상태
   const { question, leftAnswer, rightAnswer } = GameInfo || {}; // 데이터를 디스트럭처링하여 사용
 
@@ -86,15 +86,15 @@ function DevicePage() {
       sse.onmessage = async (e) => {
         const data = e.data;
         console.log(data);
-        if (data !== "sSf") {
-          //화면보호기 끄고
-          setManualModal(false);
-          //40초 뒤에 다시 켜
-          setTimeout(() => {
-            console.log("10초 뒤에 실행됐음");
-            setManualModal(true);
-          }, 10000);
-        }
+        // if (data !== "sSf") {
+        //   //화면보호기 끄고
+        //   setManualModal(false);
+        //   //40초 뒤에 다시 켜
+        //   setTimeout(() => {
+        //     console.log("10초 뒤에 실행됐음");
+        //     setManualModal(true);
+        //   }, 10000);
+        // }
         // 왼쪽 수거 로직 구현
 
         // 왼쪽 아무것도 없음
@@ -258,7 +258,7 @@ function DevicePage() {
       {/* */}
 
       {/* <ManualModal /> */}
-      {manualModal && <ManualModal />}
+      {/* {manualModal && <ManualModal />} */}
       <img className={classes.decorate_left_img} src={decorateImg_1} alt="" />
       <img className={classes.decorate_right_img} src={decorateImg_2} alt="" />
       <img className={classes.verse_img} src={verseImg} alt="" />
