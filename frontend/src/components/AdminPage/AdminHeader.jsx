@@ -52,7 +52,7 @@ function AdminHeader() {
   // 헤더 리스트
   const pageList = [
     { path: "", name: "홈" },
-    { path: "adminBoard", name: "밸런스 게임 게시판 관리" },
+    { path: "adminBoard", name: "밸런스 게임 관리" },
     { path: "adminCategories", name: "카테고리 관리" },
   ];
 
@@ -63,7 +63,11 @@ function AdminHeader() {
   return (
     <div className={classes.admin_header_container}>
       <div className={classes.logo}>
-        <h1>Green Drop</h1>
+        <Link to="/admin">
+          <h1>
+            <span className={classes.first_word}>Green</span> Drop
+          </h1>
+        </Link>
       </div>
       <div className={classes.page_list}>
         {pageList.map((page, index) => (

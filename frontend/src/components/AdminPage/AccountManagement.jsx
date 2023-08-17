@@ -69,7 +69,7 @@ function AccountManagement() {
       })
       .then(() => {
         setManagerList((prevList) =>
-          prevList.filter((account) => account.managerSeq !== managerSeq)
+          prevList.filter((account) => account.managerSeq !== managerSeq),
         );
       })
       .catch((error) => {
@@ -87,7 +87,7 @@ function AccountManagement() {
         },
         {
           headers: { Authorization: `Bearer ${token}` },
-        }
+        },
       )
       .then((response) => {
         axios
@@ -118,12 +118,20 @@ function AccountManagement() {
   const totalPages = Math.ceil(managerList.length / managerPerPage);
 
   return (
-    <div className={classes.account_management_container}>
+    <div
+      className={classes.account_management_container}
+      onClick={() => {
+        setShowModal(false);
+      }}
+    >
       <div className={classes.account_management_header}>
         <h1>관리자 목록</h1>
         <div className={classes.account_management_header_button}>
           <button
-            onClick={() => setShowModal(true)}
+            onClick={(e) => {
+              e.stopPropagation();
+              setShowModal(true);
+            }}
             className={classes.create_account_button}
           >
             관리자 계정 생성
@@ -134,7 +142,7 @@ function AccountManagement() {
         <div className={classes.account_list_header}>
           <p className={classes.account_id}>아이디</p>
           <p className={classes.account_date}>생성 날짜</p>
-          <p>비고</p>
+          <p className={classes.etc}>비고</p>
         </div>
 
         {getCurrentManagerList().map((account, idx) => (
@@ -147,28 +155,30 @@ function AccountManagement() {
           >
             <p className={classes.account_id}>{account.id}</p>
             <p className={classes.account_date}>{account.createdDate}</p>
-            <button
-              className={classes.delete_button}
-              onClick={() => handleDelete(account.managerSeq)}
-            >
-              삭제
-            </button>
+            <p className={classes.etc}>
+              <button
+                className={classes.delete_button}
+                onClick={() => handleDelete(account.managerSeq)}
+              >
+                삭제
+              </button>
+            </p>
           </div>
         ))}
       </div>
-
-      <div className={classes.pagination}>
-        {Array.from({ length: totalPages }, (_, index) => (
-          <button
-            key={index + 1}
-            onClick={() => setCurrentPage(index + 1)}
-            className={currentPage === index + 1 ? classes.active : ""}
-          >
-            {index + 1}
-          </button>
-        ))}
+      <div className={classes.page_area}>
+        <div className={classes.pagination}>
+          {Array.from({ length: totalPages }, (_, index) => (
+            <button
+              key={index + 1}
+              onClick={() => setCurrentPage(index + 1)}
+              className={classes.page_btn}
+            >
+              {index + 1}
+            </button>
+          ))}
+        </div>
       </div>
-
       {showModal && (
         <div className={classes.modal}>
           <div className={classes.modal_content}>

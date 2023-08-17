@@ -35,18 +35,24 @@ function AdminCategories() {
   }, [currentPage]);
 
   const handleDelete = (categorySeq) => {
-    axios
-      .delete(`${api}category/${categorySeq}`)
-      .then(() => {
-        setCategories((prevCategories) =>
-          prevCategories.filter(
-            (category) => category.categorySeq !== categorySeq
-          )
-        );
-      })
-      .catch((error) => {
-        console.error("카테고리 삭제 중 오류가 발생했습니다.", error);
-      });
+    if (window.confirm("해당 카테고리를 삭제 하시겠습니까?")) {
+      axios
+        .delete(`${api}category/${categorySeq}`)
+        .then(() => {
+          setCategories((prevCategories) =>
+            prevCategories.filter(
+              (category) => category.categorySeq !== categorySeq,
+            ),
+          );
+          alert("카테고리 삭제를 성공했습니다.");
+        })
+        .catch((error) => {
+          console.error("카테고리 삭제 중 오류가 발생했습니다.", error);
+          alert("카테고리 삭제를 실패했습니다.");
+        });
+    } else {
+      alert("삭제를 취소했습니다.");
+    }
   };
 
   const handleCreateCategory = () => {
@@ -96,13 +102,18 @@ function AdminCategories() {
       <h1>카테고리 목록</h1>
       {/* 카테고리 추가 버튼 */}
       <div className={classes.plus_category}>
-        <button onClick={() => setShowModal(true)}>카테고리 추가</button>
+        <button
+          onClick={() => setShowModal(true)}
+          className={classes.category_add_btn}
+        >
+          카테고리 추가
+        </button>
       </div>
 
       {/* 카테고리 목록 표시 */}
       <table className={classes.categories_table}>
         <thead>
-          <tr>
+          <tr className={classes.table_title}>
             <th>등록 번호</th>
             <th>카테고리 이름</th>
             <th>비고</th>
@@ -115,8 +126,8 @@ function AdminCategories() {
               <td>{category.item}</td>
               <td>
                 <button
-                  style={{ color: "red" }}
                   onClick={() => handleDelete(category.categorySeq)}
+                  className={classes.delete_btn}
                 >
                   삭제
                 </button>
@@ -125,20 +136,20 @@ function AdminCategories() {
           ))}
         </tbody>
       </table>
-
-      {/* Pagination */}
-      <ul className={classes.pagination}>
-        {pageNumbers.map((number) => (
-          <li
-            key={number}
-            className={currentPage === number ? classes.active : null}
-            onClick={() => handlePageChange(number)}
-          >
-            {number}
-          </li>
-        ))}
-      </ul>
-
+      <div className={classes.page_area}>
+        {/* Pagination */}
+        <div className={classes.pagination}>
+          {pageNumbers.map((number) => (
+            <button
+              key={number}
+              onClick={() => handlePageChange(number)}
+              className={classes.page_btn}
+            >
+              {number}
+            </button>
+          ))}
+        </div>
+      </div>
       {/* 카테고리 추가 모달 */}
       {showModal && (
         <div className={classes.modal} onClick={handleCloseModal}>
