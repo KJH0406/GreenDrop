@@ -150,6 +150,50 @@ function GuidePage() {
               묻어있는 통은 재활용이 되지 않습니다.
             </span>
           </div>
+          <hr />
+        </div>
+        <div className={classes.detail_item}>
+          <p className={classes.detail_item_title}>6. 종이류</p>
+          <div className={classes.detail_item_content}>
+            <span className={classes.highlight}>신문</span> : 물기에 젖지 않도록
+            하고, 반듯하게 펴서 차곡차곡 쌓은 후 흩날리지 않도록 끈 등으로
+            묶어서 배출한다.
+            <br />
+            <span className={classes.highlight}>책자 / 노트</span> : 스프링 등
+            종이류와 다른 재질은 제거한 후 배출한다.
+            <br />
+            <span className={classes.highlight}>상자류</span> : 테이프 등
+            종이류와 다른 재질은 제거한 후 배출한다.
+            <br />
+            <span style={{ color: "red" }}>
+              ※ 아래의 경우 종이류가 아닌 쓰레기 종량제 봉투로 배출하세요!
+            </span>
+            <br /> &nbsp; - 다른 재질과 혼합 구성된 종이 : 감열지(영수증),
+            금박지, 은박지, 다른 재질이 혼합된 벽지
+            <br /> &nbsp;&nbsp;&nbsp; (천연재료 벽지, PVC 코팅 벽지 등)
+            <br /> &nbsp; - 종이가 아닌 소재 : 부직포, 플라스틱 합성지
+          </div>
+          <hr />
+        </div>
+        <div className={classes.detail_item}>
+          <p className={classes.detail_item_title}>7. 종이팩 / 종이컵</p>
+          <div className={classes.detail_item_content}>
+            <span className={classes.highlight}>종이팩</span>
+            <br /> &nbsp; - 내용물을 비우고 물로 헹구는 등 이물질을 제거하고
+            말린 후 배출한다.
+            <br /> &nbsp; - 빨대, 비닐 등 종이팩과 다른 재질은 제거한 후
+            배출한다.
+            <br /> &nbsp; - 일반 종이류와 혼합되지 않게 종이팩 전용수거함에
+            배출한다.
+            <br /> &nbsp; - 종이팩 전용수거함이 없는 경우에는 종이류와 구분할 수
+            있도록 가급적 끈 등으로 묶어 종이류
+            <br /> &nbsp;&nbsp;&nbsp;&nbsp; 수거함으로 배출한다.
+            <br />
+            <span className={classes.highlight}>종이컵</span>
+            <br /> &nbsp; - 내용물을 비우고 물로 헹구는 등 이물질을 제거하여
+            배출한다.
+            <br />
+          </div>
         </div>
       </div>
     </div>

@@ -1,0 +1,142 @@
+.down {
+  margin: 3rem;
+  display: flex;
+  justify-content: center;
+}
+
+.down_image {
+  width: 20px;
+  content: url("../../assets/arrow.gif");
+}
+
+.balance_game_container {
+  margin-top: 15%;
+}
+
+.balance_game_box {
+  display: flex;
+  flex-direction: column;
+  padding: 5%;
+}
+
+.balance_game_title {
+  font-weight: bolder;
+  margin-bottom: 2%;
+}
+
+.balance_game_item {
+  background-color: #fff;
+  width: 85%;
+  border: 3px solid white;
+  border-radius: 10px;
+  box-shadow: 0 5px 8px rgba(0, 0, 0, 0.4);
+}
+
+.slider_section {
+  display: flex;
+  justify-content: center;
+  width: 90%;
+  margin: 5% auto;
+}
+
+.slider {
+  width: 90%;
+  margin: 5%;
+}
+
+.slider_item {
+  width: 80%;
+  margin: 2% auto;
+  padding: 5% auto;
+  font-size: 1.5rem;
+  line-height: 3rem;
+}
+
+.slider_item_img1 {
+  background-image: url("../../assets/recycle-bin.jpg");
+}
+
+.slider_item_img2 {
+  background-image: url("../../assets/balancegame.PNG");
+}
+
+.slider_item_img3 {
+  background-image: url("../../assets/board.PNG");
+}
+
+.slider_item_img4 {
+  background-image: url("../../assets/thumbnail.jpg");
+}
+
+.slider_item_img {
+  background-size: 100% 100%;
+  width: 90%;
+  margin: 5% auto;
+  border-radius: 2rem;
+  padding-top: 5%;
+  margin-bottom: 5%;
+  box-shadow: 8px 8px 8px rgba(0, 0, 0, 0.6);
+}
+
+@media (min-width: 500px) {
+  .balance_game_title {
+    line-height: 4rem;
+    font-size: 1.8rem;
+  }
+
+  .balance_game_explanation {
+    font-size: 1rem;
+  }
+
+  .balance_game_box {
+    font-size: 1.5rem;
+  }
+
+  .balance_game_item {
+    padding: 1.8rem;
+    margin: 2%;
+    border: 1px solid black;
+    border-radius: 10px;
+    line-height: 2.5rem;
+  }
+
+  .slider_section {
+    margin: 0 2rem 2rem 2rem;
+  }
+
+  .slider_item_img {
+    width: 60%;
+    height: 350px;
+  }
+}
+
+@media (max-width: 500px) {
+  .balance_game_title {
+    line-height: 2.5rem;
+    font-size: 1.1rem;
+  }
+
+  .balance_game_explanation {
+    font-size: 0.7rem;
+  }
+
+  .balance_game_item {
+    margin: 4% 1%;
+    padding: 1rem;
+    font-size: 0.9rem;
+    line-height: 2rem;
+  }
+
+  .balance_game_box {
+    font-size: 1rem;
+  }
+
+  .slider_section {
+    margin-bottom: 5%;
+  }
+
+  .slider_item_img {
+    width: 80%;
+    height: 300px;
+  }
+}
