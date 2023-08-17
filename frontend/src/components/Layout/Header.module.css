@@ -1,0 +1,72 @@
+.container {
+  z-index: 999;
+  position: sticky;
+  top: 0px;
+}
+
+.header {
+  font-family: sans-serif !important;
+  position: relative;
+  height: 3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  padding: 10px;
+
+  /* 개발 과정중 헤더 포지션 알기 위해 border 임시 적용 */
+  /* border: 1px solid red; */
+}
+
+.title {
+  font-weight: bolder;
+  font-size: larger;
+  cursor: pointer;
+}
+
+.first_word {
+  margin-right: 5px;
+  color: green;
+}
+
+.second_word {
+  /* color: green; */
+}
+
+.hamburger_img {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+
+.close_img {
+  padding-right: 4px;
+  width: 20px;
+  height: 20px;
+}
+
+.sidbar {
+  z-index: 997;
+  position: absolute;
+  right: 0%;
+  height: 100vh;
+  background-color: white;
+  animation: fadeIn ease-in-out 0.4s;
+}
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.overlay {
+  width: 100%;
+  position: absolute;
+  left: 0;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6); /* 오버레이 배경 색상과 투명도 조정 */
+  z-index: 996; /* 사이드바보다 뒤에 오도록 설정 */
+}

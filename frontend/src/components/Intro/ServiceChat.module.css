@@ -1,0 +1,90 @@
+.service_chat_container {
+  margin-top: 15%;
+}
+
+.service_chat_title {
+  font-weight: bolder;
+  margin-bottom: 10%;
+}
+
+@media (min-width: 500px) {
+  .service_chat_title {
+    line-height: 4rem;
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .service_chat_title {
+    line-height: 2.5rem;
+    font-size: 1.1rem;
+  }
+}
+
+.down {
+  margin: 3rem;
+  display: flex;
+  justify-content: center;
+}
+
+.down_image {
+  width: 20px;
+  content: url("../../assets/arrow.gif");
+}
+
+.service_chat_box {
+  display: flex;
+  flex-direction: column;
+  padding: 5%;
+}
+
+@media (min-width: 500px) {
+  .service_chat_box {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .service_chat_box {
+    font-size: 1rem;
+  }
+}
+
+@media (min-width: 500px) {
+  .service_chat_item {
+    width: fit-content;
+    padding: 1.8rem;
+    margin: 5% 2%;
+    border: 1px solid black;
+    border-radius: 10px;
+    line-height: 2.5rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .service_chat_item {
+    width: fit-content;
+    margin: 4% 1%;
+    padding: 1rem;
+    font-size: 1rem;
+    line-height: 2rem;
+  }
+}
+
+.service_chat_item {
+  background-color: #fff;
+  border: 3px solid white; /* Increase the border thickness */
+  border-radius: 15px; /* Increase the border-radius for a more rounded look */
+  box-shadow: 0 10px 8px rgba(0, 0, 0, 0.4);
+  transition: transform 0.3s ease-in-out;
+}
+
+.service_chat_item:hover {
+  transform: translate(0, -5px);
+  box-shadow: 0 20px 16px rgba(0, 0, 0, 0.6);
+}
+
+.service_chat_box_middle {
+  display: flex;
+  justify-content: flex-end;
+}

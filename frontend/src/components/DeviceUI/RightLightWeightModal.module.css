@@ -1,0 +1,38 @@
+.device_modal_container {
+  z-index: 1;
+  position: absolute;
+  top: 20%;
+  right: 7.5%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 29%;
+  height: 45%;
+  padding: 3%;
+  background-color: rgb(255, 255, 255, 0.95);
+  border-radius: 30px;
+  animation: mount 0.7s ease-in-out;
+}
+@keyframes mount {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.device_modal_img {
+  width: 300px;
+  height: 300px;
+  content: url("../../assets/lightWeightError.png");
+}
+
+.device_modal_title {
+  text-align: center;
+  margin-top: 3rem;
+  margin-bottom: 6rem;
+  line-height: 8rem;
+  font-size: 3.5rem;
+  color: red;
+}

@@ -1,0 +1,196 @@
+/* AdminCategories.module.css */
+.admin_categories_container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  padding-left: 10%;
+  padding-right: 10%;
+  background-color: white;
+}
+
+.admin_categories_container::-webkit-scrollbar {
+  display: none;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.modal_content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  max-width: 400px;
+}
+
+.modal_buttons {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.modal h2 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.modal label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.modal input {
+  width: 100%;
+  padding: 5px;
+  margin-bottom: 10px;
+}
+
+.modal button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 10px;
+  font-weight: normal;
+}
+
+.modal button:last-child {
+  color: #f44336;
+  background-color: white;
+  border: 1px solid#37a150;
+}
+
+.plus_category {
+  display: flex;
+  width: 100%;
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding-right: 5%;
+}
+
+.category_add_btn {
+  font-size: large;
+  font-weight: normal;
+  width: auto;
+  height: 40px;
+  border-radius: 5px;
+  border: #37a150;
+  background-color: #37a150;
+  color: white;
+}
+
+.category_add_btn:hover {
+  background-color: green;
+}
+
+.modify_button {
+  font-size: medium;
+  font-weight: normal;
+  width: auto;
+  height: 35px;
+  border-radius: 5px;
+  border: 1px solid #37a150;
+  background-color: #37a150;
+  color: white;
+  margin-right: 2%;
+}
+
+.modify_button:hover {
+  background-color: green;
+}
+
+.delete_btn {
+  font-size: large;
+  width: auto;
+  height: 35px;
+  border-radius: 5px;
+  border: 1px solid #37a150;
+  background-color: white;
+  color: rgb(252, 118, 95);
+}
+
+.delete_btn:hover {
+  color: red;
+}
+
+.categories_table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.categories_table th {
+  color: rgb(57, 57, 57);
+  background-color: rgb(255, 249, 171);
+}
+.categories_table td {
+  font-weight: bold;
+}
+.categories_table th,
+.categories_table td {
+  border: 1px solid #ccc;
+  padding: 8px;
+}
+
+.page_area {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 50px;
+  margin-bottom: 100px;
+}
+
+.pagination {
+  display: flex;
+  width: 100px;
+  justify-content: center;
+  padding-bottom: 10px;
+}
+
+.page_btn {
+  font-size: 14pt;
+  width: 20px;
+  height: 20px;
+  background-color: transparent;
+  border: transparent;
+  margin-right: 10px;
+  color: rgb(118, 118, 118);
+}
+
+.page_btn:hover {
+  border-bottom: 3px solid #37a150;
+}
+
+.page_btn:focus {
+  border-bottom: 3px solid #37a150;
+}
+
+/* 애니메이션 효과 추가 */
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modal_content {
+  animation: modalFadeIn 0.3s ease-in-out;
+}

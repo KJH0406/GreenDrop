@@ -1,0 +1,202 @@
+/* AccountManagement.module.css */
+
+/* Container styles */
+.account_management_container {
+  height: 100vh;
+  margin: 0 auto;
+  border: 1px solid #000000;
+  padding-left: 10%;
+  padding-right: 10%;
+}
+
+/* Account list Header styles*/
+.account_management_header_button {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+}
+
+.account_management_header_button button {
+  height: 40px;
+  color: white;
+  font-weight: normal;
+  font-size: large;
+  border: #37a150;
+  background-color: #37a150;
+}
+
+/* Account list styles */
+.account_list_header {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  font-weight: bolder;
+  margin-bottom: 10px;
+  border-bottom: 1px solid black;
+  color: rgb(57, 57, 57);
+  background-color: rgb(255, 249, 171);
+}
+
+.account_list {
+  display: flex;
+  flex-direction: column;
+}
+
+.account_box {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  padding: 5px 0;
+  border-bottom: 1px solid #ccc;
+}
+
+/* ID column styles */
+.account_id {
+  flex: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* Date column styles */
+.account_date {
+  flex: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.etc {
+  flex: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.modify_button {
+  margin-right: 2%;
+  font-size: large;
+  width: 60px;
+  height: 35px;
+  border-radius: 5px;
+  border: 1px solid #4caf50;
+  background-color: #4caf50;
+  color: white;
+}
+
+.modify_button:hover {
+  background-color: #37a150;
+}
+
+.delete_button {
+  font-size: large;
+  width: 60px;
+  height: 35px;
+  border-radius: 5px;
+  border: 1px solid #37a150;
+  background-color: white;
+  color: rgb(252, 118, 95);
+}
+
+.delete_button:hover {
+  color: red;
+}
+
+/* Create account button styles */
+.create_account_button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.page_area {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 50px;
+  margin-bottom: 100px;
+}
+
+.pagination {
+  display: flex;
+  width: 100px;
+  justify-content: center;
+  padding-bottom: 10px;
+}
+
+.page_btn {
+  font-size: 14pt;
+  width: 20px;
+  height: 20px;
+  background-color: transparent;
+  border: transparent;
+  margin-right: 10px;
+  color: rgb(118, 118, 118);
+}
+
+.page_btn:hover {
+  border-bottom: 3px solid #37a150;
+}
+
+.page_btn:focus {
+  border-bottom: 3px solid #37a150;
+}
+
+/* Modal styles */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal_content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.modal h2 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.modal label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.modal input {
+  width: 100%;
+  padding: 5px;
+  margin-bottom: 10px;
+}
+
+.modal button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 10px;
+  font-weight: normal;
+}
+
+.modal button:last-child {
+  color: #f44336;
+  background-color: white;
+  border: 1px solid#37a150;
+}

@@ -1,0 +1,30 @@
+.admin_board_table {
+  width: 100%;
+  border-collapse: collapse;
+  overflow-y: auto; /* Enable vertical scrolling within the fixed height */
+  border: none;
+  margin-bottom: 20px;
+}
+
+.admin_board_table th {
+  color: rgb(57, 57, 57);
+  background-color: rgb(255, 249, 171);
+}
+
+.admin_board_table th,
+.admin_board_table td {
+  padding: 10px;
+  border: 1px solid #ccc;
+  /* border-bottom: none; */
+  white-space: nowrap; /* Prevent text wrapping */
+  text-overflow: ellipsis; /* Display ... for long text */
+  overflow: hidden; /* Hide overflowing content */
+}
+
+.right_pos {
+  text-align: end;
+}
+
+.left_pos {
+  text-align: start;
+}

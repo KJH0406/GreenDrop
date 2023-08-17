@@ -1,0 +1,37 @@
+.tohome_container {
+  margin-top: 20%;
+  padding-top: 20%;
+  padding-bottom: 20%;
+}
+
+.tohome_title {
+  margin-bottom: 10%;
+  font-weight: bolder;
+}
+
+.click_img {
+  margin: 0 auto;
+  width: 10rem;
+  height: 10rem;
+  background-image: url("../../assets/sprout.gif");
+  background-size: cover;
+}
+
+.tohome_sub_title {
+  color: lightsalmon;
+  margin-top: 10%;
+  margin-bottom: 10%;
+  font-weight: bolder;
+}
+
+@media (min-width: 500px) {
+  .tohome_title {
+    font-size: xx-large;
+  }
+}
+
+@media (max-width: 500px) {
+  .tohome_title {
+    font-size: x-large;
+  }
+}
