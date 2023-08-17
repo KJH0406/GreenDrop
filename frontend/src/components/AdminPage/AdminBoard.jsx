@@ -42,6 +42,7 @@ const AdminBoard = () => {
 
   // 추가
   const [reservations, setReservations] = useState([]);
+  const [nowGame, setNowGame] = useState({});
   const [selectedReservations, setSelectedReservations] = useState([]);
   const [value, onChange] = useState(new Date());
   const [isOpenCalendar, setIsOpenCalendar] = useState(false);
@@ -63,10 +64,20 @@ const AdminBoard = () => {
 
   // 추가
   useEffect(() => {
+    const date = formatDate(new Date()).slice(0, 10);
+    axios
+      .get(`${api}game/${date}`)
+      .then((response) => {
+        setNowGame(response.data);
+      })
+      .catch((error) => {
+        alert("오늘의 게임을 불러오는데 실패했습니다.");
+      });
+
     axios
       .get(`${api}reservation/list`)
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         setReservations(response.data);
       })
       .catch((error) => {
@@ -79,7 +90,7 @@ const AdminBoard = () => {
       .get(`${api}board/list`)
       .then((response) => {
         setPosts(response.data);
-        console.log(response.data);
+        // console.log(response.data);
       })
       .catch((error) => {
         console.error("Error fetching posts:", error);
@@ -106,7 +117,7 @@ const AdminBoard = () => {
   }, [posts]);
 
   useEffect(() => {
-    console.log(formatDate(value).slice(0, 10));
+    // console.log(formatDate(value).slice(0, 10));
   }, [value]);
 
   const handleCheckboxChange = (event, boardSeq) => {
@@ -225,7 +236,8 @@ const AdminBoard = () => {
           alert("등록 완료!");
         });
       } else {
-        console.log("등록할 것에 체크해주세요.");
+        // console.log("등록할 것에 체크해주세요.");
+        alert("오늘의 주제로 등록하는데 실패했습니다.");
       }
     } else {
       alert("오늘의 주제로 등록을 취소하셨습니다.");
@@ -240,44 +252,107 @@ const AdminBoard = () => {
       }}
     >
       <h1>밸런스 게임 관리</h1>
+
+      <div className={classes.now_game_table_container}>
+        <h2 className={classes.left_pos}>오늘의 게임</h2>
+        <table className={classes.admin_board_table}>
+          <thead>
+            <tr className={classes.admin_board_heading}>
+              <th className={classes.left_pos}>게임 번호</th>
+              <th className={classes.left_pos}>주제</th>
+              <th className={classes.left_pos}>왼쪽 선택지</th>
+              <th className={classes.left_pos}>오른쪽 선택지</th>
+              <th className={classes.left_pos}>왼쪽 수거량</th>
+              <th className={classes.left_pos}>오른쪽 수거량</th>
+              <th className={classes.left_pos}>닉네임</th>
+              <th className={classes.left_pos}>날짜</th>
+              <th className={classes.left_pos}>등록 날짜</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td className={classes.right_pos}>
+                {nowGame.gameSeq >= 0 ? (
+                  nowGame.gameSeq?.toLocaleString("ko-KR")
+                ) : (
+                  <></>
+                )}
+              </td>
+              <td className={classes.left_pos}>{nowGame.question}</td>
+              <td className={classes.left_pos}>{nowGame.leftAnswer}</td>
+              <td className={classes.left_pos}>{nowGame.rightAnswer}</td>
+              <td className={classes.right_pos}>
+                {nowGame.leftCount?.toLocaleString("ko-KR")}
+              </td>
+              <td className={classes.right_pos}>
+                {nowGame.rightCount?.toLocaleString("ko-KR")}
+              </td>
+              <td className={classes.left_pos}>{nowGame.nickname}</td>
+              <td className={classes.right_pos}>
+                {nowGame.date ? formatDate(new Date(nowGame.date)) : <></>}
+              </td>
+              <td className={classes.right_pos}>
+                {nowGame.data ? formatDate(nowGame.createdDate) : <></>}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
       <div>
         <div className={classes.reservation}>
           <div ref={tableContainerRef}>
+            <h2 className={classes.left_pos}>예약된 게임</h2>
+
             {reservations.length > 0 && (
               <table className={classes.admin_board_table}>
                 <thead>
                   <tr className={classes.admin_board_heading}>
-                    <th>등록번호</th>
-                    <th>카테고리</th>
-                    <th>주제</th>
-                    <th>왼쪽 선택지</th>
-                    <th>오른쪽 선택지</th>
-                    <th>좋아요 수</th>
-                    <th>닉네임</th>
-                    <th>등록 매니저</th>
-                    <th>등록 예정 날짜</th>
-                    <th>선택</th>
+                    <th className={classes.left_pos}>등록번호</th>
+                    <th className={classes.left_pos}>카테고리</th>
+                    <th className={classes.left_pos}>주제</th>
+                    <th className={classes.left_pos}>왼쪽 선택지</th>
+                    <th className={classes.left_pos}>오른쪽 선택지</th>
+                    <th className={classes.left_pos}>좋아요 수</th>
+                    <th className={classes.left_pos}>닉네임</th>
+                    <th className={classes.left_pos}>등록 매니저</th>
+                    <th className={classes.left_pos}>등록 예정 날짜</th>
+                    <th className={classes.left_pos}>선택</th>
                   </tr>
                 </thead>
                 <tbody>
                   {reservations.map((reservation) => (
                     <tr key={reservation.reservationSeq}>
-                      <td>{reservation.reservationSeq}</td>
+                      <td className={classes.right_pos}>
+                        {reservation.reservationSeq?.toLocaleString("ko-KR")}
+                      </td>
                       <td>{reservation.board.item}</td>
-                      <td>
+                      <td className={classes.left_pos}>
                         <Link
                           to={`/admin/adminBoardDetail/${reservation.board.boardSeq}/${reservation.reservationSeq}/${reservation.board.item}`}
                         >
                           {truncateText(reservation.board.question, 10)}
                         </Link>
                       </td>
-                      <td>{truncateText(reservation.board.leftAnswer, 10)}</td>
-                      <td>{truncateText(reservation.board.rightAnswer, 10)}</td>
-                      <td>{reservation.board.likeCount}</td>
+                      <td className={classes.left_pos}>
+                        {truncateText(reservation.board.leftAnswer, 10)}
+                      </td>
+                      <td className={classes.left_pos}>
+                        {truncateText(reservation.board.rightAnswer, 10)}
+                      </td>
+                      <td className={classes.right_pos}>
+                        {reservation.board.likeCount?.toLocaleString("ko-KR")}
+                      </td>
 
-                      <td>{truncateText(reservation.board.nickname, 5)}</td>
-                      <td>{reservation.managerId}</td>
-                      <td>{formatDate(reservation.dateTime)}</td>
+                      <td className={classes.left_pos}>
+                        {truncateText(reservation.board.nickname, 5)}
+                      </td>
+                      <td className={classes.left_pos}>
+                        {reservation.managerId}
+                      </td>
+                      <td className={classes.right_pos}>
+                        {formatDate(reservation.dateTime)}
+                      </td>
                       <td>
                         <input
                           type="checkbox"
@@ -327,6 +402,9 @@ const AdminBoard = () => {
           <></>
         )}
 
+        <h2 className={classes.left_pos} style={{ marginBottom: 0 }}>
+          등록된 글
+        </h2>
         <div
           className={classes.post_button}
           onClick={(e) => {
@@ -416,23 +494,25 @@ const AdminBoard = () => {
             <table className={classes.admin_board_table}>
               <thead>
                 <tr className={classes.admin_board_heading}>
-                  <th>등록번호</th>
-                  <th>카테고리</th>
-                  <th>주제</th>
-                  <th>왼쪽 선택지</th>
-                  <th>오른쪽 선택지</th>
-                  <th>좋아요 수</th>
-                  <th>댓글 수</th>
-                  <th>닉네임</th>
-                  <th>선택</th>
+                  <th className={classes.left_pos}>등록번호</th>
+                  <th className={classes.left_pos}>카테고리</th>
+                  <th className={classes.left_pos}>주제</th>
+                  <th className={classes.left_pos}>왼쪽 선택지</th>
+                  <th className={classes.left_pos}>오른쪽 선택지</th>
+                  <th className={classes.left_pos}>좋아요 수</th>
+                  <th className={classes.left_pos}>댓글 수</th>
+                  <th className={classes.left_pos}>닉네임</th>
+                  <th className={classes.left_pos}>선택</th>
                 </tr>
               </thead>
               <tbody>
                 {currentPosts.map((post) => (
                   <tr key={post.boardSeq}>
-                    <td>{post.boardSeq}</td>
+                    <td className={classes.right_pos}>
+                      {post.boardSeq?.toLocaleString("ko-KR")}
+                    </td>
                     <td>{truncateText(post.item, 20)}</td>
-                    <td>
+                    <td className={classes.left_pos}>
                       <Link
                         to={`/admin/adminBoardDetail/${post.boardSeq}/${null}/${
                           post.item
@@ -441,11 +521,19 @@ const AdminBoard = () => {
                         {truncateText(post.question, 20)}
                       </Link>
                     </td>
-                    <td>{truncateText(post.leftAnswer, 20)}</td>
-                    <td>{truncateText(post.rightAnswer, 20)}</td>
-                    <td>{post.likeCount}</td>
-                    <td>{post.commentCount}</td>
-                    <td>{post.nickname}</td>
+                    <td className={classes.left_pos}>
+                      {truncateText(post.leftAnswer, 20)}
+                    </td>
+                    <td className={classes.left_pos}>
+                      {truncateText(post.rightAnswer, 20)}
+                    </td>
+                    <td className={classes.right_pos}>
+                      {post.likeCount?.toLocaleString("ko-KR")}
+                    </td>
+                    <td className={classes.right_pos}>
+                      {post.commentCount?.toLocaleString("ko-KR")}
+                    </td>
+                    <td className={classes.left_pos}>{post.nickname}</td>
                     <td>
                       <input
                         type="checkbox"
