@@ -236,6 +236,7 @@
   width: 100%;
   word-wrap: break-word;
   word-break: keep-all;
+  line-height: 1.2rem;
 }
 
 .result_percentage {

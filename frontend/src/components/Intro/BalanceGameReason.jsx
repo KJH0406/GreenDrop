@@ -42,20 +42,24 @@ function BalanceGameReason() {
       <div className={classes.slider_section}>
         <Slider {...settings} className={classes.slider}>
           <div className={classes.slider_item}>
-            <div className={`${classes.slider_item_img1} ${classes.slider_item_img}`}></div>
+            <div
+              className={`${classes.slider_item_img1} ${classes.slider_item_img}`}
+            ></div>
             <div className={classes.balance_game_item}>
               <span>
-                반에 있는 일반 쓰레기통이 아닌 <br /> 카페의 {" "}
+                반에 있는 일반 쓰레기통이 아닌 <br /> 카페의{" "}
               </span>
               <span style={{ fontWeight: "bold" }}>분리수거함</span>
-              <span>까지 발걸음을 옮길 수 있도록 </span>
+              <span>까지 발걸음을 옮기도록 </span>
               <br />
               <span style={{ fontWeight: "bold" }}>밸런스 게임</span>
               <span>이라는 재미 요소를 첨가했어요.</span>
             </div>
           </div>
           <div className={classes.slider_item}>
-            <div className={`${classes.slider_item_img2} ${classes.slider_item_img}`}></div>
+            <div
+              className={`${classes.slider_item_img2} ${classes.slider_item_img}`}
+            ></div>
             <div className={classes.balance_game_item}>
               <span>분리수거함 위에 놓여진 </span>
               <span style={{ fontWeight: "bold" }}>QR 코드</span>
@@ -65,12 +69,16 @@ function BalanceGameReason() {
               <span style={{ fontWeight: "bold" }}>주제를 등록</span>
               <span>하거나 </span>
               <br />
-              <span style={{ fontWeight: "bold" }}>다른 사람의 주제에 좋아요</span>
+              <span style={{ fontWeight: "bold" }}>
+                다른 사람의 주제에 좋아요
+              </span>
               <span>를 누를 수 있어요!</span>
             </div>
           </div>
           <div className={classes.slider_item}>
-            <div className={`${classes.slider_item_img3} ${classes.slider_item_img}`}></div>
+            <div
+              className={`${classes.slider_item_img3} ${classes.slider_item_img}`}
+            ></div>
             <div className={classes.balance_game_item}>
               <span>원하는 주제에 하트가 많다면 언젠가 </span>
               <br />
@@ -80,7 +88,9 @@ function BalanceGameReason() {
             </div>
           </div>
           <div className={classes.slider_item}>
-            <div className={`${classes.slider_item_img4} ${classes.slider_item_img}`}></div>
+            <div
+              className={`${classes.slider_item_img4} ${classes.slider_item_img}`}
+            ></div>
             <div className={classes.balance_game_item}>
               <span>저희 프로젝트를 계기로 분리배출에 대한</span>
               <br />
