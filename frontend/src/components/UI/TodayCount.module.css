@@ -11,7 +11,7 @@
   .totalSection {
     font-size: 2rem;
   }
-  
+
   .todayCount {
     font-size: 5rem;
   }
@@ -30,13 +30,17 @@
     font-size: 4rem;
   }
 
+  .totalSection div {
+    margin-bottom: 0.5rem;
+  }
+
   .todayCountText {
     font-size: 1.5rem;
   }
 }
 
 .todayCount {
-  color: #1DA154;
+  color: #1da154;
 }
 
 .todayCountText {

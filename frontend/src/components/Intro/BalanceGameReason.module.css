@@ -26,10 +26,10 @@
 
 .balance_game_item {
   background-color: #fff;
-  width: 85%;
+  width: 83%;
   border: 3px solid white;
   border-radius: 10px;
-  box-shadow: 0 5px 8px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 5px 6px rgba(0, 0, 0, 0.4);
 }
 
 .slider_section {
@@ -94,7 +94,7 @@
 
   .balance_game_item {
     padding: 1.8rem;
-    margin: 2%;
+    margin: auto;
     border: 1px solid black;
     border-radius: 10px;
     line-height: 2.5rem;
@@ -121,7 +121,7 @@
   }
 
   .balance_game_item {
-    margin: 4% 1%;
+    margin: 4% auto;
     padding: 1rem;
     font-size: 0.9rem;
     line-height: 2rem;

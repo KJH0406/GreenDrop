@@ -28,11 +28,11 @@ function GuidePage() {
           </div>
         </div>
         <div className={classes.content}>
-          분리배출을 어떻게 해야하는지 헷갈리신 적은 없으신가요?
+          분리배출 방법이 헷갈리신 적은 없으신가요?
         </div>
         <div className={classes.content}>
           <span style={{ fontWeight: "bold" }}>분리배출 방법</span>
-          <span>에 대해 꼼꼼히 알려드리도록 하겠습니다!</span>
+          <span>에 대해 꼼꼼히 알려드릴게요!</span>
         </div>
       </div>
       <div className={classes.slider_section}>
@@ -186,8 +186,7 @@ function GuidePage() {
             <br /> &nbsp; - 일반 종이류와 혼합되지 않게 종이팩 전용수거함에
             배출한다.
             <br /> &nbsp; - 종이팩 전용수거함이 없는 경우에는 종이류와 구분할 수
-            있도록 가급적 끈 등으로 묶어 종이류
-            <br /> &nbsp;&nbsp;&nbsp;&nbsp; 수거함으로 배출한다.
+            있도록 가급적 끈 등으로 묶어 종이류 수거함으로 배출한다.
             <br />
             <span className={classes.highlight}>종이컵</span>
             <br /> &nbsp; - 내용물을 비우고 물로 헹구는 등 이물질을 제거하여
