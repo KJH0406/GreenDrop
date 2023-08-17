@@ -42,7 +42,6 @@ function DevicePage() {
   // var audio = new Audio(success);
 
   // 포트 관련 함수
-  const [port, setPort] = useState(null);
   const [LeftConfirm, setLeftConfirm] = useState(false);
   const [LeftComplete, setLeftComplete] = useState(false);
   const [LeftOver, setLeftOver] = useState(false);
@@ -51,6 +50,7 @@ function DevicePage() {
   const [RightComplete, setRightComplete] = useState(false);
   const [RightOver, setRightOver] = useState(false);
   const [RightLight, setRightLight] = useState(false);
+  // const [manualModal, setManualModal] = useState(true);
   const [GameInfo, setGameInfo] = useState(null); // 데이터를 담을 상태
   const { question, leftAnswer, rightAnswer } = GameInfo || {}; // 데이터를 디스트럭처링하여 사용
 
@@ -59,7 +59,7 @@ function DevicePage() {
     try {
       const response = await axios.get(`${api}game/${currentDate}`); // API 엔드포인트를 적절히 수정해주세요
       setGameInfo(response.data);
-      console.log(response.data);
+      // console.log(response.data);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -72,51 +72,33 @@ function DevicePage() {
   }, [GameInfo]);
 
   useEffect(() => {
-    const connectSerial = async () => {
-      try {
-        const port = await navigator.serial.requestPort();
-        await port.open({ baudRate: 9600 });
-        setPort(port);
+    const sse = new EventSource("http://127.0.0.1:8888/events");
 
-        const reader = port.readable.getReader();
-        readData(reader);
-      } catch (error) {
-        console.error("Error connecting to serial port:", error);
-      }
-    };
-
-    const handleClick = () => {
-      connectSerial();
-    };
-
-    document.addEventListener("click", handleClick);
-
+    readData(sse);
     return () => {
-      if (port && port.readable) {
-        port.readable.cancel();
-        port.close();
-      }
-      document.removeEventListener("click", handleClick);
+      // 컴포넌트가 언마운트될 때 EventSource를 정리
+      sse.close();
     };
-  }, [port]);
+  }, []);
 
-  const readData = async (reader) => {
+  const readData = async (sse) => {
     try {
-      while (true) {
-        const { value, done } = await reader.read();
-        if (done) {
-          console.log("Reader has been canceled.");
-          break;
-        }
-        const textDecoder = new TextDecoder();
-        const data = textDecoder.decode(value);
-        const portValue = data.trim().replace(/\s+/g, " ");
-        console.log(portValue);
-
+      sse.onmessage = async (e) => {
+        const data = e.data;
+        console.log(data);
+        // if (data !== "sSf") {
+        //   //화면보호기 끄고
+        //   setManualModal(false);
+        //   //40초 뒤에 다시 켜
+        //   setTimeout(() => {
+        //     console.log("10초 뒤에 실행됐음");
+        //     setManualModal(true);
+        //   }, 10000);
+        // }
         // 왼쪽 수거 로직 구현
 
         // 왼쪽 아무것도 없음
-        if (portValue.includes("s")) {
+        if (data.includes("s")) {
           setLeftConfirm(false);
           setLeftComplete(false);
           setLeftOver(false);
@@ -124,7 +106,7 @@ function DevicePage() {
         }
 
         // 왼쪽 측정
-        if (portValue.includes("m")) {
+        if (data.includes("m")) {
           setLeftConfirm(true);
           setLeftComplete(false);
           setLeftOver(false);
@@ -132,11 +114,12 @@ function DevicePage() {
         }
 
         // 왼쪽 수거
-        if (portValue.includes("L")) {
+        if (data.includes("L")) {
           setLeftConfirm(false);
           setLeftComplete(true);
           setLeftOver(false);
           setLeftLight(false);
+
           setTimeout(() => {
             setLeftComplete(false);
           }, 2000);
@@ -152,7 +135,7 @@ function DevicePage() {
         }
 
         // 왼쪽 무거움 경고
-        if (portValue.includes("o")) {
+        if (data.includes("o")) {
           setLeftConfirm(false);
           setLeftComplete(false);
           setLeftOver(true);
@@ -160,7 +143,7 @@ function DevicePage() {
         }
 
         // 왼쪽 가벼움 경고
-        if (portValue.includes("e")) {
+        if (data.includes("e")) {
           setLeftConfirm(false);
           setLeftComplete(false);
           setLeftOver(false);
@@ -170,7 +153,7 @@ function DevicePage() {
         // 오른쪽 수거 로직 구현
 
         // 오른쪽 아무것도 없음
-        if (portValue.includes("S")) {
+        if (data.includes("S")) {
           setRightConfirm(false);
           setRightComplete(false);
           setRightOver(false);
@@ -178,7 +161,7 @@ function DevicePage() {
         }
 
         // 오른쪽 측정
-        if (portValue.includes("M")) {
+        if (data.includes("M")) {
           setRightConfirm(true);
           setRightComplete(false);
           setRightOver(false);
@@ -186,11 +169,12 @@ function DevicePage() {
         }
 
         // 오른쪽 수거
-        if (portValue.includes("R")) {
+        if (data.includes("R")) {
           setRightConfirm(false);
           setRightComplete(true);
           setRightOver(false);
           setRightLight(false);
+
           setTimeout(() => {
             setRightComplete(false);
           }, 2000);
@@ -206,20 +190,20 @@ function DevicePage() {
         }
 
         // 오른쪽 무거움 경고
-        if (portValue.includes("O")) {
+        if (data.includes("O")) {
           setRightConfirm(false);
           setRightComplete(false);
           setRightOver(true);
           setRightLight(false);
         }
         // 오른쪽 가벼움 경고
-        if (portValue.includes("E")) {
+        if (data.includes("E")) {
           setRightConfirm(false);
           setRightComplete(false);
           setRightOver(false);
           setRightLight(true);
         }
-      }
+      };
     } catch (error) {
       console.error("Error reading data:", error);
     }
@@ -273,8 +257,8 @@ function DevicePage() {
       {/* <RightLightWeightModal /> */}
       {/* */}
 
-      <ManualModal />
-
+      {/* <ManualModal /> */}
+      {/* {manualModal && <ManualModal />} */}
       <img className={classes.decorate_left_img} src={decorateImg_1} alt="" />
       <img className={classes.decorate_right_img} src={decorateImg_2} alt="" />
       <img className={classes.verse_img} src={verseImg} alt="" />
