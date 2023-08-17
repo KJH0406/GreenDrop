@@ -1,9 +1,11 @@
 .admin_main_container {
   max-width: 80%;
-  height: 100vh;
+  height: 80vh;
   margin: 0 auto;
+  margin-top: 20px;
   padding: 20px;
-  border: 1px solid black;
+  /* border: 1px solid black; */
+  border-radius: 20px;
 }
 
 @media (max-width: 1250px) {
@@ -15,7 +17,11 @@
 .today_section {
   display: flex;
   padding: 1rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
   border: 1px solid black;
+  border-radius: 10px;
 }
 
 .today_chart {
@@ -77,6 +83,7 @@
   padding: 1rem;
   margin: 1rem;
   border: 1px solid black;
+  border-radius: 10px;
 }
 
 .chart_title {
@@ -97,6 +104,7 @@
   align-items: center;
   margin: 1rem;
   border: 1px solid black;
+  border-radius: 10px;
 }
 
 .chart_table {

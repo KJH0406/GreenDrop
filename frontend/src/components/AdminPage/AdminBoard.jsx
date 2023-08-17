@@ -1,7 +1,8 @@
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import Calendar from "react-calendar";
-import "react-calendar/dist/Calendar.css";
+// import "react-calendar/dist/Calendar.css";
+import "./Calendar.css";
 import { Link } from "react-router-dom";
 import classes from "./AdminBoard.module.css";
 const api = "https://i9b103.p.ssafy.io/api/";
@@ -43,6 +44,7 @@ const AdminBoard = () => {
   const [reservations, setReservations] = useState([]);
   const [selectedReservations, setSelectedReservations] = useState([]);
   const [value, onChange] = useState(new Date());
+  const [isOpenCalendar, setIsOpenCalendar] = useState(false);
   const [selected, setSelected] = useState("1");
   const [trigger, setTrigger] = useState(true);
 
@@ -53,7 +55,7 @@ const AdminBoard = () => {
 
   //너무 길면 생략
   const truncateText = (text, maxLength) => {
-    if (text.length > maxLength) {
+    if (text && text.length > maxLength) {
       return text.substring(0, maxLength) + "...";
     }
     return text;
@@ -102,6 +104,10 @@ const AdminBoard = () => {
       tableContainerRef.current.style.height = tableHeight;
     }
   }, [posts]);
+
+  useEffect(() => {
+    console.log(formatDate(value).slice(0, 10));
+  }, [value]);
 
   const handleCheckboxChange = (event, boardSeq) => {
     if (event.target.checked) {
@@ -227,189 +233,253 @@ const AdminBoard = () => {
   };
 
   return (
-    <div className={classes.admin_board_container}>
-      <h1>벨런스 게임 게시판 관리 페이지 입니다.</h1>
-      <div className={classes.admin_reservation}>
-        <div>
-          <div className={classes.reservation}>
-            <div ref={tableContainerRef}>
-              {reservations.length > 0 && (
-                <table className={classes.admin_board_table}>
-                  <thead>
-                    <tr className={classes.admin_board_heading}>
-                      <th>등록번호</th>
-                      <th>주제</th>
-                      <th>왼쪽 선택지</th>
-                      <th>오른쪽 선택지</th>
-                      <th>좋아요 수</th>
-                      <th>닉네임</th>
-                      <th>등록 매니저</th>
-                      <th>등록 예정 날짜</th>
-                      <th>선택</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {reservations.map((reservation) => (
-                      <tr key={reservation.reservationSeq}>
-                        <td>{reservation.reservationSeq}</td>
-                        <td>
-                          <Link
-                            to={`/admin/adminBoardDetail/${reservation.board.boardSeq}/${reservation.reservationSeq}/${reservation.board.item}`}
-                          >
-                            {truncateText(reservation.board.question, 10)}
-                          </Link>
-                        </td>
-                        <td>{truncateText(reservation.board.leftAnswer, 10)}</td>
-                        <td>{truncateText(reservation.board.rightAnswer, 10)}</td>
-                        <td>{reservation.board.likeCount}</td>
-                        <td>{truncateText(reservation.board.nickname, 5)}</td>
-                        <td>{reservation.managerId}</td>
-                        <td>{reservation.dateTime}</td>
-                        <td>
-                          <input
-                            type="checkbox"
-                            checked={selectedReservations.includes(
+    <div
+      className={classes.admin_board_container}
+      onClick={() => {
+        setIsOpenCalendar(false);
+      }}
+    >
+      <h1>밸런스 게임 관리</h1>
+      <div>
+        <div className={classes.reservation}>
+          <div ref={tableContainerRef}>
+            {reservations.length > 0 && (
+              <table className={classes.admin_board_table}>
+                <thead>
+                  <tr className={classes.admin_board_heading}>
+                    <th>등록번호</th>
+                    <th>카테고리</th>
+                    <th>주제</th>
+                    <th>왼쪽 선택지</th>
+                    <th>오른쪽 선택지</th>
+                    <th>좋아요 수</th>
+                    <th>닉네임</th>
+                    <th>등록 매니저</th>
+                    <th>등록 예정 날짜</th>
+                    <th>선택</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {reservations.map((reservation) => (
+                    <tr key={reservation.reservationSeq}>
+                      <td>{reservation.reservationSeq}</td>
+                      <td>{reservation.board.item}</td>
+                      <td>
+                        <Link
+                          to={`/admin/adminBoardDetail/${reservation.board.boardSeq}/${reservation.reservationSeq}/${reservation.board.item}`}
+                        >
+                          {truncateText(reservation.board.question, 10)}
+                        </Link>
+                      </td>
+                      <td>{truncateText(reservation.board.leftAnswer, 10)}</td>
+                      <td>{truncateText(reservation.board.rightAnswer, 10)}</td>
+                      <td>{reservation.board.likeCount}</td>
+
+                      <td>{truncateText(reservation.board.nickname, 5)}</td>
+                      <td>{reservation.managerId}</td>
+                      <td>{formatDate(reservation.dateTime)}</td>
+                      <td>
+                        <input
+                          type="checkbox"
+                          checked={selectedReservations.includes(
+                            reservation.reservationSeq,
+                          )}
+                          onChange={(e) =>
+                            handleReservationCheckboxChange(
+                              e,
                               reservation.reservationSeq,
-                            )}
-                            onChange={(e) =>
-                              handleReservationCheckboxChange(
-                                e,
-                                reservation.reservationSeq,
-                                reservation.board.boardSeq,
-                              )
-                            }
-                          />
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              )}
-            </div>
+                              reservation.board.boardSeq,
+                            )
+                          }
+                        />
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
           </div>
           <div className={classes.reservation_button}>
-            <button onClick={subTheme}>오늘의 주제 등록하기</button>
-            <button style={{ color: "red" }} onClick={deleteReservation}>
+            <button onClick={subTheme} className={classes.subject_btn}>
+              오늘의 주제 등록하기
+            </button>
+            <button className={classes.cancel_btn} onClick={deleteReservation}>
               예약 삭제
             </button>
           </div>
         </div>
-        <div className={classes.reservation_button_element}>
-          <Calendar onChange={onChange} value={value}></Calendar>
-          <div className={classes.reservation_time}>
-            <select className="w150" onChange={handleSelect}>
+      </div>
+
+      <div
+        ref={tableContainerRef}
+        className={classes.relative_container}
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+      >
+        {isOpenCalendar ? (
+          <Calendar
+            onChange={onChange}
+            value={value}
+            style={{ border: "1px solid black" }}
+          ></Calendar>
+        ) : (
+          <></>
+        )}
+
+        <div
+          className={classes.post_button}
+          onClick={(e) => {
+            setIsOpenCalendar(false);
+          }}
+        >
+          <div className={classes.post_button_element}>
+            <select
+              onChange={(e) => {
+                setOrder(e.target.value);
+              }}
+              className={classes.order_select}
+            >
+              <option value="dateNew">최신순</option>
+              <option value="dateOld">오래된 순</option>
+              <option value="like">좋아요 순</option>
+              <option value="category">카테고리 순</option>
+            </select>
+            <select
+              onChange={(e) => {
+                setSelectedCategory(e.target.value);
+              }}
+              disabled={order === "category" ? false : true}
+              className={classes.order_select}
+            >
+              <option value="0">전체</option>
+              {categoryList.map((category, idx) => {
+                return (
+                  <option key={idx} value={category.categorySeq}>
+                    {category.item}
+                  </option>
+                );
+              })}
+            </select>
+            <select
+              onChange={(e) => {
+                setIsIncludeDeleted(e.target.value);
+              }}
+              className={classes.order_select}
+            >
+              <option value={false}>삭제 미포함</option>
+              <option value={true}>삭제 포함</option>
+            </select>
+            <button
+              onClick={getOrderedCategoryList}
+              className={classes.sort_btn}
+            >
+              정렬
+            </button>
+          </div>
+          <div className={classes.calendar_btn}>
+            <div
+              className={`${classes.calendar_popup} ${
+                isOpenCalendar ? classes.Calendar_popup_focus : ""
+              }`}
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsOpenCalendar(!isOpenCalendar);
+              }}
+            >
+              {formatDate(value).slice(0, 10)}
+            </div>
+            <select className={classes.time_select} onChange={handleSelect}>
               <option value="1">오전</option>
               <option value="2">오후</option>
             </select>
-            <button onClick={addReservation}>주제 예약하기</button>
+            <button
+              onClick={addReservation}
+              className={classes.subject_reservation_btn}
+            >
+              주제 예약하기
+            </button>
+          </div>
+          <div className={classes.post_button_element}>
+            <button onClick={deletePost} className={classes.delete_btn}>
+              글 삭제
+            </button>
           </div>
         </div>
-      </div>
-      <div className={classes.post_button}>
-        <div className={classes.post_button_element}>
-          <select
-            onChange={(e) => {
-              setOrder(e.target.value);
-            }}
-          >
-            <option value="dateNew">최신순</option>
-            <option value="dateOld">오래된 순</option>
-            <option value="like">좋아요 순</option>
-            <option value="category">카테고리 순</option>
-          </select>
-          <select
-            onChange={(e) => {
-              setSelectedCategory(e.target.value);
-            }}
-            disabled={order === "category" ? false : true}
-          >
-            <option value="0">전체</option>
-            {categoryList.map((category, idx) => {
-              return (
-                <option key={idx} value={category.categorySeq}>
-                  {category.item}
-                </option>
-              );
-            })}
-          </select>
-          <select
-            onChange={(e) => {
-              setIsIncludeDeleted(e.target.value);
-            }}
-          >
-            <option value={false}>삭제 미포함</option>
-            <option value={true}>삭제 포함</option>
-          </select>
-          <button onClick={getOrderedCategoryList}>정렬</button>
-        </div>
-        <div className={classes.post_button_element}>
-          <button style={{ color: "red" }} onClick={deletePost}>
-            글 삭제
-          </button>
-        </div>
-      </div>
-
-      <div ref={tableContainerRef}>
-        {currentPosts.length > 0 && (
-          <table className={classes.admin_board_table}>
-            <thead>
-              <tr className={classes.admin_board_heading}>
-                <th>등록번호</th>
-                <th>카테고리</th>
-                <th>주제</th>
-                <th>왼쪽 선택지</th>
-                <th>오른쪽 선택지</th>
-                <th>좋아요 수</th>
-                <th>닉네임</th>
-                <th>선택</th>
-              </tr>
-            </thead>
-            <tbody>
-              {currentPosts.map((post) => (
-                <tr key={post.boardSeq}>
-                  <td>{post.boardSeq}</td>
-                  <td>{truncateText(post.item, 20)}</td>
-                  <td>
-                    <Link
-                      to={`/admin/adminBoardDetail/${post.boardSeq}/${null}/${
-                        post.item
-                      }`}
-                    >
-                      {truncateText(post.question, 20)}
-                    </Link>
-                  </td>
-                  <td>{truncateText(post.leftAnswer, 20)}</td>
-                  <td>{truncateText(post.rightAnswer, 20)}</td>
-                  <td>{post.likeCount}</td>
-                  <td>{post.nickname}</td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      checked={selectedPosts.includes(post.boardSeq)}
-                      onChange={(e) => {
-                        handleCheckboxChange(e, post.boardSeq);
-                      }}
-                    />
-                  </td>
+        <div
+          className={classes.table_container}
+          onClick={(e) => {
+            setIsOpenCalendar(false);
+          }}
+        >
+          {currentPosts.length > 0 && (
+            <table className={classes.admin_board_table}>
+              <thead>
+                <tr className={classes.admin_board_heading}>
+                  <th>등록번호</th>
+                  <th>카테고리</th>
+                  <th>주제</th>
+                  <th>왼쪽 선택지</th>
+                  <th>오른쪽 선택지</th>
+                  <th>좋아요 수</th>
+                  <th>댓글 수</th>
+                  <th>닉네임</th>
+                  <th>선택</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
-      </div>
-
-      {/* Pagination */}
-      {posts.length > postsPerPage && (
-        <div className={classes.pagination}>
-          {Array.from({ length: Math.ceil(posts.length / postsPerPage) }).map(
-            (_, index) => (
-              <button key={index} onClick={() => paginate(index + 1)}>
-                {index + 1}
-              </button>
-            ),
+              </thead>
+              <tbody>
+                {currentPosts.map((post) => (
+                  <tr key={post.boardSeq}>
+                    <td>{post.boardSeq}</td>
+                    <td>{truncateText(post.item, 20)}</td>
+                    <td>
+                      <Link
+                        to={`/admin/adminBoardDetail/${post.boardSeq}/${null}/${
+                          post.item
+                        }`}
+                      >
+                        {truncateText(post.question, 20)}
+                      </Link>
+                    </td>
+                    <td>{truncateText(post.leftAnswer, 20)}</td>
+                    <td>{truncateText(post.rightAnswer, 20)}</td>
+                    <td>{post.likeCount}</td>
+                    <td>{post.commentCount}</td>
+                    <td>{post.nickname}</td>
+                    <td>
+                      <input
+                        type="checkbox"
+                        checked={selectedPosts.includes(post.boardSeq)}
+                        onChange={(e) => {
+                          handleCheckboxChange(e, post.boardSeq);
+                        }}
+                      />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           )}
         </div>
-      )}
+        <div className={classes.page_area}>
+          {/* Pagination */}
+          {posts.length > postsPerPage && (
+            <div className={classes.pagination}>
+              {Array.from({
+                length: Math.ceil(posts.length / postsPerPage),
+              }).map((_, index) => (
+                <button
+                  className={`${classes.page_btn}`}
+                  key={index}
+                  onClick={() => paginate(index + 1)}
+                >
+                  {index + 1}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
 };
