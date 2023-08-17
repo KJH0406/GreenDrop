@@ -1,6 +1,7 @@
 .thumbnail_box {
   font-family: sans-serif !important;
-  background-image: url("../../assets/background.jpg");
+  background-image: url("../../assets/background.PNG");
+
   background-position: 10%;
   background-size: cover;
 }
