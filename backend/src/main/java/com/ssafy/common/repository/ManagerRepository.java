@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 import java.util.Optional;
 
-public interface ManagerRepository extends JpaRepository<Manager, Byte> {
+public interface ManagerRepository extends JpaRepository<Manager, Byte> , ManagerRepositoryCustom {
     Optional<Manager> findById(String id);
     List<Manager> findAll();
 
