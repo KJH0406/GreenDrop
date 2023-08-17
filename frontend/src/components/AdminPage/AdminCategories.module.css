@@ -5,8 +5,8 @@
   justify-content: center;
   align-items: center;
   margin: 0 auto;
-
-  padding: 20px;
+  padding-left: 10%;
+  padding-right: 10%;
   background-color: white;
 }
 
@@ -41,6 +41,39 @@
   margin-top: 20px;
 }
 
+.modal h2 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.modal label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.modal input {
+  width: 100%;
+  padding: 5px;
+  margin-bottom: 10px;
+}
+
+.modal button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 10px;
+  font-weight: normal;
+}
+
+.modal button:last-child {
+  color: #f44336;
+  background-color: white;
+  border: 1px solid#37a150;
+}
+
 .plus_category {
   display: flex;
   width: 100%;
@@ -51,8 +84,9 @@
 
 .category_add_btn {
   font-size: large;
+  font-weight: normal;
   width: auto;
-  height: 35px;
+  height: 40px;
   border-radius: 5px;
   border: #37a150;
   background-color: #37a150;
@@ -96,23 +130,37 @@
   padding: 8px;
 }
 
-.pagination {
-  list-style-type: none;
+.page_area {
   display: flex;
+  align-items: center;
   justify-content: center;
-  margin-top: 20px;
+  margin-top: 50px;
+  margin-bottom: 100px;
 }
 
-.pagination li {
-  margin: 0 5px;
-  padding: 5px 10px;
-  border: 1px solid #ccc;
-  cursor: pointer;
+.pagination {
+  display: flex;
+  width: 100px;
+  justify-content: center;
+  padding-bottom: 10px;
 }
 
-.pagination li.active {
-  background-color: #007bff;
-  color: #fff;
+.page_btn {
+  font-size: 14pt;
+  width: 20px;
+  height: 20px;
+  background-color: transparent;
+  border: transparent;
+  margin-right: 10px;
+  color: rgb(118, 118, 118);
+}
+
+.page_btn:hover {
+  border-bottom: 3px solid #37a150;
+}
+
+.page_btn:focus {
+  border-bottom: 3px solid #37a150;
 }
 
 /* 애니메이션 효과 추가 */

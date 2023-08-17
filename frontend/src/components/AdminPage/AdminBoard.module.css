@@ -7,7 +7,8 @@
   justify-content: flex-start;
   align-items: center;
   margin: 0 auto;
-  padding: 20px;
+  padding-left: 10%;
+  padding-right: 10%;
   background-color: white;
   height: 100%;
 }
@@ -18,21 +19,23 @@
 
 .admin_reservation {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }
 
 .reservation {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  height: 270px;
-  margin-bottom: 15px;
-  overflow: auto;
-  /* border: 1px solid #000; */
-  /* border-radius: 20px; */
+  height: auto;
+  width: 100%;
+  margin-bottom: 20px;
 }
 
 .reservation_button {
   display: flex;
+  width: 100%;
   justify-content: flex-end;
   margin-bottom: 10px;
 }
@@ -196,7 +199,7 @@
   border-collapse: collapse;
   overflow-y: auto; /* Enable vertical scrolling within the fixed height */
   border: none;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 }
 
 .admin_board_table th {
@@ -231,8 +234,25 @@
 
 .pagination {
   display: flex;
+  width: 100px;
+  justify-content: center;
+  padding-bottom: 10px;
 }
+
 .page_btn {
-  width: 30px;
-  height: 30px;
+  font-size: 14pt;
+  width: 20px;
+  height: 20px;
+  background-color: transparent;
+  border: transparent;
+  margin-right: 10px;
+  color: rgb(118, 118, 118);
+}
+
+.page_btn:hover {
+  border-bottom: 3px solid #37a150;
+}
+
+.page_btn:focus {
+  border-bottom: 3px solid #37a150;
 }
