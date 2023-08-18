@@ -67,10 +67,12 @@ function AccountManagement() {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
-        const modifiedManagerList = response.data.map((account) => ({
-          ...account,
-          createdDate: formatDate(new Date(account.createdDate)),
-        }));
+        const modifiedManagerList = response.data
+          .filter((account) => account.role !== "SUPER")
+          .map((account) => ({
+            ...account,
+            createdDate: formatDate(new Date(account.createdDate)),
+          }));
         setManagerList(modifiedManagerList);
       })
       .catch((error) => {
