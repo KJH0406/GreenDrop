@@ -1,6 +1,6 @@
 .thumbnail_box {
   font-family: sans-serif !important;
-  background-image: url("../../assets/background.PNG");
+  background-image: url("../../assets/background.jfif");
 
   background-position: 10%;
   background-size: cover;
@@ -18,7 +18,7 @@
   }
 
   .thumbnail_title {
-    background-color: rgba(0, 0, 0, 0.55);
+    /* background-color: rgba(0, 0, 0, 0.5); */
     height: 39rem;
     padding-top: 4rem;
     padding-left: 4rem;
@@ -41,7 +41,7 @@
   }
 
   .thumbnail_title {
-    background-color: rgba(0, 0, 0, 0.55);
+    /* background-color: rgba(0, 0, 0, 0.2); */
     height: 29rem;
     padding-top: 4rem;
     padding-left: 2rem;

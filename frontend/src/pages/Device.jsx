@@ -85,7 +85,7 @@ function DevicePage() {
     try {
       sse.onmessage = async (e) => {
         const data = e.data;
-        console.log(data);
+        // console.log(data);
         // if (data !== "sSf") {
         //   //화면보호기 끄고
         //   setManualModal(false);
