@@ -80,7 +80,13 @@ function AdminMain() {
       },
     },
   });
-
+  const getCurrentDate = () => {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, "0");
+    const day = String(today.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
   useEffect(() => {
     let date = new Date();
     let now = date.toISOString().slice(0, 10);
@@ -88,7 +94,7 @@ function AdminMain() {
     axios
       .get(`https://i9b103.p.ssafy.io/api/plastic/list/week`)
       .then((result) => {
-        console.log(result.data);
+        // console.log(result.data);
         const data = [
           { x: "8/5", y: "0" },
           { x: "8/6", y: "0" },
@@ -113,10 +119,11 @@ function AdminMain() {
       .catch(() => {
         alert("집계에 오류가 있습니다.");
       });
-
+    const currentDate = getCurrentDate();
     axios
-      .get(`https://i9b103.p.ssafy.io/api/game/${now}`)
+      .get(`https://i9b103.p.ssafy.io/api/game/${currentDate}`)
       .then((result) => {
+        // console.log(result);
         setTodayStatus((balanceGame) => {
           return [
             { ...balanceGame[0], question: result.data.question },
