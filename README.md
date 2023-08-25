@@ -23,7 +23,7 @@
 |[@KJH0406](https://github.com/KJH0406)|@|@|@|@|[@Fizioo0102](https://github.com/Fizioo0102)|
 |FE / Design / AI |FE|FE / Infra(FE)|IoT / AI|BE / AI / DB|BE / Infra(BE) / DB|
 
-# 3. 기술 스택
+# 💻 3. 기술 스택
 
 ### Communication
   <img src="https://img.shields.io/badge/gitlab-FC6D26?style=for-the-badge&logo=gitlab&logoColor=white">  <img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white"> <img src="https://img.shields.io/badge/notion-000000?style=for-the-badge&logo=notion&logoColor=white"> <img src="https://img.shields.io/badge/mattermost-0058CC?style=for-the-badge&logo=mattermost&logoColor=white">
@@ -40,4 +40,44 @@
 ### AIoT
 <img src="https://img.shields.io/badge/python-3776AB?style=for-the-badge&logo=python&logoColor=white"> <img src="https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=Flask&logoColor=white"> <img src="https://img.shields.io/badge/Tensorflow-FF6F00?style=for-the-badge&logo=Tensorflow&logoColor=white"> <img src="https://img.shields.io/badge/arduino-00878F?style=for-the-badge&logo=arduino&logoColor=white"> <img src="https://img.shields.io/badge/openCV-5C3EE8?style=for-the-badge&logo=openCV&logoColor=white"> <img src="https://img.shields.io/badge/raspberryPI-A22846?style=for-the-badge&logo=raspberryPI&logoColor=white">  <img src="https://img.shields.io/badge/C++ -00599C?style=for-the-badge&logo=C++ &logoColor=white">
 
+# 📂 5. 화면 구성
+> FIGMA
+
+![image](https://github.com/Fizioo0102/commonPJT-3/assets/107913312/5d0bd6e0-6a7b-4660-83bf-29648fcfe4a2)
+
+# 📃 4. ERD
+![image](https://github.com/Fizioo0102/commonPJT-3/assets/107913312/c92f9905-5330-4e8c-836d-5f2d3635a290)
+
+# ♻️ 6. 서비스 소개
+### 🥤 플라스틱 컵 분리수거 함
+> 모니터 화면에 해당일자 밸런스 게임 표시
+> 
+> 플라스틱 컵을 투입구에 올려놓으면 무게 센서 및 웹 캠(Open CV 활용)을 통해 플라스틱 컵 여부를 판별하여 수거
+
+### :earth_asia: Greeen Drop Ver. 1
+> 아두이노 + 라즈베리파이 + 무게센서
+
+![image](https://github.com/Fizioo0102/commonPJT-3/assets/107913312/24a6d16a-e7d9-48dd-a9ea-81ebdd35f901)
+### :earth_asia: Green Drop Ver. 2
+> 아두이노 + 노트북(AI) + 웹캠2개(side view)
+
+![image](https://github.com/Fizioo0102/commonPJT-3/assets/107913312/d0e95168-f700-4bdb-a42c-a860a93705b3)
+### :earth_asia: Green Drop Ver. 3
+> 아두이노 + 라즈베리파이(AI) + 웹캠1개(top view)
+
+![image](https://github.com/Fizioo0102/commonPJT-3/assets/107913312/03ee4b41-f8e0-4b32-a996-68f269ee290d)
+
+### 📱 웹 서비스
+- 서비스 소개 
+
+- 밸런스 게임 
+
+- 수거현황
+
+- 그린 스토리
+
+### 🔑 관리자 페이지
+- 수거 현황 대시보드, 밸런스 게임 관리, 카테고리 관리, 관리자 계정 관리(최고 관리자), 비밀번호 변경(일반 관리자)
+
+![scrnli_2023-8-25-오후-5-16-43](https://github.com/Fizioo0102/commonPJT-3/assets/107913312/3ef870c5-0360-44f3-aa2d-9f32f3331b3f)
 
