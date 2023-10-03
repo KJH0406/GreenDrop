@@ -21,7 +21,7 @@
 |---|---|---|---|---|---|
 |img|img|img|img|img|<img src="https://github.com/Fizioo0102/commonPJT-3/assets/107913312/c21d0b0a-03ea-4491-91ad-c74b97f8dfe7" width = "100" height = "100">|
 |[@KJH0406](https://github.com/KJH0406)|@|@|@|@|[@Fizioo0102](https://github.com/Fizioo0102)|
-|FE / Design / AI |FE|FE / Infra(FE)|IoT / AI|BE / AI / DB|BE / Infra(BE) / DB|
+|FE / Design |FE|FE / Infra(FE)|IoT / AI|BE / AI / DB|BE / Infra(BE) / DB|
 
 # 💻 3. 기술 스택
 
