@@ -158,7 +158,7 @@
 
 ### 🥤 웹서비스 
 - **서비스 소개** <br/>
-  - 저희 서비스 소개를 시작으로 react-slick Carousel을 사용하여 서비스의 다양한 기능을 소개하였습니다.
+   - 저희 서비스 소개를 시작으로 react-slick Carousel을 사용하여 서비스의 다양한 기능을 소개하였습니다.
   <br/>
   <img src="https://github.com/Fizioo0102/Green-Drop/blob/2219c221a96adf9def029720ce99839b5e26f715/GIF/%EC%84%9C%EB%B9%84%EC%8A%A4%20%EC%86%8C%EA%B0%9C.GIF" width="300" height="600" /><br/>
   <hr />
@@ -187,9 +187,9 @@
   <img src="https://github.com/Fizioo0102/Green-Drop/blob/2219c221a96adf9def029720ce99839b5e26f715/GIF/%EC%9D%BC%EC%9D%BC%20%EC%A3%BC%EA%B0%84%20%EC%88%98%EA%B1%B0%EB%9F%89.GIF" width="300" height="600" /><br/>
   <hr />
 - **부가 기능** <br />
-  - 그린 스토리 : 환경에 도움이 되는 다양한 기사를 제공하고 있습니다.
-  - 분리 배출 가이드 : 환경부에서 제공하는 분리수거 가이드와 평소 잘 알지 못했던 금속, 고철 류 등을 포함하여 더욱 다양한 분리 배출 가이드를 제공하고 있습니다.
-  - 수거함 위치 : 저희 IoT수거함의 위치를 제공하여 더 많은 사용자가 동참할 수 있도록 하였습니다.
+  - **그린 스토리** : 환경에 도움이 되는 다양한 기사를 제공하고 있습니다.
+  - **분리 배출 가이드** : 환경부에서 제공하는 분리수거 가이드와 평소 잘 알지 못했던 금속, 고철 류 등을 포함하여 더욱 다양한 분리 배출 가이드를 제공하고 있습니다.
+  - **수거함 위치** : 저희 IoT수거함의 위치를 제공하여 더 많은 사용자가 동참할 수 있도록 하였습니다.
   <br/>
   <img src="https://github.com/Fizioo0102/Green-Drop/blob/2219c221a96adf9def029720ce99839b5e26f715/GIF/%EA%B8%B0%ED%83%80%ED%99%94%EB%A9%B4.GIF" width="300" height="600" /><br/>
   <hr />
@@ -200,7 +200,7 @@
   <img src="https://github.com/Fizioo0102/Green-Drop/blob/d74af2399c4c9787617a071ca8181817e22c86f1/GIF/%EA%B4%80%EB%A6%AC%EC%9E%90%20%ED%8E%98%EC%9D%B4%EC%A7%80.gif" width="900" height="600" /><br/>
 
 
-### 🥤 실제 사용 영상
+### 🥤 실제 사용 영상 YOUTUBE 바로가기
 - **GreenDrop ver.1 유저 테스트**
 
 [![GreenDrop ver.1 유저 테스트](https://github.com/Fizioo0102/Green-Drop/assets/107913312/ca33abd9-0767-402c-8d0f-6ec3426d56a6)](https://youtu.be/serdEaDSmQw)
@@ -209,3 +209,18 @@
   
 [![GreenDrop ver.3](https://github.com/Fizioo0102/Green-Drop/assets/107913312/3590f05f-b515-4a59-950b-f9a864453ddf)](https://youtu.be/j7RCUMPcBFA?si=kgjYExig8LYEV3CA)
 
+### 🥤 GreenDrop 사진첩
+<details>
+<summary>📷 유저테스트 </summary>
+<img src="https://github.com/Fizioo0102/Green-Drop/assets/107913312/662b3732-8abd-4099-b971-f6b177f4e2da" width="450" height="300"/>
+<img src="https://github.com/Fizioo0102/Green-Drop/assets/107913312/24277940-6b88-4d6a-bb61-2e9c0886ad8f" width="450" height="300"/> 
+<img src="https://github.com/Fizioo0102/Green-Drop/assets/107913312/4ae51c9a-a9ee-417c-b4ef-b567cdec1d77" width="450" height="300"/> 
+<img src="https://github.com/Fizioo0102/Green-Drop/assets/107913312/e37f237b-49a7-4492-9c88-02b1e2b1cd4c" width="450" height="300"/> 
+</details>
+<details>
+<summary>📷 제작과정 </summary>
+<img src="https://github.com/Fizioo0102/Green-Drop/assets/107913312/88cb59b8-d634-489e-8c1f-522d54418ac9" width="450" height="300"/> 
+<img src="https://github.com/Fizioo0102/Green-Drop/assets/107913312/440b8978-c823-4b3f-b65b-d44cbe8cbb7a" width="450" height="300"/>
+<img src="https://github.com/Fizioo0102/Green-Drop/assets/107913312/227673b1-06cf-4b49-aa6b-ca4c0ada604d" width="450" height="300"/> 
+<img src="https://github.com/Fizioo0102/Green-Drop/assets/107913312/18830016-88cd-4e6c-a6cf-fe45135288ab" width="450" height="300"/> 
+</details>
