@@ -97,9 +97,8 @@
 
 # 📂 5. 화면 구성
 
-> FIGMA 와이어 프레임
-> 
-
+- **FIGMA 와이어 프레임** 
+ 
 ![image](https://github.com/Fizioo0102/commonPJT-3/assets/107913312/5d0bd6e0-6a7b-4660-83bf-29648fcfe4a2)
 
 # 📃 4. ERD
