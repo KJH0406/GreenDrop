@@ -26,9 +26,9 @@
 # 👯 2. 팀원 소개
 |김장호|이대건|이승현|조영헌|천원준|최경인|
 |---|---|---|---|---|---|
-|<img src="https://avatars.githubusercontent.com/u/48538519?v=4" width="110">|<img src="https://avatars.githubusercontent.com/u/102503928?v=4" width="110">|<img src="https://avatars.githubusercontent.com/u/104187750?v=4" width="110">|<img src="https://avatars.githubusercontent.com/u/109343692?v=4" width="110">|<img src="https://avatars.githubusercontent.com/u/40604592?v=4" width="110">|<img src="https://avatars.githubusercontent.com/u/107913312?v=4" width="110">|
+|<img src="https://github.com/Fizioo0102/Green-Drop/assets/107913312/79ab9c9a-ed02-4d87-a608-57f353ea0f51" width="110">|<img src="https://avatars.githubusercontent.com/u/102503928?v=4" width="110">|<img src="https://avatars.githubusercontent.com/u/104187750?v=4" width="110">|<img src="https://avatars.githubusercontent.com/u/109343692?v=4" width="110">|<img src="https://avatars.githubusercontent.com/u/40604592?v=4" width="110">|<img src="https://avatars.githubusercontent.com/u/107913312?v=4" width="110">|
 |[@KJH0406](https://github.com/KJH0406)|[@leedaegeon](https://github.com/leedaegeon)|[@leverest96](https://github.com/leverest96)|[@marine-doe](https://github.com/marine-doe)|[@wonjunchun](https://github.com/wonjunchun)|[@Fizioo0102](https://github.com/Fizioo0102)|
-|FE / Design |FE|FE / Infra(FE)|IoT / AI|BE / AI / DB|BE / Infra(BE) / DB|
+|FE / PM / Design |FE|FE / Infra(FE)|IoT / AI|BE / AI / DB|BE / Infra(BE) / DB|
 
 # 💻 3. 기술 스택
 
@@ -155,13 +155,7 @@
 > </details> <br/>
 >
 
-### 🥤 GIF/VIDEO
-
-<details>
-<summary>📱 웹 서비스 GIF 바로가기</summary>
-<div markdown="1">
-
-
+### 🥤 웹서비스 
 
 - [서비스 소개](https://github.com/Fizioo0102/Green-Drop/blob/2219c221a96adf9def029720ce99839b5e26f715/GIF/%EC%84%9C%EB%B9%84%EC%8A%A4%20%EC%86%8C%EA%B0%9C.GIF)
 - [밸런스 게임 조회](https://github.com/Fizioo0102/Green-Drop/blob/2219c221a96adf9def029720ce99839b5e26f715/GIF/%EB%B0%B8%EB%9F%B0%EC%8A%A4%20%EA%B2%8C%EC%9E%84%20%EC%A1%B0%ED%9A%8C.GIF)
@@ -173,15 +167,12 @@
 - [관리자 페이지](https://github.com/Fizioo0102/Green-Drop/blob/d74af2399c4c9787617a071ca8181817e22c86f1/GIF/%EA%B4%80%EB%A6%AC%EC%9E%90%20%ED%8E%98%EC%9D%B4%EC%A7%80.gif)
 
 
-</div>
-</details>
+### 🥤 실제 사용 영상
+- GreenDrop ver.1 유저 테스트
 
-<details>
-<summary>📺 시연 영상 youtube 바로가기</summary>
-<div markdown="1">
+[![GreenDrop ver.1 유저 테스트](https://github.com/Fizioo0102/Green-Drop/assets/107913312/52502195-a582-43c7-9163-58f0f19fd12c)](https://youtu.be/serdEaDSmQw)
 
-- [GreenDrop ver.1 유저 테스트](https://youtu.be/serdEaDSmQw)
-- [GreenDrop ver.3](https://youtu.be/j7RCUMPcBFA?si=kgjYExig8LYEV3CA)
+- GreenDrop ver.3
+  
+[![GreenDrop ver.3](https://github.com/Fizioo0102/Green-Drop/assets/107913312/d6338765-b0a8-457d-9f87-4c954005240c)](https://youtu.be/j7RCUMPcBFA?si=kgjYExig8LYEV3CA)
 
-</div>
-</details>
