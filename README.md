@@ -1,6 +1,7 @@
 # :earth_asia: Green Drop :earth_asia:
 
 # 📜 1. 프로젝트 개요
+:crown: SSAFY 9기 2학기 공통 프로젝트 - 최우수상(1위) 수상 :crown:
 
 ### 개발기간
 
@@ -156,23 +157,32 @@
 >
 
 ### 🥤 웹서비스 
+- **서비스 소개** <br/>
+  <img src="https://github.com/Fizioo0102/Green-Drop/blob/2219c221a96adf9def029720ce99839b5e26f715/GIF/%EC%84%9C%EB%B9%84%EC%8A%A4%20%EC%86%8C%EA%B0%9C.GIF" width="300" height="600" /><br/>
+- **밸런스게임** <br/>
 
-- [서비스 소개](https://github.com/Fizioo0102/Green-Drop/blob/2219c221a96adf9def029720ce99839b5e26f715/GIF/%EC%84%9C%EB%B9%84%EC%8A%A4%20%EC%86%8C%EA%B0%9C.GIF)
-- [밸런스 게임 조회](https://github.com/Fizioo0102/Green-Drop/blob/2219c221a96adf9def029720ce99839b5e26f715/GIF/%EB%B0%B8%EB%9F%B0%EC%8A%A4%20%EA%B2%8C%EC%9E%84%20%EC%A1%B0%ED%9A%8C.GIF)
-- [밸런스 게임 등록](https://github.com/Fizioo0102/Green-Drop/blob/2219c221a96adf9def029720ce99839b5e26f715/GIF/%EB%B0%B8%EB%9F%B0%EC%8A%A4%20%EA%B2%8C%EC%9E%84%20%EB%93%B1%EB%A1%9D.GIF)
-- [밸런스 게임 수정/삭제](https://github.com/Fizioo0102/Green-Drop/blob/2219c221a96adf9def029720ce99839b5e26f715/GIF/%EB%B0%B8%EB%9F%B0%EC%8A%A4%EA%B2%8C%EC%9E%84%20%EC%88%98%EC%A0%95%20%EC%82%AD%EC%A0%9C.GIF)
-- [댓글 등록/삭제](https://github.com/Fizioo0102/Green-Drop/blob/2219c221a96adf9def029720ce99839b5e26f715/GIF/%EB%8C%93%EA%B8%80%20%EC%9E%91%EC%84%B1%20%EC%82%AD%EC%A0%9C.GIF)
-- [수거현황](https://github.com/Fizioo0102/Green-Drop/blob/2219c221a96adf9def029720ce99839b5e26f715/GIF/%EC%9D%BC%EC%9D%BC%20%EC%A3%BC%EA%B0%84%20%EC%88%98%EA%B1%B0%EB%9F%89.GIF)
-- [그린 스토리](https://github.com/Fizioo0102/Green-Drop/blob/2219c221a96adf9def029720ce99839b5e26f715/GIF/%EA%B8%B0%ED%83%80%ED%99%94%EB%A9%B4.GIF)
-- [관리자 페이지](https://github.com/Fizioo0102/Green-Drop/blob/d74af2399c4c9787617a071ca8181817e22c86f1/GIF/%EA%B4%80%EB%A6%AC%EC%9E%90%20%ED%8E%98%EC%9D%B4%EC%A7%80.gif)
+  - **밸런스 게임 조회**<br/>
+  <img src="https://github.com/Fizioo0102/Green-Drop/blob/2219c221a96adf9def029720ce99839b5e26f715/GIF/%EB%B0%B8%EB%9F%B0%EC%8A%A4%20%EA%B2%8C%EC%9E%84%20%EC%A1%B0%ED%9A%8C.GIF" width="300" height="600" /><br/>
+  - **밸런스 게임 등록** <br/>
+  <img src="https://github.com/Fizioo0102/Green-Drop/blob/2219c221a96adf9def029720ce99839b5e26f715/GIF/%EB%B0%B8%EB%9F%B0%EC%8A%A4%20%EA%B2%8C%EC%9E%84%20%EB%93%B1%EB%A1%9D.GIF" width="300" height="600" /><br/>
+  - **밸런스 게임 수정/삭제** <br/>
+  <img src="https://github.com/Fizioo0102/Green-Drop/blob/2219c221a96adf9def029720ce99839b5e26f715/GIF/%EB%B0%B8%EB%9F%B0%EC%8A%A4%EA%B2%8C%EC%9E%84%20%EC%88%98%EC%A0%95%20%EC%82%AD%EC%A0%9C.GIF" width="300" height="600" /><br/>
+- **댓글 기능** <br/>
+  <img src="https://github.com/Fizioo0102/Green-Drop/blob/2219c221a96adf9def029720ce99839b5e26f715/GIF/%EB%8C%93%EA%B8%80%20%EC%9E%91%EC%84%B1%20%EC%82%AD%EC%A0%9C.GIF" width="300" height="600" /><br/>
+- **수거 현황** <br/>
+  <img src="https://github.com/Fizioo0102/Green-Drop/blob/2219c221a96adf9def029720ce99839b5e26f715/GIF/%EC%9D%BC%EC%9D%BC%20%EC%A3%BC%EA%B0%84%20%EC%88%98%EA%B1%B0%EB%9F%89.GIF" width="300" height="600" /><br/>
+- **부가 기능** <br />
+  <img src="https://github.com/Fizioo0102/Green-Drop/blob/2219c221a96adf9def029720ce99839b5e26f715/GIF/%EA%B8%B0%ED%83%80%ED%99%94%EB%A9%B4.GIF" width="300" height="600" /><br/>
+- **관리자 페이지** <br />
+  <img src="https://github.com/Fizioo0102/Green-Drop/blob/d74af2399c4c9787617a071ca8181817e22c86f1/GIF/%EA%B4%80%EB%A6%AC%EC%9E%90%20%ED%8E%98%EC%9D%B4%EC%A7%80.gif" width="1200" height="600" /><br/>
 
 
 ### 🥤 실제 사용 영상
-- GreenDrop ver.1 유저 테스트
+- **GreenDrop ver.1 유저 테스트**
 
-[![GreenDrop ver.1 유저 테스트](https://github.com/Fizioo0102/Green-Drop/assets/107913312/52502195-a582-43c7-9163-58f0f19fd12c)](https://youtu.be/serdEaDSmQw)
+[![GreenDrop ver.1 유저 테스트](https://github.com/Fizioo0102/Green-Drop/assets/107913312/ca33abd9-0767-402c-8d0f-6ec3426d56a6)](https://youtu.be/serdEaDSmQw)
 
-- GreenDrop ver.3
+- **GreenDrop ver.3** 
   
-[![GreenDrop ver.3](https://github.com/Fizioo0102/Green-Drop/assets/107913312/d6338765-b0a8-457d-9f87-4c954005240c)](https://youtu.be/j7RCUMPcBFA?si=kgjYExig8LYEV3CA)
+[![GreenDrop ver.3](https://github.com/Fizioo0102/Green-Drop/assets/107913312/3590f05f-b515-4a59-950b-f9a864453ddf)](https://youtu.be/j7RCUMPcBFA?si=kgjYExig8LYEV3CA)
 
