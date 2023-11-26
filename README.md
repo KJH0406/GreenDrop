@@ -178,7 +178,7 @@
   <img src="https://github.com/Fizioo0102/Green-Drop/blob/2219c221a96adf9def029720ce99839b5e26f715/GIF/%EB%B0%B8%EB%9F%B0%EC%8A%A4%EA%B2%8C%EC%9E%84%20%EC%88%98%EC%A0%95%20%EC%82%AD%EC%A0%9C.GIF" width="300" height="600" /><br/>
   - **댓글 기능** <br/>
   
-    <img src="https://github.com/Fizioo0102/Green-Drop/blob/2219c221a96adf9def029720ce99839b5e26f715/GIF/%EB%8C%93%EA%B8%80%20%EC%9E%91%EC%84%B1%20%EC%82%AD%EC%A0%9C.GIF" width="300" height="600" /><br/>
+  <img src="https://github.com/Fizioo0102/Green-Drop/blob/2219c221a96adf9def029720ce99839b5e26f715/GIF/%EB%8C%93%EA%B8%80%20%EC%9E%91%EC%84%B1%20%EC%82%AD%EC%A0%9C.GIF" width="300" height="600" /><br/>
   <hr />
 - **수거 현황** <br/>
   - 실시간으로 IoT 수거함에서 수거되고 있는 일회용 플라스틱 컵의 개수를 확인할 수 있습니다.
