@@ -22,7 +22,7 @@
 # 👯 2. 팀원 소개
 |김장호|이대건|이승현|조영헌|천원준|최경인|
 |---|---|---|---|---|---|
-|<img src="https://github.com/Fizioo0102/Green-Drop/assets/107913312/79ab9c9a-ed02-4d87-a608-57f353ea0f51" width="110">|<img src="https://avatars.githubusercontent.com/u/102503928?v=4" width="110">|<img src="https://avatars.githubusercontent.com/u/104187750?v=4" width="110">|<img src="https://avatars.githubusercontent.com/u/109343692?v=4" width="110">|<img src="https://avatars.githubusercontent.com/u/40604592?v=4" width="110">|<img src="https://avatars.githubusercontent.com/u/107913312?v=4" width="110">|
+|<img src="https://avatars.githubusercontent.com/KJH0406" width="110">|<img src="https://avatars.githubusercontent.com/u/102503928?v=4" width="110">|<img src="https://avatars.githubusercontent.com/u/104187750?v=4" width="110">|<img src="https://avatars.githubusercontent.com/u/109343692?v=4" width="110">|<img src="https://avatars.githubusercontent.com/u/40604592?v=4" width="110">|<img src="https://avatars.githubusercontent.com/u/107913312?v=4" width="110">|
 |[@KJH0406](https://github.com/KJH0406)|[@leedaegeon](https://github.com/leedaegeon)|[@leverest96](https://github.com/leverest96)|[@marine-doe](https://github.com/marine-doe)|[@wonjunchun](https://github.com/wonjunchun)|[@Fizioo0102](https://github.com/Fizioo0102)|
 |FE / PM / Design |FE|FE / Infra(FE)|IoT / AI|BE / AI / DB|BE / Infra(BE) / DB|
 
