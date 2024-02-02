@@ -97,7 +97,7 @@
 
 # 📂 5. 화면 구성
 
-- **FIGMA 와이어 프레임** 
+- **FIGMA 와이어 프레임** [FIGMA 바로가기](https://www.figma.com/file/m144KxIGI5BfidLsaxe8A7/GreenDrop?type=design&node-id=0%3A1&mode=design&t=TcUxUS6maIl1k4Bk-1)
  
 ![image](https://github.com/Fizioo0102/commonPJT-3/assets/107913312/5d0bd6e0-6a7b-4660-83bf-29648fcfe4a2)
 
